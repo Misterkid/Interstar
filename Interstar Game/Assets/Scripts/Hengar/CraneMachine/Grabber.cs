@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Grabber : MonoBehaviour 
 {
+    //It Works! Hello Github!
     public PickUps holdingObject;//holding object
     //private PickUps targetObject; //target object
     public bool isDown = false;// is the grabber down
