@@ -141,7 +141,15 @@ public class CraneMachine : MonoBehaviour
             }
             else
             {
-                grabber.MoveUp(speed, true);
+                if (movementSettings.grabberSqueeze)
+                {
+                    if(grabber.isHoldingObject)
+                        grabber.MoveUp(speed, true);
+                }
+                else
+                {
+                    grabber.MoveUp(speed, true);
+                }
             }
 
             //Debug.Log(grabber.isDown + ":" + grabber.isUp + ":" + grabber.isHoldingObject + ":" + grabber.isGoingDown);

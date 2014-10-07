@@ -5,6 +5,8 @@ public class Grabber : MonoBehaviour
 {
     //It Works! Hello Github!
     public PickUps holdingObject;//holding object
+    public PickUps targetObject;//Target object.
+
     //private PickUps targetObject; //target object
     public bool isDown = false;// is the grabber down
    // public bool isGoingDown = false;
@@ -26,34 +28,27 @@ public class Grabber : MonoBehaviour
     //Move the grabber Up and down using pressure
     public void MovePressure(float speed)
     {
-        RaycastHit hit;//What do we hit?
+        RaycastHit hit;
         Ray ray = new Ray(transform.position, -transform.up);//Ray down from this object.
-        if (Physics.Raycast(ray, out hit, 50))//Raycast with a distance of 50. We also get to know what we hit
+        if(Physics.Raycast(ray,out hit, 50))//Raycast with a distance of 50. We also get to know what we hit
         {
             PickUps pickUp = hit.collider.gameObject.GetComponent<PickUps>();//Do we hit a pickup?
-            //The target height. Till what height should we go down ?
             float targetHeight = hit.point.y + 0.5f; //(EUtils.GetObjectUnitSize(this.gameObject).y / 2);
-            //are we above the target height and is the presure below 0
+            //move down
             if ((transform.position.y > targetHeight && speed < 0))
             {
-                if(pickUp != null)//Is there an object we can pickup?
-                {
-                    transform.Translate(0, speed * Time.deltaTime, 0);//Go down
-                    isUp = false;
-                }
-                else
-                {
-                   // isDown = true;//No object? We can't go down (putting this on true makes it able to go up)
-                }
+                transform.Translate(0, speed * Time.deltaTime, 0);//Go down
+                isUp = false;
             }
+            //move up
             //are we below the start position and is the pressure above 0?
             if ((transform.position.y < startHeight && speed > 0))
             {
-               // Debug.Log(speed);
+                // Debug.Log(speed);
                 transform.Translate(0, speed * Time.deltaTime, 0);//go up.
                 isDown = false;
             }
-            //transform.Translate(0, speed * Time.deltaTime, 0);
+            //Grabbing time
             float distanceDown = Mathf.Abs(transform.position.y - targetHeight);
             float distanceUp = Mathf.Abs(transform.position.y - startHeight);
             if (distanceDown < 0.1f)
@@ -65,17 +60,17 @@ public class Grabber : MonoBehaviour
                         //Grab();
                         //Grab(pickUp);
                         isDown = true;
+                        Grab();
                     }
                 }
             }
             else if (distanceUp < 0.1f)
             {
-               // isDown = false;
+                // isDown = false;
                 isUp = true;
             }
         }
     }
-    //To do fix
     public void MoveDown(float speed, bool autoGrab = true)
     {
         if (!isDown && !isHoldingObject)//We can't go down if we are down?
@@ -102,6 +97,10 @@ public class Grabber : MonoBehaviour
                             if (autoGrab)
                             {
                                 Grab();
+                            }
+                            else
+                            {
+                                targetObject = pickUp;//target
                             }
                         }
                     }
@@ -132,25 +131,32 @@ public class Grabber : MonoBehaviour
             }
         //}
     }
+    //To Do Fix please
     public void Squeeze(int power)//please
     {
         squeezePower = power;
-        if (holdingObject == null)
+        if (targetObject != null)
         {
-            Grab();
-            isDown = false;
-        }
-        else
-        {
-            if (power < holdingObject.minPressure)
+            if (power < targetObject.minPressure)
             {
-                LetGo();
+                if (holdingObject != null)
+                {
+                    //Debug.Log("DO YOU EVEN WORK?!");
+                    LetGo();
+                }
             }
-            else if (power > holdingObject.maxPressure)
+            else if (power > targetObject.maxPressure)
             {
-                Destroy(holdingObject.gameObject);
-                holdingObject = null;
-                isHoldingObject = false;
+                if (holdingObject != null)
+                {
+                    Destroy(holdingObject.gameObject);
+                    holdingObject = null;
+                    isHoldingObject = false;
+                }
+            }
+            else
+            {
+                Grab();
             }
         }
     }
@@ -174,17 +180,6 @@ public class Grabber : MonoBehaviour
             }
         }
     }
-    /*
-    private void Grab(PickUps pickUp)
-    {
-        holdingObject = pickUp;
-        isHoldingObject = true;
-        float addedHeight = (EUtils.GetObjectUnitSize(holdingObject.gameObject).y / 2);
-        holdingObject.transform.position = new Vector3(transform.position.x, transform.position.y - addedHeight, transform.position.z);
-        holdingObject.transform.parent = this.transform;
-        holdingObject.rigidbody.isKinematic = true;
-    }
-     */ 
     public void LetGo()
     {
         if (holdingObject != null)
@@ -192,6 +187,7 @@ public class Grabber : MonoBehaviour
             holdingObject.isGrounded = false;
             holdingObject.rigidbody.isKinematic = false;
             holdingObject.transform.parent = null;
+            holdingObject.rigidbody.useGravity = true;//Just to be sure
             holdingObject = null;
             isHoldingObject = false;
         }
