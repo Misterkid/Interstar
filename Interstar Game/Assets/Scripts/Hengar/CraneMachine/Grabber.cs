@@ -210,8 +210,8 @@ public class Grabber : MonoBehaviour
                 if (catcher != null)
                 {
                     //cheetsy doodle
-                    if (!isDown)
-                        isDown = true;
+                    //if (!isDown)
+                        //isDown = true;
 
                     return true;
                 }
