@@ -21,7 +21,7 @@ public class Grabber : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        Debug.DrawRay(transform.position, -transform.up);
+        //Debug.DrawRay(transform.position, -transform.up);
 	}
     //Move the grabber Up and down using pressure
     public void MovePressure(float speed)
@@ -32,7 +32,7 @@ public class Grabber : MonoBehaviour
         {
             PickUps pickUp = hit.collider.gameObject.GetComponent<PickUps>();//Do we hit a pickup?
             //The target height. Till what height should we go down ?
-            float targetHeight = hit.point.y + (EUtils.GetObjectUnitSize(this.gameObject).y / 2);
+            float targetHeight = hit.point.y + 0.5f; //(EUtils.GetObjectUnitSize(this.gameObject).y / 2);
             //are we above the target height and is the presure below 0
             if ((transform.position.y > targetHeight && speed < 0))
             {
@@ -75,6 +75,7 @@ public class Grabber : MonoBehaviour
             }
         }
     }
+    //To do fix
     public void MoveDown(float speed, bool autoGrab = true)
     {
         if (!isDown && !isHoldingObject)//We can't go down if we are down?
@@ -87,44 +88,31 @@ public class Grabber : MonoBehaviour
                 if (pickUp != null)//yes we do then
                 {
                     float targetHeight = hit.point.y + 0.5f;
-                    //if (auto && pickUp.isGrounded)//do we move automaticly and is the object on the floor?
                     if (pickUp.isGrounded)
                     {
-                        //float targetHeight = hit.point.y + 0.5f;
                         Vector3 targetPosition = new Vector3(transform.position.x, targetHeight, transform.position.z);
                         if (transform.position != targetPosition)
                         {
                             isUp = false;
-                            //isGoingDown = true;
                             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                         }
                         else
                         {
-                           // isGoingDown = false;
-
                             isDown = true;
                             if (autoGrab)
                             {
                                 Grab();
-                                //Grab(pickUp);
                             }
-                            //else
-                            //{
-                                //targetObject = pickUp;
-                            //}
-                           // targetObject = pickUp;
-                            //Grab(pickUp);
-                            //Squeeze(pickUp.minPressure);
                         }
                     }
                 }
+                /*
                 else
                 {
                     if(autoGrab)
                         isDown = true;
-                    //isGoingDown = true;
-                   // isDown = true;
                 }
+                 */
             }
         }
     }
@@ -221,7 +209,10 @@ public class Grabber : MonoBehaviour
                 CatchTrigger catcher = hit.collider.GetComponent<CatchTrigger>();
                 if (catcher != null)
                 {
-                   // LetGo();
+                    //cheetsy doodle
+                    if (!isDown)
+                        isDown = true;
+
                     return true;
                 }
             }

@@ -19,7 +19,7 @@ public class MovementRail : MonoBehaviour
     public void Move(float speed,bool auto = false,bool isHoldingObject = false)
     {
         float diffrenceZ = transform.parent.position.z + (EUtils.GetObjectUnitSize(transform.parent.gameObject).z / 2);//min and max WORLD position.
-        Debug.Log(diffrenceZ + ":" + transform.position.z);
+       // Debug.Log(diffrenceZ + ":" + transform.position.z);
         if (!auto)
         {
             //Just read it. It is to see if the object is out of the moving area!

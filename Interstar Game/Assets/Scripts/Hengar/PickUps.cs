@@ -20,6 +20,7 @@ public class PickUps : MonoBehaviour
 	}
     private void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
+        if (collision.collider.tag == "Floor")
+            isGrounded = true;
     }
 }
