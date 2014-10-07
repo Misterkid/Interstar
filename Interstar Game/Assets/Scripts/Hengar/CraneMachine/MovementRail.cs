@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class MovementRail : MonoBehaviour 
 {
     public int minMaxAddition = -5;//add or subtract from the parent object length.
+
 	// Use this for initialization
 	void Start () 
     {
@@ -13,7 +13,7 @@ public class MovementRail : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-	
+
 	}
     //Jupe looks the same as MovementMount.Move but not exactly. Maybe this will be diffrent in the future ? Who knows.
     public void Move(float speed,bool auto = false,bool isHoldingObject = false)

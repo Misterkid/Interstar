@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class CraneMachine : MonoBehaviour 
 {
     public float speed;//movement speed of all the object in this crane!
@@ -8,6 +8,9 @@ public class CraneMachine : MonoBehaviour
     public MovementRail movementRail;
     public MovementMount movementMount;
     public Grabber grabber;
+    public Text pressureText;
+    public Text nameText;
+    public Text minMaxPressureText;
     //Settings. Many booleans for diffrent way's to move.
     [System.Serializable] 
     public struct MovementSettings
@@ -34,7 +37,17 @@ public class CraneMachine : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        
+        pressureText.text = "Pressure: " + grabber.squeezePower;
+        if (grabber.holdingObject != null)
+        {
+            nameText.text = "Name: " + grabber.holdingObject.objectName;
+            minMaxPressureText.text = "Min Pressure: " + grabber.holdingObject.minPressure + " Max: " + grabber.holdingObject.maxPressure;
+        }
+        else
+        {
+            minMaxPressureText.text = "Min Pressure: -"  + " Max: -" ;
+            nameText.text = "Name: -";
+        }
 	}
     void FixedUpdate()
     {
@@ -151,14 +164,6 @@ public class CraneMachine : MonoBehaviour
                     grabber.MoveUp(speed, true);
                 }
             }
-
-            //Debug.Log(grabber.isDown + ":" + grabber.isUp + ":" + grabber.isHoldingObject + ":" + grabber.isGoingDown);
-            /*
-            if (!grabber.isDown && !grabber.isUp && !grabber.isHoldingObject && grabber.isGoingDown )
-            {
-                grabber.MoveUp(speed, true);
-            }
-            */
             if (movementSettings.grabberSqueeze)
             {
                 int squeezePower = Mathf.FloorToInt(Input.GetAxis("RTrigger") * 100);
