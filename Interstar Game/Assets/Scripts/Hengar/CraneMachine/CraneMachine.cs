@@ -156,7 +156,8 @@ public class CraneMachine : MonoBehaviour
             {
                 if (movementSettings.grabberSqueeze)
                 {
-                    if(grabber.isHoldingObject)
+                    //Move up when there is a target or when we are holding a object.
+                    if(grabber.targetObject == null || grabber.isHoldingObject || (!grabber.isHoldingObject && grabber.isGoingUp) )
                         grabber.MoveUp(speed, true);
                 }
                 else

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CatchTrigger : MonoBehaviour 
 {
-
+    public bool destroyWholeObject = true;
 	// Use this for initialization
 	void Start () 
     {
@@ -20,7 +20,11 @@ public class CatchTrigger : MonoBehaviour
         PickUps pickUp = collider.gameObject.GetComponent<PickUps>();
         if (pickUp != null)
         {
-            Destroy(pickUp.gameObject);
+            if (destroyWholeObject)
+                Destroy(pickUp.gameObject);
+            else
+                Destroy(pickUp);
+
             GameValues.HANGAR.Score++;
         }
     }

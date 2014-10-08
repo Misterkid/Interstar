@@ -27,9 +27,12 @@ public class PlayerShip : Ship {
         float y = (Input.GetAxis("Vertical") * speed) * Time.deltaTime;
         //Whole squeeze power again.
         //squeezePressure = 0;
+
         squeezePressure = (speed * Input.GetAxis("RTrigger"));//Get the trigger / pressure value.
+        /*
         squeezePressure = (speed / 2) - squeezePressure;//convert to speed/2 minus the pressure making it (-speed/2) and (speed/2)
         squeezePressure *= -1;//Flip it!
+        */
         //squeezePressure = squeezePressure * Time.deltaTime;
         transform.Translate(x, y, squeezePressure * Time.deltaTime);
 

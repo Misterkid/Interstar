@@ -9,7 +9,7 @@ public class Grabber : MonoBehaviour
 
     //private PickUps targetObject; //target object
     public bool isDown = false;// is the grabber down
-   // public bool isGoingDown = false;
+    public bool isGoingUp = false;
     public bool isUp = true;//are we up??
     public bool isHoldingObject = false;// Are we holding a object -.-
     public int squeezePower = 0;//pppppppsqueeze power!
@@ -89,6 +89,7 @@ public class Grabber : MonoBehaviour
                         if (transform.position != targetPosition)
                         {
                             isUp = false;
+                            isGoingUp = false;
                             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                         }
                         else
@@ -123,9 +124,11 @@ public class Grabber : MonoBehaviour
             if (transform.position != targetPosition)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                isGoingUp = true;
             }
             else
             {
+                isGoingUp = false;
                 isUp = true;
                 isDown = false;
             }
@@ -150,6 +153,7 @@ public class Grabber : MonoBehaviour
                 if (holdingObject != null)
                 {
                     Destroy(holdingObject.gameObject);
+                    //Destroy(holdingObject);
                     holdingObject = null;
                     isHoldingObject = false;
                 }
@@ -198,6 +202,11 @@ public class Grabber : MonoBehaviour
         {
             RaycastHit hit;//What do we hit?
             //holdingObject.transform
+            if (holdingObject == null)
+            {
+                isHoldingObject = false;
+                return false;
+            }
             Ray ray = new Ray(holdingObject.transform.position, -transform.up);//Ray down from this object.
             if (Physics.Raycast(ray, out hit, 50))//Raycast with a distance of 50. We also get to know what we hit
             {
@@ -205,10 +214,6 @@ public class Grabber : MonoBehaviour
                 CatchTrigger catcher = hit.collider.GetComponent<CatchTrigger>();
                 if (catcher != null)
                 {
-                    //cheetsy doodle
-                    //if (!isDown)
-                        //isDown = true;
-
                     return true;
                 }
             }
