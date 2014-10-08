@@ -3,7 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 public class MainMenu : MonoBehaviour 
 {
-	// Use this for initialization
+    public Animator StartGame;
+        
+    // Use this for initialization
 	void Start () 
     {
 
@@ -12,7 +14,7 @@ public class MainMenu : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-	
+	    
 	}
     public void LoadLevel(int id)
     {
@@ -22,4 +24,14 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void startTheGame()
+    {
+        StartGame.SetBool("hasClickedStart", true);
+       
+       
+    }
+
+   
+    
 }
