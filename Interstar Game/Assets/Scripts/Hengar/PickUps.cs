@@ -10,7 +10,11 @@ public class PickUps : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-	
+        if (minPressure < 0)
+        {
+            Debug.Log(string.Format("Min Pressure is {0} and is now set to 1.", minPressure));
+            minPressure = 1;
+        }
 	}
 	
 	// Update is called once per frame

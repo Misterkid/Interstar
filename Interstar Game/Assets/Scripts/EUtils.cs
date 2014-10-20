@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System;
 using System.Globalization;
 using System.Linq;
+using System.IO;
 /* 
  * Author: Eduard Meivogel
  * Website: https://www.facebook.com/EddyMeivogelProjects
@@ -139,5 +140,30 @@ public static class EUtils
             return nearestGameObject;//Return nearest Gameobject
         }
         return null;
+    }
+
+    /// <summary>
+    /// Get the Farrest object of type
+    /// </summary>
+    public static GameObject GetFarestObjectOfType<T>(Vector3 from) where T : MonoBehaviour
+    {
+        MonoBehaviour[] scripts = GameObject.FindObjectsOfType(typeof(T)) as MonoBehaviour[];
+        //LinQ (It is slower!)
+        return scripts.OrderBy(go => Vector3.Distance(go.transform.position, from)).LastOrDefault().gameObject;
+        //return null;
+    }
+    /// <summary>
+    /// Alternative logging. ToDo
+    /// </summary> 
+    public static void Log(String text,object[] args)
+    {
+        Debug.Log(string.Format(text, args));
+    }
+    /// <summary>
+    /// Alternative logging. ToDo
+    /// </summary> 
+    public static void Log(String text)
+    {
+        Debug.Log(text);
     }
 }
