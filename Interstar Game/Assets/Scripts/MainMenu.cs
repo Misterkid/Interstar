@@ -10,18 +10,41 @@ public class MainMenu : MonoBehaviour
     // Use this for initialization
 	void Start () 
     {
-        isFinished = Animator.StringToHash("Base Layer.StartGame");
+        //isFinished = Animator.StringToHash("Base Layer.StartGame");
     }
 	
 	// Update is called once per frame
 	void Update () 
     {
-        Debug.Log(isFinished);
+        //Debug.Log(StartGame.GetBool("hasClickedStart"));
+        //Debug.Log(StartGame.GetBool("isDone"));
+
+        if (StartGame.GetBool("hasClickedStart"))
+        {
+            // WaitForSeconds(5);
+            Debug.Log(Camera.main.transform.position);
+            if (Camera.main.transform.position.x == 0)
+            {
+                StartGame.SetBool("isDone", true);
+            }
+            if (StartGame.GetBool("isDone") == true)
+            {
+                //LoadLevel(2);
+            }
+        }
+        
+        // Debug.Log(isFinished);
+        
 	}
     
     public void LoadLevel(int id)
     {
-        Application.LoadLevel(id);
+        if (StartGame.GetBool("isDone") == true)
+        {
+            Application.LoadLevel(id);
+            Debug.Log("?");
+        }
+
     }
     
     public void Quit()
@@ -32,15 +55,8 @@ public class MainMenu : MonoBehaviour
     public void startTheGame()
     {
         StartGame.SetBool("hasClickedStart", true);
-        Debug.Log(StartGame);
-
-        
-
-        
-        //StartGame.Stop();
-        //Debug.Log(StartGame.GetCurrentAnimatorStateInfo(0));
-
-        //StartGame.
+        //yield WaitForSeconds (5);
+        //WaitForSeconds(5);
        
     }
 
