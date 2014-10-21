@@ -26,6 +26,10 @@ public class MainManu : MonoBehaviour
     {
         Application.LoadLevel(id);//Load new level
     }
+    public void LoadLevel(int id)
+    {
+        Application.LoadLevel(id);
+    }
     public void Quit()
     {
         Application.Quit();//Quit!
