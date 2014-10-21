@@ -44,7 +44,15 @@ public class PlayerShip : Ship {
             if (speed < minSpeed)
                 speed = minSpeed;
         }
-        transform.Translate(x * Time.deltaTime, y * Time.deltaTime, speed * Time.deltaTime);
+        //ToDo Fix this crap.
+       // transform.Translate(x * Time.deltaTime, y * Time.deltaTime, speed * Time.deltaTime);
+        //Forward
+        transform.Translate(transform.forward * (speed * Time.deltaTime));
+        //left,right
+        transform.Translate(transform.right * (x * Time.deltaTime));
+        //up,down
+        transform.Translate(transform.up * (y * Time.deltaTime));
+
         //transform.Translate(x, y, squeezePressure * Time.deltaTime);
 
         CameraMovement();//Move the damn Camera
@@ -53,10 +61,13 @@ public class PlayerShip : Ship {
     void CameraMovement()
     {
         GameObject camera = Camera.main.gameObject;
+        //camera.transform.position = transform.position;
+        //camera.transform.rotation = transform.rotation;
         //camera.transform.position = Vector3.MoveTowards(camera.transform.position, this.transform.position + cameraDistance, 2 * Time.deltaTime);
-        float distance = Mathf.Abs(camera.transform.position.z - transform.position.z);
-        //camera.transform.position = Vector3.MoveTowards(camera.transform.position, new Vector3(camera.transform.position.x, camera.transform.position.y, transform.position.z + (cameraDistance.z - squeezePressure)), (maxSpeed ) * Time.deltaTime);
-        camera.transform.position = Vector3.MoveTowards(camera.transform.position, new Vector3(camera.transform.position.x, camera.transform.position.y, transform.position.z + cameraDistance.z), (maxSpeed * 10) * Time.deltaTime);
+        //float distance = Mathf.Abs(camera.transform.position.z - transform.position.z);
+        camera.transform.position = Vector3.MoveTowards(camera.transform.position, new Vector3(camera.transform.position.x, camera.transform.position.y, transform.position.z + (cameraDistance.z - squeezePressure)), (maxSpeed ) * Time.deltaTime);
+       // EUtils.Log("Test{0}", camera);
+        //camera.transform.position = Vector3.MoveTowards(camera.transform.position, new Vector3(camera.transform.position.x, camera.transform.position.y, transform.position.z + cameraDistance.z), (maxSpeed * 10) * Time.deltaTime);
         //Debug.Log(distance);
         /*
         if (distance > cameraDistance.z + 5 || distance > cameraDistance.z - 5)
@@ -70,6 +81,7 @@ public class PlayerShip : Ship {
         }*/
          
     }
+
     void CameraBounds()
     {
         //float distance = Mathf.Abs(cameraDistance.z - transform.position.z);
@@ -100,4 +112,5 @@ public class PlayerShip : Ship {
             }
         }
     }
+
 }

@@ -139,6 +139,7 @@ public static class EUtils
             }
             return nearestGameObject;//Return nearest Gameobject
         }
+
         return null;
     }
 
@@ -153,18 +154,50 @@ public static class EUtils
         //Didn't use it yet... So. Nothing to make it faster.
         //return null;
     }
+    //Alternative Unity3d Logging.
+    //Params? What is it? check here: http://msdn.microsoft.com/en-us/library/w5zay9db.aspx
     /// <summary>
-    /// Alternative logging. ToDo
+    /// Alternative unity3d logging. Shorter then "Debug.Log(string.Format(text, args))"
     /// </summary> 
-    public static void Log(String text,object[] args)
+    public static void Log(String text,params object[] args)
     {
         Debug.Log(string.Format(text, args));
     }
     /// <summary>
-    /// Alternative logging. ToDo
+    /// Alternative unity3d logging.
     /// </summary> 
-    public static void Log(String text)
+    public static void Log(object message)
     {
-        Debug.Log(text);
+        Debug.Log(message);
+    }
+
+    /// <summary>
+    /// Alternative unity3d Error Logging. Shorter then "Debug.LogError(string.Format(text, args))"
+    /// </summary> 
+    public static void LogError(String text, params object[] args)
+    {
+        Debug.LogError(string.Format(text, args));
+    }
+    /// <summary>
+    /// Alternative unity3d Error logging.
+    /// </summary> 
+    public static void LogError(object message)
+    {
+        Debug.LogError(message);
+    }
+
+    /// <summary>
+    /// Alternative unity3d warning logging. Shorter then "Debug.LogWarning(string.Format(text, args))"
+    /// </summary> 
+    public static void LogWarning(String text, params object[] args)
+    {
+        Debug.LogWarning(string.Format(text, args));
+    }
+    /// <summary>
+    /// Alternative unity3d warning logging.
+    /// </summary> 
+    public static void LogWarning(object message)
+    {
+        Debug.LogWarning(message);
     }
 }

@@ -8,6 +8,10 @@ using System.Collections;
  *
  *
  */
+/// <summary>
+/// SoundManager
+/// This is a class to change the volume for each "channel" or to play a sound.
+/// </summary> 
 public class SoundManager
 {
     private static float music_volume;
@@ -106,19 +110,38 @@ public class SoundManager
         VOICE,
         AMBIENT
     }
-    public static void SoundManagerInit()
+    private static bool isLoaded = false;
+    /*
+    static SoundManager()
     {
-        if(PlayerPrefs.HasKey("e_sm_music"))
-        {
-            MUSIC_VOLUME = PlayerPrefs.GetFloat("e_sm_music");
-        }
+        //SoundManagerInit();
+        Debug.Log("SoundManager Initialized!");
+    }
+    */
+    /// <summary>
+    /// Initialize the SoundManager. (Will only initialize once)
+    /// </summary> 
+    public static void Load()
+    {
+        //Zo schoon is da niet. Kinda hacky. 
+        if (!isLoaded)
+            Init();
         else
+            isLoaded = true;
+    }
+    private static void Init()
+    {
+        if(PlayerPrefs.HasKey("e_sm_music"))//Got music sound saved?
         {
-            PlayerPrefs.SetFloat("e_sm_music", 1);
-            MUSIC_VOLUME = 1;
+            MUSIC_VOLUME = PlayerPrefs.GetFloat("e_sm_music");//Get it!
+        }
+        else// No?
+        {
+            PlayerPrefs.SetFloat("e_sm_music", 1);//Set It to 1!
+            MUSIC_VOLUME = 1;//This is 1 ofcourse.
             Debug.Log("e_sm_music has been added to PlayerPrefs");
         }
-
+        //Repeat
         if(PlayerPrefs.HasKey("e_sm_effect"))
         {
             EFFECT_VOLUME = PlayerPrefs.GetFloat("e_sm_effect");
@@ -154,6 +177,9 @@ public class SoundManager
             Debug.Log("e_sm_ambient has been added to PlayerPrefs");
         }
     }
+    /// <summary>
+    /// Play a sound!
+    /// </summary> 
     public static void PlaySound(AudioClip audioClip,Vector3 position,SoundTypes soundType,bool loop = false,Transform parent = null)
     {
         GameObject gameObject = new GameObject();
@@ -163,6 +189,9 @@ public class SoundManager
         NamedAudioSource namedAudioSource = gameObject.AddComponent<NamedAudioSource>();
         namedAudioSource.PlaySound(audioClip, position, soundType,loop);
     }
+    /// <summary>
+    /// Change the Volume of a sound type.
+    /// </summary> 
     private static void ChangeVolume(SoundManager.SoundTypes type)
     {
         NamedAudioSource[] audioSources = GameObject.FindObjectsOfType<NamedAudioSource>() as NamedAudioSource[];

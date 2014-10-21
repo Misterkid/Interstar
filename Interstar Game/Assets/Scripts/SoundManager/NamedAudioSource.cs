@@ -81,7 +81,7 @@ public class NamedAudioSource : MonoBehaviour
         if(!loop && !isAlwaysThere)
         {
             Timer endTimer = new Timer(Mathf.Ceil(audioClip.length * 1000) );
-            endTimer.Elapsed += endTimer_Elapsed;
+            endTimer.Elapsed += EndTimer_Elapsed;
             endTimer.Start();
             //Debug.Log(audioClip.length + ":" + endTimer.Interval);
         }
@@ -89,11 +89,11 @@ public class NamedAudioSource : MonoBehaviour
 
     }
 
-    void endTimer_Elapsed(object sender, ElapsedEventArgs e)
+    void EndTimer_Elapsed(object sender, ElapsedEventArgs e)
     {
         Timer timer = sender as Timer;
         timer.Stop();
-        timer.Elapsed -= endTimer_Elapsed;
+        timer.Elapsed -= EndTimer_Elapsed;
         timer.Dispose();
         timer = null;
        // Destroy(this.gameObject);
