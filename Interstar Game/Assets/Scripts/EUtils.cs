@@ -150,6 +150,7 @@ public static class EUtils
         MonoBehaviour[] scripts = GameObject.FindObjectsOfType(typeof(T)) as MonoBehaviour[];
         //LinQ (It is slower!)
         return scripts.OrderBy(go => Vector3.Distance(go.transform.position, from)).LastOrDefault().gameObject;
+        //Didn't use it yet... So. Nothing to make it faster.
         //return null;
     }
     /// <summary>
