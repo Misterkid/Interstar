@@ -112,11 +112,5 @@ public class PlayerShip : Ship {
             }
         }
     }
-    void OnCollisionEnter(Collision collision)
-    {
-        speed = minSpeed;
-        //rigidbody.AddForce(-collision.relativeVelocity * 10f);
-       // Debug.Log("?");
-    }
 
 }

@@ -19,8 +19,4 @@ public class SpaceGUI : MonoBehaviour
     {
         return meters * 7.859f;
     }
-    public void LoadLevel(int id)
-    {
-        Application.LoadLevel(id);
-    }
 }
