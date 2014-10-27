@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Mover : MonoBehaviour 
+public class Defendable : MonoBehaviour 
 {
-    public float speed;
+    public float health = 100;
 	// Use this for initialization
 	void Start () 
     {
