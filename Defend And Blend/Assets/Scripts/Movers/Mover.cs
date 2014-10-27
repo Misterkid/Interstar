@@ -5,13 +5,13 @@ public class Mover : MonoBehaviour
 {
     public float speed;
 	// Use this for initialization
-	void Start () 
+    protected virtual void Start() 
     {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () 
+    protected virtual void Update() 
     {
 	
 	}

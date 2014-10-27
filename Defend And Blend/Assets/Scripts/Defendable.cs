@@ -15,4 +15,8 @@ public class Defendable : MonoBehaviour
     {
 	
 	}
+    public void DoDamage(float pain)
+    {
+        health -= pain;
+    }
 }
