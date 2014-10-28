@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Kiwi : Monster 
 {
-    public GameObject bulletParticle;
+    public GameObject bullet;
     // Use this for initialization
     protected override void Start()
     {
@@ -26,10 +26,12 @@ public class Kiwi : Monster
                 {
                     nextAttack = Time.time + attackSpeed;//Set up next attack
                     target.DoDamage(damage);//Do Attack
-                    //particle
+                    //bullet
+                    /*
                     Quaternion quaternion = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
                     quaternion.SetEulerAngles(transform.rotation.eulerAngles.x, transform.rotation.y - 90, transform.rotation.z);
-                    GameObject.Instantiate(bulletParticle, transform.position, quaternion);
+                    */
+                    GameObject.Instantiate(bullet, transform.position, transform.rotation);
                 }
                 isInAttackRange = true;
             }
@@ -41,5 +43,9 @@ public class Kiwi : Monster
             //spawn particle
         }
         base.Attack();
+    }
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        base.OnCollisionEnter(collision);
     }
 }

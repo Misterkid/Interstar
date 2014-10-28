@@ -10,22 +10,56 @@ public class Monster : Mover
 
     protected float nextAttack;
     protected bool isInAttackRange = false;
+
+    protected float stunTime;
+    protected bool isStunned = false;
+    protected float stunTimeEnd;
 	// Use this for initialization
     protected override void Start()
     {
+        IgnoreCollision();
         base.Start();
+    }
+    protected virtual void IgnoreCollision()
+    {
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Monster");
+        for (int i = 0; i < gameObjects.Length; i++)
+        {
+            if (gameObjects[i] != gameObject)
+                Physics.IgnoreCollision(gameObject.collider,gameObjects[i].collider,true);
+        }
     }
 	// Update is called once per frame
     protected override void Update() 
     {
-        if (target != null && !isInAttackRange)//If we have a target
+        if (!isStunned)
         {
-            Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, 0);//Position to walk to
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);//Move torwards the target
+            if (target != null && !isInAttackRange)//If we have a target and are not stunned
+            {
+                Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, 0);//Position to walk to
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);//Move torwards the target
+            }
+            Attack();
         }
-        Attack();
+        Stunned();
         base.Update();
 	}
+    protected virtual void Stunned()
+    {
+        if (isStunned)
+        {
+            if (Time.time >= stunTimeEnd)
+            {
+                isStunned = false;
+            }
+        }
+    }
+    public virtual void Stun(float time)
+    {
+        isStunned = true;
+        stunTime = time;
+        stunTimeEnd = Time.time + stunTime;
+    }
     protected virtual void Attack()
     {
         float distance = Vector3.Distance(transform.position, target.transform.position);
@@ -46,11 +80,15 @@ public class Monster : Mover
         }
     }
     protected virtual void OnCollisionEnter(Collision collision)
-    {        
+    {    
+
+
+        /*
         Defendable defendable = collision.gameObject.GetComponent<Defendable>();//Get Defendable Collision
         if (defendable != null)//If we collide with the defendable?
         {
 
         }
+         */
     }
 }

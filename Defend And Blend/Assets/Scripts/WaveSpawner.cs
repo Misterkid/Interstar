@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WaveSpawner : MonoBehaviour {
 
@@ -22,6 +23,7 @@ public class WaveSpawner : MonoBehaviour {
 	void Start () 
     {
         Debug.Log("Starting with Wave:" + currentWave);
+
         StartCoroutine(SpawnWaves());
 	}
 

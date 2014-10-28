@@ -14,4 +14,8 @@ public class Banana : Monster
     {
         base.Update();
     }
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        base.OnCollisionEnter(collision);
+    }
 }
