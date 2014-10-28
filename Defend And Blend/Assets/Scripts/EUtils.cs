@@ -79,6 +79,42 @@ public static class EUtils
         string retText = "<color=" + htmlHex + ">" + text + "</color>";
         return retText;
     }
+
+    public static Vector3 GetObjectUnitSize(GameObject gameObject)
+    {
+        MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
+        Mesh objectMesh = null;
+        if (meshFilter != null)
+        {
+            objectMesh = meshFilter.sharedMesh;
+        }
+        else if (objectMesh == null)
+        {
+            SkinnedMeshRenderer skinnedMeshRenderer = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+            if (skinnedMeshRenderer != null)
+            {
+                objectMesh = skinnedMeshRenderer.sharedMesh;
+                //Debug.Log(objectMesh.bounds);
+            }
+        }
+        if (objectMesh != null)
+            return new Vector3(objectMesh.bounds.size.x * gameObject.transform.localScale.x, objectMesh.bounds.size.y * gameObject.transform.localScale.y, objectMesh.bounds.size.z * gameObject.transform.localScale.z);
+        else
+        {
+            //Debug.LogError("No mesh found!");
+            return new Vector3(2, 2, 2);
+        }
+    }
+    public static Vector3 GetObjectCollUnitSize(GameObject gameObject)
+    {
+        Collider collider = gameObject.GetComponent<Collider>();
+        if (collider != null)
+            return collider.bounds.size;
+        else
+            return (new Vector3(2, 2, 2));
+        //return new Vector3(collider.bounds.size.x * collider.transform.localScale.x, collider.bounds.size.y * collider.transform.localScale.y, collider.bounds.size.z * collider.transform.localScale.z);
+    }
+/*
     /// <summary>
     /// Get the objects unitsize (scale is counted too!)
     /// </summary> 
@@ -87,6 +123,9 @@ public static class EUtils
         Mesh objectMesh = gameObject.GetComponent<MeshFilter>().sharedMesh;
         return new Vector3(objectMesh.bounds.size.x * gameObject.transform.localScale.x, objectMesh.bounds.size.y * gameObject.transform.localScale.y, objectMesh.bounds.size.z * gameObject.transform.localScale.z);
     }
+    */
+
+
     /// <summary>
     /// Get the Sprite unitsize (scale is counted too!)
     /// </summary> 

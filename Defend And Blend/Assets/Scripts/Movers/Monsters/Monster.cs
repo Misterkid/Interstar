@@ -20,9 +20,10 @@ public class Monster : Mover
     protected override void Start()
     {
         IgnoreCollision();
-        attackDistance = attackDistance + ((EUtils.GetObjectUnitSize(target.gameObject).x / 2) + (EUtils.GetObjectUnitSize(gameObject).x / 2));
-        attackDistance += 0.1f;
-        Debug.Log(attackDistance);
+        attackDistance = attackDistance + (EUtils.GetObjectCollUnitSize(gameObject).z / 2);
+        if (attackDistance <= 0)
+            attackDistance = 0.1f;
+
         base.Start();
     }
     protected virtual void IgnoreCollision()
@@ -75,6 +76,32 @@ public class Monster : Mover
     }
     protected virtual void Attack()
     {
+        //if(Physics.Raycast)
+        RaycastHit[] hit;// = new RaycastHit();
+        bool foundHit = false;
+        hit =  Physics.RaycastAll(transform.position, transform.forward * 0.5f, attackDistance);
+        for(int i = 0; i < hit.Length; i++)
+        {
+            if(hit[i].collider == target.collider)
+            {
+                //http://docs.unity3d.com/ScriptReference/Time-time.html
+                if (Time.time >= nextAttack)//Is it time to attack?
+                {
+                    nextAttack = Time.time + attackSpeed;//Set up next attack
+                    target.DoDamage(damage);//Do Attack
+                }
+                isInAttackRange = true;
+                Debug.Log("hit");
+                foundHit = true;
+            }
+        }
+        if (!foundHit)
+        {
+            Debug.Log("reset");
+            isInAttackRange = false;
+            nextAttack = Time.time + attackSpeed; //Setup next attack until we are at our target
+        }
+        /*
         float distance = Vector3.Distance(transform.position, target.transform.position);
         if (distance <= attackDistance)
         {
@@ -91,6 +118,7 @@ public class Monster : Mover
             isInAttackRange = false;
             nextAttack = Time.time + attackSpeed; //Setup next attack until we are at our target
         }
+         */
     }
     protected virtual void OnCollisionEnter(Collision collision)
     {    
