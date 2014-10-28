@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
             Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, 0);//Position to shoot at
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPosition, 10 * Time.deltaTime);
 
-            if(gameObject.transform.position == target.transform.position)
+            if (gameObject.transform.position == targetPosition)
             {
                 target.DoDamage(damage);
                 Destroy(this.gameObject);

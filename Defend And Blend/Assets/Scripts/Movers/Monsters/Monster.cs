@@ -14,10 +14,15 @@ public class Monster : Mover
     protected float stunTime;
     protected bool isStunned = false;
     protected float stunTimeEnd;
+
+    protected bool hasSpeedBoost = false;//can only be boosted once.
 	// Use this for initialization
     protected override void Start()
     {
         IgnoreCollision();
+        attackDistance = attackDistance + ((EUtils.GetObjectUnitSize(target.gameObject).x / 2) + (EUtils.GetObjectUnitSize(gameObject).x / 2));
+        attackDistance += 0.1f;
+        Debug.Log(attackDistance);
         base.Start();
     }
     protected virtual void IgnoreCollision()
@@ -44,6 +49,14 @@ public class Monster : Mover
         Stunned();
         base.Update();
 	}
+    public virtual void BoostSpeed(float speedBoost)
+    {
+        if (!hasSpeedBoost)
+        {
+            speed += speedBoost;
+            hasSpeedBoost = true;
+        }
+    }
     protected virtual void Stunned()
     {
         if (isStunned)
@@ -63,7 +76,7 @@ public class Monster : Mover
     protected virtual void Attack()
     {
         float distance = Vector3.Distance(transform.position, target.transform.position);
-        if (distance < attackDistance)
+        if (distance <= attackDistance)
         {
             //http://docs.unity3d.com/ScriptReference/Time-time.html
             if (Time.time >= nextAttack)//Is it time to attack?
@@ -81,14 +94,10 @@ public class Monster : Mover
     }
     protected virtual void OnCollisionEnter(Collision collision)
     {    
-
-
-        /*
         Defendable defendable = collision.gameObject.GetComponent<Defendable>();//Get Defendable Collision
         if (defendable != null)//If we collide with the defendable?
         {
 
         }
-         */
     }
 }

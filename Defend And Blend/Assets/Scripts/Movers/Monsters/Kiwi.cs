@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Kiwi : Monster 
 {
-    public GameObject bullet;
+    public Bullet bullet;
     // Use this for initialization
     protected override void Start()
     {
@@ -25,13 +25,14 @@ public class Kiwi : Monster
                 if (Time.time >= nextAttack)//Is it time to attack?
                 {
                     nextAttack = Time.time + attackSpeed;//Set up next attack
-                    target.DoDamage(damage);//Do Attack
+                    //target.DoDamage(damage);//Do Attack
                     //bullet
                     /*
                     Quaternion quaternion = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
                     quaternion.SetEulerAngles(transform.rotation.eulerAngles.x, transform.rotation.y - 90, transform.rotation.z);
                     */
-                    GameObject.Instantiate(bullet, transform.position, transform.rotation);
+                    Bullet clone = GameObject.Instantiate(bullet, transform.position, transform.rotation) as Bullet;
+                    clone.Shoot(damage, target);
                 }
                 isInAttackRange = true;
             }
