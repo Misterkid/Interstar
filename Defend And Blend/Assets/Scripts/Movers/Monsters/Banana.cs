@@ -4,6 +4,7 @@ using System.Collections;
 public class Banana : Monster 
 {
     public BananaPeel bananaPeel;
+    private int peelCount = 1;
     // Use this for initialization
     protected override void Start()
     {
@@ -14,10 +15,17 @@ public class Banana : Monster
     {
         base.Update();
     }
-    private void DropPeel()
+    public void DropPeel()
     {
         //ToDo
-        GameObject.Instantiate(bananaPeel);//Drop peel
+        if (peelCount > 0)
+        {
+            Vector3 position = transform.position;
+            position.y = position.y - (EUtils.GetObjectCollUnitSize(gameObject).y / 2);// -1;
+            GameObject clone = GameObject.Instantiate(bananaPeel,transform.position,transform.rotation) as GameObject;//Drop peel
+            //Physics.IgnoreCollision(gameObject.collider, clone.collider);
+            peelCount--;
+        }
     }
     protected override void OnCollisionEnter(Collision collision)
     {

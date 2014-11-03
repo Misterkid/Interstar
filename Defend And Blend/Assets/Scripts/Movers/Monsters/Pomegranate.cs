@@ -26,9 +26,10 @@ public class Pomegranate : Monster
         if (defendable != null)//If we collide with the defendable?
         {
             //TODO Sexy Explosion Particle
-            GameObject.Instantiate(explosionEffect,transform.position,transform.rotation);
             defendable.DoDamage(damage);//Damage the defendable
-            Destroy(this.gameObject);
+            Die();
+            //GameObject.Instantiate(explosionEffect,transform.position,transform.rotation);
+            //Destroy(this.gameObject);
         }
 #endif
         base.OnCollisionEnter(collision);

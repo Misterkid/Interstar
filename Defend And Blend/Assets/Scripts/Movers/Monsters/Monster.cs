@@ -124,11 +124,15 @@ public class Monster : Mover
         if (defendable != null)//If we collide with the defendable?
         {
 #if EXPLODE_IMPACT
-            //TODO Sexy Explosion Particle
-            GameObject.Instantiate(explosionEffect,transform.position,transform.rotation);
+            //TODO Sexify Explosion Particle
             defendable.DoDamage(damage);//Damage the defendable
-            Destroy(this.gameObject);
+            Die();//destroy
 #endif
         }
+    }
+    public void Die()
+    {
+        GameObject.Instantiate(explosionEffect, transform.position, transform.rotation);
+        Destroy(this.gameObject);
     }
 }

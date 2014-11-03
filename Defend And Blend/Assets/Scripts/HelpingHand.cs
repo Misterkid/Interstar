@@ -8,13 +8,15 @@ public class HelpingHand : MonoBehaviour
     private float rightObjectStart;
     private float leftObjectStart;
     private bool isHoldingObject = false;
+    private Monster holdingObject;
+    private float squeezePressure;
 	// Use this for initialization
 	void Start () 
     {
         rightObjectStart = rightObject.transform.localPosition.x;
         leftObjectStart = leftObject.transform.localPosition.x;
-        Physics.IgnoreCollision(gameObject.collider, rightObject.collider);
-        Physics.IgnoreCollision(gameObject.collider, leftObject.collider);
+        //Physics.IgnoreCollision(gameObject.collider, rightObject.collider);
+        //Physics.IgnoreCollision(gameObject.collider, leftObject.collider);
         //Physics.IgnoreCollision(gameObject.collider, gameObject.collider);
 	}
 	
@@ -26,40 +28,60 @@ public class HelpingHand : MonoBehaviour
         //pressure
         if(rightObject != null && leftObject != null)
         {
-            float squeezePressure = rightObjectStart - (rightObjectStart * Input.GetAxis("RTrigger"));//Get the trigger / pressure value.
+            squeezePressure = rightObjectStart - (rightObjectStart * Input.GetAxis("RTrigger"));//Get the trigger / pressure value.
             rightObject.transform.localPosition = new Vector3(squeezePressure, rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
             leftObject.transform.localPosition = new Vector3(-squeezePressure, leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
            // collider.bounds.size = new Vector3(collider.bounds.size.x, collider.bounds.size.y, collider.bounds.size.z);
             BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>() as BoxCollider;
             boxCollider.size = new Vector3( (rightObject.transform.localPosition.x) * 2, boxCollider.size.y, boxCollider.size.z);
         }
+
+        if(isHoldingObject)
+        {
+            //if (holdingObject != null)
+            //{
+                //Debug.Log(Input.GetAxis("RTrigger") * 100 + ":" + holdingObject.minPressure);
+                if (holdingObject != null &&  Input.GetAxis("RTrigger") * 100 < holdingObject.minPressure)
+                {
+                    holdingObject.transform.parent = null;
+                    //Debug.Log(holdingObject.transform.localPosition);
+                    isHoldingObject = false;
+                    holdingObject.LetGo();
+                    holdingObject.Stun(1);
+                    holdingObject = null;
+                }
+                if (holdingObject != null && Input.GetAxis("RTrigger") * 100 > holdingObject.maxPressure)
+                {
+                    isHoldingObject = false;
+                    holdingObject.Die();
+                    holdingObject = null;
+                }
+            //}
+        }
 	}
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (!isHoldingObject)
         {
             Monster monster = other.GetComponent<Monster>();
             if (monster != null)
             {
-                monster.transform.parent = this.transform;
-                monster.Hold();
-                isHoldingObject = true;
+                //Debug.Log(Input.GetAxis("RTrigger") * 100 + ":" + monster.minPressure);
+                if (Input.GetAxis("RTrigger") * 100 > monster.minPressure)
+                {
+                    monster.transform.parent = this.transform;
+                    monster.Hold();
+                    monster.transform.localPosition = Vector3.zero;
+                    Banana banana = other.GetComponent<Banana>();
+
+                    if (banana != null)
+                        banana.DropPeel();
+
+                    isHoldingObject = true;
+                    holdingObject = monster;
+                }
             }
-            Debug.Log(collider.name);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (isHoldingObject)
-        {
-            Monster monster = other.GetComponent<Monster>();
-            if (monster != null)
-            {
-                monster.transform.parent = null;
-                isHoldingObject = false;
-                monster.LetGo();
-            }
-            Debug.Log(collider.name);
         }
     }
 }
