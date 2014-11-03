@@ -7,6 +7,10 @@ public class Monster : Mover
     public float damage;//Ammount of damage it does to the defendable target.
     public float attackSpeed;
     public float attackDistance;
+    public float minPressure = 10;
+    public float maxPressure = 80;
+
+    public GameObject explosionEffect;//Explosion particle
 
     protected float nextAttack;
     protected bool isInAttackRange = false;
@@ -16,6 +20,7 @@ public class Monster : Mover
     protected float stunTimeEnd;
 
     protected bool hasSpeedBoost = false;//can only be boosted once.
+    protected bool isInholding = false;
 	// Use this for initialization
     protected override void Start()
     {
@@ -38,19 +43,32 @@ public class Monster : Mover
 	// Update is called once per frame
     protected override void Update() 
     {
-        if (!isStunned)
+        if (!isInholding)
         {
-            if (target != null && !isInAttackRange)//If we have a target and are not stunned
+            if (!isStunned)
             {
-                Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, 0);//Position to walk to
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);//Move torwards the target
-                transform.LookAt(targetPosition);
+                if (target != null && !isInAttackRange)//If we have a target and are not stunned
+                {
+                    Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, 0);//Position to walk to
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);//Move torwards the target
+                    transform.LookAt(targetPosition);
+                }
+                Attack();
             }
-            Attack();
+            Stunned();
+            base.Update();
         }
-        Stunned();
-        base.Update();
 	}
+    public virtual void Hold()
+    {
+        rigidbody.isKinematic = true;
+        isInholding = true;
+    }
+    public virtual void LetGo()
+    {
+        rigidbody.isKinematic = false;
+        isInholding = false;
+    }
     public virtual void BoostSpeed(float speedBoost)
     {
         if (!hasSpeedBoost)
@@ -105,7 +123,12 @@ public class Monster : Mover
         Defendable defendable = collision.gameObject.GetComponent<Defendable>();//Get Defendable Collision
         if (defendable != null)//If we collide with the defendable?
         {
-
+#if EXPLODE_IMPACT
+            //TODO Sexy Explosion Particle
+            GameObject.Instantiate(explosionEffect,transform.position,transform.rotation);
+            defendable.DoDamage(damage);//Damage the defendable
+            Destroy(this.gameObject);
+#endif
         }
     }
 }

@@ -21,13 +21,16 @@ public class Pomegranate : Monster
     }
     protected override void OnCollisionEnter(Collision collision)
     {
+#if !EXPLODE_IMPACT
         Defendable defendable = collision.gameObject.GetComponent<Defendable>();//Get Defendable Collision
         if (defendable != null)//If we collide with the defendable?
         {
             //TODO Sexy Explosion Particle
+            GameObject.Instantiate(explosionEffect,transform.position,transform.rotation);
             defendable.DoDamage(damage);//Damage the defendable
             Destroy(this.gameObject);
         }
+#endif
         base.OnCollisionEnter(collision);
     }
 }

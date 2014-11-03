@@ -7,11 +7,15 @@ public class HelpingHand : MonoBehaviour
     public GameObject leftObject;
     private float rightObjectStart;
     private float leftObjectStart;
+    private bool isHoldingObject = false;
 	// Use this for initialization
 	void Start () 
     {
         rightObjectStart = rightObject.transform.localPosition.x;
         leftObjectStart = leftObject.transform.localPosition.x;
+        Physics.IgnoreCollision(gameObject.collider, rightObject.collider);
+        Physics.IgnoreCollision(gameObject.collider, leftObject.collider);
+        //Physics.IgnoreCollision(gameObject.collider, gameObject.collider);
 	}
 	
 	// Update is called once per frame
@@ -30,8 +34,32 @@ public class HelpingHand : MonoBehaviour
             boxCollider.size = new Vector3( (rightObject.transform.localPosition.x) * 2, boxCollider.size.y, boxCollider.size.z);
         }
 	}
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(collider.name);
+        if (!isHoldingObject)
+        {
+            Monster monster = other.GetComponent<Monster>();
+            if (monster != null)
+            {
+                monster.transform.parent = this.transform;
+                monster.Hold();
+                isHoldingObject = true;
+            }
+            Debug.Log(collider.name);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (isHoldingObject)
+        {
+            Monster monster = other.GetComponent<Monster>();
+            if (monster != null)
+            {
+                monster.transform.parent = null;
+                isHoldingObject = false;
+                monster.LetGo();
+            }
+            Debug.Log(collider.name);
+        }
     }
 }
