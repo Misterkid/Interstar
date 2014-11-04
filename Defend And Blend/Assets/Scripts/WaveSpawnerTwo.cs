@@ -33,7 +33,7 @@ public class WaveSpawnerTwo : MonoBehaviour
 	void Start () 
     {
         // The player will start at Wave 1.
-        currentWave = 1;
+        currentWave = 0;
         // In the first wave there will be <2> enemies.
         enemiesInWave = 2;
        
@@ -50,7 +50,7 @@ public class WaveSpawnerTwo : MonoBehaviour
         {       
             //Check if the max number of enemies is already spawned
             //If not, keep looping till the max enemies / wave are spawned
-            for (int MN = 0; MN < enemiesInWave; MN++)
+            for (int MN = 0; MN < waves[currentWave].monsters.Length; MN++)
             {
                
                 // Setting up the spawnpositions of the spawnable.
@@ -58,16 +58,11 @@ public class WaveSpawnerTwo : MonoBehaviour
                 // Setting up the rotation of the spawnable (is needed for 'Instantiate')
                 // What it does I'll actually need to find it out.
                 Quaternion spawnRotation = Quaternion.identity;
+                //currentWave = waves.Length;
 
-
-              
+                Debug.Log(monsters[waves[currentWave].monsters[MN]]);
                 GameObject clone = Instantiate(monsters[waves[currentWave].monsters[MN]], spawnPosition, spawnRotation) as GameObject;
 
-             
-                
-                
-                
-                
                 // Make the monster go to the target
                 Monster monster = clone.GetComponent<Monster>();//target
                 monster.target = target;
