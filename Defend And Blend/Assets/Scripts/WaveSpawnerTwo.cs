@@ -8,7 +8,7 @@ public class WaveSpawnerTwo : MonoBehaviour
 // <-- Starting with declaring the vars. --> //
 // Creating variables that are needed to create the wave system.
     // Making an Array of GameObjects with the Enemies within.
-    public GameObject[] enemies;
+    public GameObject[] monsters;
     // Making an variable of the target they will attack.
     public Defendable target;
     // Making a Vector3 for the spawnPosition of the enemies.
@@ -26,7 +26,7 @@ public class WaveSpawnerTwo : MonoBehaviour
     
     //public Wave references to the class Wave.
     // 
-    public Wave[] Waves;
+    public Wave[] waves;
 // <-- Ending with declaring the vars. --> //
 
     // Use this for initialization
@@ -61,7 +61,7 @@ public class WaveSpawnerTwo : MonoBehaviour
 
 
               
-                    GameObject clone = Instantiate(enemies[0], spawnPosition, spawnRotation) as GameObject;
+                GameObject clone = Instantiate(monsters[waves[currentWave].monsters[MN]], spawnPosition, spawnRotation) as GameObject;
 
              
                 
