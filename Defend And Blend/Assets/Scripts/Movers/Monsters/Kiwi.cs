@@ -4,9 +4,12 @@ using System.Collections;
 public class Kiwi : Monster 
 {
     public Bullet bullet;
+    public AudioClip bulletAudioClip;
     // Use this for initialization
     protected override void Start()
     {
+        //SoundManager.Load();
+        SoundManager.EFFECT_VOLUME = 1f;
         base.Start();
     }
     // Update is called once per frame
@@ -32,7 +35,10 @@ public class Kiwi : Monster
                     quaternion.SetEulerAngles(transform.rotation.eulerAngles.x, transform.rotation.y - 90, transform.rotation.z);
                     */
                     Bullet clone = GameObject.Instantiate(bullet, transform.position, transform.rotation) as Bullet;
+                    SoundManager.PlaySound(bulletAudioClip, transform.position, SoundManager.SoundTypes.EFFECT, false, transform);
+                    Debug.Log(SoundManager.EFFECT_VOLUME);
                     clone.Shoot(damage, target);
+
                 }
                 isInAttackRange = true;
             }

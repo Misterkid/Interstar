@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class HelpingHand : MonoBehaviour 
 {
     public GameObject rightObject;
     public GameObject leftObject;
+    //public int[] monstersList;
+    public float maxHeight;
+    public float minHeight;
     private float rightObjectStart;
     private float leftObjectStart;
     private bool isHoldingObject = false;
@@ -25,6 +27,14 @@ public class HelpingHand : MonoBehaviour
     {
 	    //Controls
         transform.Translate((Input.GetAxis("Horizontal") * 10) * Time.deltaTime, (Input.GetAxis("Vertical") * 10) * Time.deltaTime, 0);
+        if (transform.position.y < minHeight)
+        {
+            transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
+        }
+        if(transform.position.y > maxHeight)
+        {
+            transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
+        }
         //pressure
         if(rightObject != null && leftObject != null)
         {
@@ -45,6 +55,7 @@ public class HelpingHand : MonoBehaviour
                 {
                     holdingObject.transform.parent = null;
                     //Debug.Log(holdingObject.transform.localPosition);
+                    Debug.Log(Input.GetAxis("RTrigger") * 100);
                     isHoldingObject = false;
                     holdingObject.LetGo();
                     holdingObject.Stun(1);
@@ -62,6 +73,7 @@ public class HelpingHand : MonoBehaviour
     //private void OnTriggerEnter(Collider other)
     private void OnTriggerStay(Collider other)
     {
+       // Debug.Log(Input.GetAxis("RTrigger") * 100);
         if (!isHoldingObject)
         {
             Monster monster = other.GetComponent<Monster>();
