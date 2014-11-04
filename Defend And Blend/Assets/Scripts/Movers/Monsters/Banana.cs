@@ -20,9 +20,10 @@ public class Banana : Monster
         //ToDo
         if (peelCount > 0)
         {
+            //Vector3 position = new Vector3(transform.position.x, transform.position.y - (EUtils.GetObjectCollUnitSize(gameObject).y / 2), transform.position.z);//transform.position;
             Vector3 position = transform.position;
-            position.y = position.y - (EUtils.GetObjectCollUnitSize(gameObject).y / 2);// -1;
-            GameObject clone = GameObject.Instantiate(bananaPeel,transform.position,transform.rotation) as GameObject;//Drop peel
+            position.y = position.y - (EUtils.GetObjectCollUnitSize(gameObject).y / 2) - EUtils.GetObjectCollUnitSize(bananaPeel.gameObject).y -1;
+            GameObject clone = GameObject.Instantiate(bananaPeel, position, transform.rotation) as GameObject;//Drop peel
             //Physics.IgnoreCollision(gameObject.collider, clone.collider);
             peelCount--;
         }
