@@ -9,7 +9,6 @@ public class WaveSpawnerTwo : MonoBehaviour
 // Creating variables that are needed to create the wave system.
     // Making an Array of GameObjects with the Enemies within.
     public GameObject[] enemies;
-    public int[][] waves;
     // Making an variable of the target they will attack.
     public Defendable target;
     // Making a Vector3 for the spawnPosition of the enemies.
@@ -24,6 +23,10 @@ public class WaveSpawnerTwo : MonoBehaviour
     public float waitBetweenWaves;
     //Seconds between the spawn of next enemy in wave.
     public int timeBetweenNextEnemy = 2;
+    
+    //public Wave references to the class Wave.
+    // 
+    public Wave[] Waves;
 // <-- Ending with declaring the vars. --> //
 
     // Use this for initialization
@@ -47,7 +50,7 @@ public class WaveSpawnerTwo : MonoBehaviour
         {       
             //Check if the max number of enemies is already spawned
             //If not, keep looping till the max enemies / wave are spawned
-            for (int i = 0; i < enemiesInWave; i++)
+            for (int MN = 0; MN < enemiesInWave; MN++)
             {
                
                 // Setting up the spawnpositions of the spawnable.
