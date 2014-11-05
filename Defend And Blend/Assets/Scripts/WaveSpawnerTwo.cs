@@ -89,6 +89,7 @@ public class WaveSpawnerTwo : MonoBehaviour
 
     void setCurrentWave()
     {
+        if (currentWaveText != null)
         currentWaveText.text = "Current Wave: " + currentWave;
     }
 }
