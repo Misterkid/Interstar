@@ -3,13 +3,11 @@ using System.Collections;
 
 public class Kiwi : Monster 
 {
-    public Bullet bullet;
-    public AudioClip bulletAudioClip;
+    public Bullet bullet;//Kiwi bullet
+    public AudioClip bulletAudioClip;//Bullet sound
     // Use this for initialization
     protected override void Start()
     {
-        //SoundManager.Load();
-        SoundManager.EFFECT_VOLUME = 1f;
         base.Start();
     }
     // Update is called once per frame
@@ -19,32 +17,27 @@ public class Kiwi : Monster
     }
     protected override void Attack()
     {
-        if(isInAttackRange)
+        if(isInAttackRange)//Are we in range?
         {
+            //Object distance
             float distance = Vector3.Distance(transform.position, target.transform.position);
+            //is the current distance lower then the attack distance?
             if (distance < attackDistance)
             {
                 //http://docs.unity3d.com/ScriptReference/Time-time.html
                 if (Time.time >= nextAttack)//Is it time to attack?
                 {
                     nextAttack = Time.time + attackSpeed;//Set up next attack
-                    //target.DoDamage(damage);//Do Attack
-                    //bullet
-                    /*
-                    Quaternion quaternion = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
-                    quaternion.SetEulerAngles(transform.rotation.eulerAngles.x, transform.rotation.y - 90, transform.rotation.z);
-                    */
-                    Bullet clone = GameObject.Instantiate(bullet, transform.position, transform.rotation) as Bullet;
-                    SoundManager.PlaySound(bulletAudioClip, transform.position, SoundManager.SoundTypes.EFFECT, false, transform);
-                    Debug.Log(SoundManager.EFFECT_VOLUME);
-                    clone.Shoot(damage, target);
+                    Bullet clone = GameObject.Instantiate(bullet, transform.position, transform.rotation) as Bullet;//Clone bullet prefeb
+                    SoundManager.PlaySound(bulletAudioClip, transform.position, SoundManager.SoundTypes.EFFECT, false, transform);//Play Sound at some position with soundtype of Effect  not looping and parent of this gameobject.
+                    clone.Shoot(damage, target);//The bullet goes torwards the target
 
                 }
-                isInAttackRange = true;
+                isInAttackRange = true;//We are in range
             }
             else
             {
-                isInAttackRange = false;
+                isInAttackRange = false;// Not anymore
                 nextAttack = Time.time + attackSpeed; //Setup next attack until we are at our target
             }
             //spawn particle

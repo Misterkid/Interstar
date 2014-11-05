@@ -8,7 +8,7 @@ public class GameInitializor : MonoBehaviour
 	void Start () 
     {
 	    //Init game stuff here
-        SoundManager.Load();
+        SoundManager.Load();//Initialize SoundManager.
 	}
 	
 	// Update is called once per frame

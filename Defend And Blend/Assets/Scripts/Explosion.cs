@@ -4,17 +4,22 @@ using System.Collections;
 public class Explosion : MonoBehaviour 
 {
     public AudioClip explosionClip;
-    private ParticleSystem particleSystem;
+   // private ParticleSystem particleSystem;
 	// Use this for initialization
 	void Start () 
+    {
+
+
+        //particleSystem.startColor = 
+	}
+    public void explode(Color color)
     {
         if (explosionClip != null)
             SoundManager.PlaySound(explosionClip, transform.position, SoundManager.SoundTypes.EFFECT);
 
-        particleSystem = this.GetComponent<ParticleSystem>();
-
-        //particleSystem.startColor = 
-	}
+        particleSystem.startColor = color;
+        particleSystem.Play();
+    }
 	
 	// Update is called once per frame
 	void Update () 

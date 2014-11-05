@@ -11,8 +11,9 @@ using System.Timers;
  */
 /// <summary>
 /// NamedAudioSource
-/// This is a class gives a type to audio, so we can change the volume for each kind of audio type
+/// This is a class gives a type to audio, so we can change the volume for each kind of audio type.
 /// </summary> 
+[RequireComponent(typeof(AudioSource))]
 public class NamedAudioSource : MonoBehaviour
 {
     /*

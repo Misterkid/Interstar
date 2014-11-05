@@ -15,6 +15,9 @@ using System.Collections;
 public class SoundManager
 {
     private static float music_volume;
+    /// <summary>
+    /// Get or change the volume of all Music sounds
+    /// </summary> 
     public static float MUSIC_VOLUME
     {
         set
@@ -23,9 +26,15 @@ public class SoundManager
             {
                 music_volume = value;
                 if (music_volume < 0)
+                {
+                    Debug.LogWarning("Music is under 0. It will be set to 0");
                     music_volume = 0;
+                }
                 if (music_volume > 1)
+                {
+                    Debug.LogWarning("Music Volume is above 1. It will be set to 1");
                     music_volume = 1;
+                }
 
                 PlayerPrefs.SetFloat("e_sm_music", music_volume);
                 ChangeVolume(SoundTypes.MUSIC);
@@ -37,6 +46,9 @@ public class SoundManager
         }
     }
     private static float effect_volume;
+    /// <summary>
+    /// Get or change the volume of all sound effects
+    /// </summary> 
     public static float EFFECT_VOLUME
     {
         set
@@ -45,9 +57,15 @@ public class SoundManager
             {
                 effect_volume = value;
                 if (effect_volume < 0)
+                {
+                    Debug.LogWarning("Effect Volume is under 0. It will be set to 0");
                     effect_volume = 0;
+                }
                 if (effect_volume > 1)
+                {
+                    Debug.LogWarning("Effect Volume is above 1. It will be set to 1");
                     effect_volume = 1;
+                }
 
                 PlayerPrefs.SetFloat("e_sm_effect", effect_volume);
                 ChangeVolume(SoundTypes.EFFECT);
@@ -59,6 +77,9 @@ public class SoundManager
         }
     }
     private static float voice_volume;
+    /// <summary>
+    /// Get or change the volume of all voice sounds
+    /// </summary> 
     public static float VOICE_VOLUME
     {
         set
@@ -67,9 +88,15 @@ public class SoundManager
             {
                 voice_volume = value;
                 if (voice_volume < 0)
+                {
+                    Debug.LogWarning("Voice Volume is under 0. It will be set to 0");
                     voice_volume = 0;
+                }
                 if (voice_volume > 1)
+                {
+                    Debug.LogWarning("Voice Volume is above 1. It will be set to 1");
                     voice_volume = 1;
+                }
 
                 PlayerPrefs.SetFloat("e_sm_voice", voice_volume);
                 ChangeVolume(SoundTypes.VOICE);
@@ -82,6 +109,9 @@ public class SoundManager
     }
 
     private static float ambient_volume;
+    /// <summary>
+    /// Get or change the volume of all Ambient sounds
+    /// </summary> 
     public static float AMBIENT_VOLUME
     {
         set
@@ -90,9 +120,13 @@ public class SoundManager
             {
                 ambient_volume = value;
                 if (ambient_volume < 0)
+                {
                     ambient_volume = 0;
+                }
                 if (ambient_volume > 1)
+                {
                     ambient_volume = 1;
+                }
 
                 PlayerPrefs.SetFloat("e_sm_ambient", ambient_volume);
                 ChangeVolume(SoundTypes.AMBIENT);
@@ -103,6 +137,9 @@ public class SoundManager
             return ambient_volume;
         }
     }
+    /// <summary>
+    /// Diffrent kind of soundtypes !
+    /// </summary> 
     public enum SoundTypes
     {
         MUSIC,
@@ -178,7 +215,7 @@ public class SoundManager
         }
     }
     /// <summary>
-    /// Play a sound!
+    /// Play a sound at position with a soundtype. Can it loop? and does it need a parent?
     /// </summary> 
     public static void PlaySound(AudioClip audioClip,Vector3 position,SoundTypes soundType,bool loop = false,Transform parent = null)
     {

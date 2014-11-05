@@ -5,26 +5,26 @@ public class Monster : Mover
 {
     public Defendable target;//Target to walk tos
     public float damage;//Ammount of damage it does to the defendable target.
-    public float attackSpeed;
-    public float attackDistance;
-    public float minPressure = 10;
-    public float maxPressure = 80;
+    public float attackSpeed;//attacking speed
+    public float attackDistance;//Attacking distance
+    public float minPressure = 10;//Minumum pressure under this pressure the object falls
+    public float maxPressure = 80;//Maximum pressure above this pressure this object dies
 
     public GameObject explosionEffect;//Explosion particle
 
-    protected float nextAttack;
-    protected bool isInAttackRange = false;
+    protected float nextAttack;//The next attack.
+    protected bool isInAttackRange = false;//Are we in range?
 
-    protected float stunTime;
-    protected bool isStunned = false;
-    protected float stunTimeEnd;
+    protected float stunTime;//How long are we stunned?
+    protected bool isStunned = false;//are we stunned
+    protected float stunTimeEnd;//Did the stun timer end?
 
     protected bool hasSpeedBoost = false;//can only be boosted once.
-    protected bool isInholding = false;
+    protected bool isInholding = false;//do we hold this object?
 	// Use this for initialization
     protected override void Start()
     {
-        IgnoreCollision();
+        IgnoreCollision();//Ignore all collisions with the same tag
         attackDistance = attackDistance + (EUtils.GetObjectCollUnitSize(gameObject).z / 2);
         if (attackDistance <= 0)
             attackDistance = 0.1f;
@@ -33,70 +33,72 @@ public class Monster : Mover
     }
     protected virtual void IgnoreCollision()
     {
-        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Monster");
-        for (int i = 0; i < gameObjects.Length; i++)
+        //Ignore all collisions with the same tag
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Monster");//get all gameobject with the tag Monster
+        for (int i = 0; i < gameObjects.Length; i++)//Come on....
         {
-            if (gameObjects[i] != gameObject)
-                Physics.IgnoreCollision(gameObject.collider,gameObjects[i].collider,true);
+            if (gameObjects[i] != gameObject)//its not the same object as this one
+                Physics.IgnoreCollision(gameObject.collider,gameObjects[i].collider,true);//ignore this object with another object
         }
     }
 	// Update is called once per frame
     protected override void Update() 
     {
-        if (!isInholding)
+        if (!isInholding)//Is this not in holding?
         {
-            if (!isStunned)
+            if (!isStunned)//is it not stunned?
             {
                 if (target != null && !isInAttackRange)//If we have a target and are not stunned
                 {
                     Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, 0);//Position to walk to
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);//Move torwards the target
-                    transform.LookAt(targetPosition);
+                    transform.LookAt(targetPosition);//look at the target position
                 }
-                Attack();
+                Attack();//ATTACK!
             }
-            Stunned();
-            base.Update();
+            Stunned();//Check for stun.
+            base.Update();//Base update
         }
 	}
-    public virtual void Hold()
+    public virtual void Hold()//Hold object!
     {
-        rigidbody.isKinematic = true;
-        isInholding = true;
+        rigidbody.isKinematic = true;//No gravity and such
+        isInholding = true;//we are holding this now
     }
-    public virtual void LetGo()
+    public virtual void LetGo()//Let go!
     {
-        rigidbody.isKinematic = false;
-        isInholding = false;
+        rigidbody.isKinematic = false;//Lets turn it back off
+        isInholding = false;//we arn't holding it anymore
     }
     public virtual void BoostSpeed(float speedBoost)
     {
-        if (!hasSpeedBoost)
+        if (!hasSpeedBoost)//We dont have a speedboost
         {
-            speed += speedBoost;
-            hasSpeedBoost = true;
+            speed += speedBoost;//Get more speed
+            hasSpeedBoost = true;//speed bost accuired
         }
     }
-    protected virtual void Stunned()
+    protected virtual void Stunned()//STUN check
     {
-        if (isStunned)
+        if (isStunned)//are we stunned?
         {
-            if (Time.time >= stunTimeEnd)
+            if (Time.time >= stunTimeEnd)//stay stunned until stun time ends
             {
-                isStunned = false;
+                isStunned = false;//we arn't stunned anymore
             }
         }
     }
-    public virtual void Stun(float time)
+    public virtual void Stun(float time)//STUN with a specific time
     {
-        isStunned = true;
-        stunTime = time;
-        stunTimeEnd = Time.time + stunTime;
+        isStunned = true;//stunned
+        stunTime = time;//time we are stunning
+        stunTimeEnd = Time.time + stunTime;//the stunning end time.
     }
-    protected virtual void Attack()
+    protected virtual void Attack()//Attack!
     {
-        RaycastHit[] hit;
-        bool foundHit = false;
+
+        RaycastHit[] hit;//Get all objects that we hit
+        bool foundHit = false;//found a target to hit
         hit =  Physics.RaycastAll(transform.position, transform.forward * 0.5f, attackDistance);
         for(int i = 0; i < hit.Length; i++)
         {
@@ -132,7 +134,9 @@ public class Monster : Mover
     }
     public void Die()
     {
-        GameObject.Instantiate(explosionEffect, transform.position, transform.rotation);
+        GameObject clone = GameObject.Instantiate(explosionEffect, transform.position, transform.rotation) as GameObject;
+        Explosion explosion = clone.GetComponent<Explosion>();
+        explosion.explode(renderer.material.color);
         Destroy(this.gameObject);
     }
 }

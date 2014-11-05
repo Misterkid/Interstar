@@ -4,7 +4,7 @@ using System.Collections;
 public class Banana : Monster 
 {
     public BananaPeel bananaPeel;
-    private int peelCount = 90;
+    public int peelCount = 1;
     // Use this for initialization
     protected override void Start()
     {
@@ -15,28 +15,28 @@ public class Banana : Monster
     {
         base.Update();
     }
+    //drop a banana peel.
     public void DropPeel()
     {
         //ToDo
         if (peelCount > 0)
         {
-            //Vector3 position = new Vector3(transform.position.x, transform.position.y - (EUtils.GetObjectCollUnitSize(gameObject).y / 2), transform.position.z);//transform.position;
-            Vector3 position = transform.position;
-            RaycastHit hit;
+            Vector3 position = transform.position;//Current position
+            RaycastHit hit;//For the raycast hit result
+            //Raycast down from object position
             if(Physics.Raycast(transform.position,-transform.up,out hit,10))
             {
-                //hit.transform.position.y;
-                position.y = hit.point.y;//hit.transform.position.y;//position.y - (EUtils.GetObjectCollUnitSize(gameObject).y / 2) - EUtils.GetObjectCollUnitSize(bananaPeel.gameObject).y;
+                position.y = hit.point.y;//Change y position to the hitting y position.
             }
 
-            //position.y = position.y - (EUtils.GetObjectCollUnitSize(gameObject).y / 2) - EUtils.GetObjectCollUnitSize(bananaPeel.gameObject).y;
+           //Clone prefeb object and place it in the game!
             GameObject clone = GameObject.Instantiate(bananaPeel, position, transform.rotation) as GameObject;//Drop peel
-            //Physics.IgnoreCollision(gameObject.collider, clone.collider);
-            peelCount--;
+            peelCount--;//one less peel to drop
         }
     }
     protected override void OnCollisionEnter(Collision collision)
     {
+        //Do base collision crap
         base.OnCollisionEnter(collision);
     }
 }
