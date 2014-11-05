@@ -79,6 +79,10 @@ public class WaveSpawnerTwo : MonoBehaviour
             // Current wave = current wave + 1.
             // Will count 'currentwave' each time + 1
             currentWave += 1;
+            //Last wave! Repeat!
+            if (currentWave == waves.Length)
+                currentWave = waves.Length - 1;
+
             setCurrentWave();
 
         }

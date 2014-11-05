@@ -20,7 +20,7 @@ public class Monster : Mover
     protected float stunTimeEnd;//Did the stun timer end?
 
     protected bool hasSpeedBoost = false;//can only be boosted once.
-    protected bool isInholding = false;//do we hold this object?
+    public bool isInholding = false;//do we hold this object?
 	// Use this for initialization
     protected override void Start()
     {
