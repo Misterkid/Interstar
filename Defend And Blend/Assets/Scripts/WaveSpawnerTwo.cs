@@ -40,6 +40,9 @@ public class WaveSpawnerTwo : MonoBehaviour
         
         setCurrentWave();
         StartCoroutine(SpawnWaves());
+
+        if (monsters.Length <= 0)
+            Debug.LogError("You forgot the monsters!");
 	}
 
     IEnumerator SpawnWaves()
@@ -90,6 +93,6 @@ public class WaveSpawnerTwo : MonoBehaviour
     void setCurrentWave()
     {
         if (currentWaveText != null)
-        currentWaveText.text = "Current Wave: " + currentWave;
+            currentWaveText.text = "Current Wave: " + currentWave;
     }
 }
