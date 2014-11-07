@@ -63,7 +63,7 @@ public class WaveSpawnerTwo : MonoBehaviour
                 Quaternion spawnRotation = Quaternion.identity;
                 //currentWave = waves.Length;
 
-                Debug.Log(monsters[waves[currentWave].monsters[MN]]);
+                //Debug.Log(monsters[waves[currentWave].monsters[MN]]);
                 GameObject clone = Instantiate(monsters[waves[currentWave].monsters[MN]], spawnPosition, spawnRotation) as GameObject;
 
                 // Make the monster go to the target

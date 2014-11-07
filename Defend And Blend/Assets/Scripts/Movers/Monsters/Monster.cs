@@ -96,7 +96,6 @@ public class Monster : Mover
     }
     protected virtual void Attack()//Attack!
     {
-
         RaycastHit[] hit;//Get all objects that we hit
         bool foundHit = false;//found a target to hit
         hit =  Physics.RaycastAll(transform.position, transform.forward * 0.5f, attackDistance);
@@ -128,6 +127,7 @@ public class Monster : Mover
 #if EXPLODE_IMPACT
             //TODO Sexify Explosion Particle
             defendable.DoDamage(damage);//Damage the defendable
+            GameValues.SCORE--;
             Die();//destroy
 #endif
         }

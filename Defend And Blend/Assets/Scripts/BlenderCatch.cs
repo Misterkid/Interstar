@@ -20,8 +20,11 @@ public class BlenderCatch : MonoBehaviour
         Monster monster = other.GetComponent<Monster>();
         if (monster != null)
         {
-            if(!monster.isInholding)
+            if (!monster.isInholding)
+            {
+                GameValues.SCORE++;
                 monster.Die();
+            }
         }
     }
 }

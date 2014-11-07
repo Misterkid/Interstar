@@ -55,7 +55,7 @@ public class HelpingHand : MonoBehaviour
                 {
                     holdingObject.transform.parent = null;
                     //Debug.Log(holdingObject.transform.localPosition);
-                    Debug.Log(Input.GetAxis("RTrigger") * 100);
+                   // Debug.Log(Input.GetAxis("RTrigger") * 100);
                     isHoldingObject = false;
                     holdingObject.LetGo();
                     holdingObject.Stun(1);
@@ -65,6 +65,7 @@ public class HelpingHand : MonoBehaviour
                 {
                     isHoldingObject = false;
                     holdingObject.Die();
+                    GameValues.SCORE--;
                     holdingObject = null;
                 }
             //}
