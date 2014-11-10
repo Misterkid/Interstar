@@ -3,15 +3,43 @@ using System.Collections;
 
 public class UIManagerScript : MonoBehaviour 
 {
+    
+
+    public Animator CameraAnimator;
+
     public Animator OptionsTextAnimator;
     public Animator HighscoresAnimator;
+
+    
 
 	// Use this for initialization
 	void Start () 
     {
+        CameraAnimator.SetBool("GameIsPaused", false);
+
         OptionsTextAnimator.SetBool("isHidden", true);
         HighscoresAnimator.SetBool("isHidden", true);
 	}
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) == true)
+        {
+            Debug.Log("Escape is ingedrukt!");
+            if (!CameraAnimator.GetBool("GameIsPaused"))
+            {
+                //gameIsPaused = true;
+                CameraAnimator.SetBool("GameIsPaused", true);
+                Debug.Log("Leuk Spelletje is op pauze gezet");
+            }
+            else if (CameraAnimator.GetBool("GameIsPaused"))
+            {
+                CameraAnimator.SetBool("GameIsPaused", false);
+                Debug.Log("Leuk Spelletje is nu niet meer op pauze hoor!");
+            }   
+                
+        }
+    }
 	
 	public void StartGame()
     {
@@ -44,5 +72,9 @@ public class UIManagerScript : MonoBehaviour
         {
             HighscoresAnimator.SetBool("isHidden", true);
         }
+    }
+    public void openPauseScreen()
+    {
+       
     }
 }
