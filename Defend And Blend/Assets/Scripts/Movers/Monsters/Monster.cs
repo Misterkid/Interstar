@@ -48,7 +48,11 @@ public class Monster : Mover
         {
             if (!isStunned)//is it not stunned?
             {
-                if (target != null && !isInAttackRange)//If we have a target and are not stunned
+#if EXPLODE_IMPACT
+                if (target != null)//If we don't  have a target
+#else
+                if (target != null && !isInAttackRange)//If we don't  have a target and arn't in range
+#endif
                 {
                     Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, 0);//Position to walk to
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);//Move torwards the target
@@ -125,7 +129,7 @@ public class Monster : Mover
         if (defendable != null)//If we collide with the defendable?
         {
 #if EXPLODE_IMPACT
-            //TODO Sexify Explosion Particle
+            //TODO improve Explosion Particle
             defendable.DoDamage(damage);//Damage the defendable
             GameValues.SCORE--;
             Die();//destroy
