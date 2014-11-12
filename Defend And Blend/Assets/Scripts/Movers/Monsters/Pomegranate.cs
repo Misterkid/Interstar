@@ -5,6 +5,7 @@ public class Pomegranate : Monster
 {
 
     // Use this for initialization
+    /*
     protected override void Start()
     {
         base.Start();
@@ -14,6 +15,7 @@ public class Pomegranate : Monster
     {
         base.Update();
     }
+    */
     protected override void Attack()
     {
         //There is No Attack

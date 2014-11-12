@@ -5,6 +5,7 @@ public class Orange : Monster
 {
     public float timeToStun;
     // Use this for initialization
+    /*
     protected override void Start()
     {
         base.Start();
@@ -19,6 +20,7 @@ public class Orange : Monster
     {
         base.Update();
     }
+    */
     protected override void OnCollisionEnter(Collision collision)
     {
         Monster otherMonster = collision.gameObject.GetComponent<Monster>();//Get Defendable Collision

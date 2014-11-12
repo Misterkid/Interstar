@@ -6,6 +6,7 @@ public class Banana : Monster
     public BananaPeel bananaPeel;
     public int peelCount = 1;
     // Use this for initialization
+    /*
     protected override void Start()
     {
         base.Start();
@@ -15,6 +16,7 @@ public class Banana : Monster
     {
         base.Update();
     }
+    */
     //drop a banana peel.
     public void DropPeel()
     {
@@ -34,9 +36,11 @@ public class Banana : Monster
             peelCount--;//one less peel to drop
         }
     }
+    /*
     protected override void OnCollisionEnter(Collision collision)
     {
         //Do base collision crap
         base.OnCollisionEnter(collision);
     }
+     */ 
 }

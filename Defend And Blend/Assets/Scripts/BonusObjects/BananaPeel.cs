@@ -5,6 +5,7 @@ public class BananaPeel : BonusObject
 {
     public float stunTime;//How long does it stun a monster?
     // Use this for initialization
+    /*
     protected override void Start()
     {
         base.Start();
@@ -15,7 +16,7 @@ public class BananaPeel : BonusObject
     {
         base.Update();
     }
-
+    */
     protected override void OnCollisionEnter(Collision collision)
     {
         Monster monster = collision.collider.gameObject.GetComponent<Monster>();//Get Monster

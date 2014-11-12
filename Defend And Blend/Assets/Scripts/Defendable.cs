@@ -50,11 +50,6 @@ public class Defendable : MonoBehaviour
         onCooldown = false;
 	}
 	
-	// Update is called once per frame
-	void Update () 
-    {
-	
-	}
     private void HandleHealth()
     {
         healthText.text = "Health: " + currentHealth;

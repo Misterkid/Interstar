@@ -9,16 +9,16 @@ public class HelpingHand : MonoBehaviour
     public float minHeight;
     public float maxPressure = 1;
     public float minPressure = 0;
-    private float rightObjectStart;
-    private float leftObjectStart;
+   // private float rightObjectStart;
+    //private float leftObjectStart;
     private bool isHoldingObject = false;
     private Monster holdingObject;
     private float squeezePressure;
 	// Use this for initialization
 	void Start () 
     {
-        rightObjectStart = rightObject.transform.localPosition.x;
-        leftObjectStart = leftObject.transform.localPosition.x;
+        //rightObjectStart = rightObject.transform.localPosition.x;
+       // leftObjectStart = leftObject.transform.localPosition.x;
         //Physics.IgnoreCollision(gameObject.collider, rightObject.collider);
         //Physics.IgnoreCollision(gameObject.collider, leftObject.collider);
         //Physics.IgnoreCollision(gameObject.collider, gameObject.collider);

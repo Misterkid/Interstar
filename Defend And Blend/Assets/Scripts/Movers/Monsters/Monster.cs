@@ -3,24 +3,24 @@ using System.Collections;
 
 public class Monster : Mover
 {
+
     public Defendable target;//Target to walk tos
     public float damage;//Ammount of damage it does to the defendable target.
     public float attackSpeed;//attacking speed
     public float attackDistance;//Attacking distance
     public float minPressure = 10;//Minumum pressure under this pressure the object falls
     public float maxPressure = 80;//Maximum pressure above this pressure this object dies
-
+    public bool isInholding = false;//do we hold this object?
     public GameObject explosionEffect;//Explosion particle
 
     protected float nextAttack;//The next attack.
     protected bool isInAttackRange = false;//Are we in range?
 
-    protected float stunTime;//How long are we stunned?
-    protected bool isStunned = false;//are we stunned
-    protected float stunTimeEnd;//Did the stun timer end?
+    private float stunTime;//How long are we stunned?
+    private bool isStunned = false;//are we stunned
+    private float stunTimeEnd;//Did the stun timer end?
 
-    protected bool hasSpeedBoost = false;//can only be boosted once.
-    public bool isInholding = false;//do we hold this object?
+    private bool hasSpeedBoost = false;//can only be boosted once.
 	// Use this for initialization
     protected override void Start()
     {
@@ -49,7 +49,8 @@ public class Monster : Mover
             if (!isStunned)//is it not stunned?
             {
 #if EXPLODE_IMPACT
-                if (target != null)//If we don't  have a target
+                //if (target != null)//If we don't  have a target
+                if (target != null && !isInAttackRange)
 #else
                 if (target != null && !isInAttackRange)//If we don't  have a target and arn't in range
 #endif
