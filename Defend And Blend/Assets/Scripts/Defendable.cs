@@ -12,16 +12,52 @@ public class Defendable : MonoBehaviour
     public float health = 100;
     
     //Testing some shizzle
+    /// <summary>
+    /// The players current health
+    /// </summary>
+    private float currentHealth;
+
+    /// <summary>
+    /// The player's max health
+    /// </summary>
+    public int maxHealth;
+
+    /// <summary>
+    /// The healt's transform, this is used for moving the object
+    /// </summary>
     public RectTransform healthTransform;
+
+    /// <summary>
+    /// The health text
+    /// </summary>
+    public Text healthText;
+
+    /// <summary>
+    /// The health's image, this is used for color changing
+    /// </summary>
+    public Image visualHealth;
+
+    /// <summary>
+    /// The health's y pos
+    /// </summary>
     private float cachedY;
+
+    /// <summary>
+    /// The minimum value of the health's x pos
+    /// </summary>
     private float minXValue;
+
+    /// <summary>
+    /// The max value of the health's x pos
+    /// </summary>
     private float maxXValue;
+
+    /// <summary>
+    /// The current xValue of the health
+    /// </summary>
     private float currentXValue;
 
-    public int maxHealth = 100;
-    private int currentHealth;
-
-    private int CurrentHealth
+    private float CurrentHealth
     {
         get { return currentHealth; }
         set 
@@ -31,11 +67,6 @@ public class Defendable : MonoBehaviour
         }
     }
 
-    private float healthBarlenght;
-
-    public Text healthText;
-    public Image visualHealth;
-
     //End of Testing some hpbars.
 
 	// Use this for initialization
@@ -43,6 +74,7 @@ public class Defendable : MonoBehaviour
     {
         //Caches the healthbars' startposition. (5.926359)
         cachedY = healthTransform.position.y;
+
         //Caches the the max value of the xPos is the start position (12)			
         maxXValue = healthTransform.position.x;
         //The minValue of the xPos is startPos - the width of the bar
@@ -63,7 +95,7 @@ public class Defendable : MonoBehaviour
 
         //private float MapValues(float x, float in_min, float in_max, float out_min, float out_max)
         Debug.Log("("+currentHealth +"x" + 0 +") x (" + maxXValue +"-" + minXValue + ") / (" +maxHealth +"-" +0 +") "+minXValue);
-        
+        Debug.Log (currentXValue);
 
         Debug.Log(Map(currentHealth, 0, maxHealth, minXValue, maxXValue));
 
@@ -87,7 +119,9 @@ public class Defendable : MonoBehaviour
         {
             
             health -= pain;
-            CurrentHealth -= 2;
+            //CurrentHealth -= 2;
+
+            CurrentHealth -= pain;
         }
     }
     /// <summary>
