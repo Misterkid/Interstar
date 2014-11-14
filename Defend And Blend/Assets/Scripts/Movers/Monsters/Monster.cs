@@ -19,7 +19,6 @@ public class Monster : Mover
     private float stunTime;//How long are we stunned?
     private bool isStunned = false;//are we stunned
     private float stunTimeEnd;//Did the stun timer end?
-
     private bool hasSpeedBoost = false;//can only be boosted once.
 	// Use this for initialization
     protected override void Start()
@@ -31,7 +30,7 @@ public class Monster : Mover
 
         base.Start();
     }
-    protected virtual void IgnoreCollision()
+    private void IgnoreCollision()
     {
         //Ignore all collisions with the same tag
         GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Monster");//get all gameobject with the tag Monster
@@ -65,17 +64,17 @@ public class Monster : Mover
             base.Update();//Base update
         }
 	}
-    public virtual void Hold()//Hold object!
+    public void Hold()//Hold object!
     {
         rigidbody.isKinematic = true;//No gravity and such
         isInholding = true;//we are holding this now
     }
-    public virtual void LetGo()//Let go!
+    public void LetGo()//Let go!
     {
         rigidbody.isKinematic = false;//Lets turn it back off
         isInholding = false;//we arn't holding it anymore
     }
-    public virtual void BoostSpeed(float speedBoost)
+    public void BoostSpeed(float speedBoost)
     {
         if (!hasSpeedBoost)//We dont have a speedboost
         {
@@ -83,7 +82,7 @@ public class Monster : Mover
             hasSpeedBoost = true;//speed bost accuired
         }
     }
-    protected virtual void Stunned()//STUN check
+    private void Stunned()//STUN check
     {
         if (isStunned)//are we stunned?
         {

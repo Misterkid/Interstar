@@ -17,11 +17,7 @@ public class HelpingHand : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        //rightObjectStart = rightObject.transform.localPosition.x;
-       // leftObjectStart = leftObject.transform.localPosition.x;
-        //Physics.IgnoreCollision(gameObject.collider, rightObject.collider);
-        //Physics.IgnoreCollision(gameObject.collider, leftObject.collider);
-        //Physics.IgnoreCollision(gameObject.collider, gameObject.collider);
+
 	}
 	
 	// Update is called once per frame
