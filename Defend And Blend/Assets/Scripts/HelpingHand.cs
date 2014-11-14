@@ -113,8 +113,8 @@ public class HelpingHand : MonoBehaviour
                     monster.transform.parent = this.transform;
                     monster.Hold();
                     monster.transform.localPosition = Vector3.zero;
-                    Banana banana = other.GetComponent<Banana>();
 
+                    Banana banana = other.GetComponent<Banana>();
                     if (banana != null)
                         banana.DropPeel();
 

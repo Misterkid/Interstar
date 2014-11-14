@@ -34,7 +34,7 @@ public class Kiwi : Monster
                 //http://docs.unity3d.com/ScriptReference/Time-time.html
                 if (Time.time >= nextAttack)//Is it time to attack?
                 {
-                    Debug.Log("BOOM");
+                    //Debug.Log("BOOM");
                     nextAttack = Time.time + attackSpeed;//Set up next attack
                     Bullet clone = GameObject.Instantiate(bullet, transform.position, transform.rotation) as Bullet;//Clone bullet prefeb
                     
