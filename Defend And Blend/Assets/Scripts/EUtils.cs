@@ -101,8 +101,9 @@ public static class EUtils
             return new Vector3(objectMesh.bounds.size.x * gameObject.transform.localScale.x, objectMesh.bounds.size.y * gameObject.transform.localScale.y, objectMesh.bounds.size.z * gameObject.transform.localScale.z);
         else
         {
-            //Debug.LogError("No mesh found!");
-            return new Vector3(2, 2, 2);
+            Debug.LogError("No mesh found!");
+           // return new Vector3(2, 2, 2);
+            return Vector3.zero;
         }
     }
     public static Vector3 GetObjectCollUnitSize(GameObject gameObject)
@@ -111,7 +112,11 @@ public static class EUtils
         if (collider != null)
             return collider.bounds.size;
         else
-            return (new Vector3(2, 2, 2));
+        {
+            // return (new Vector3(2, 2, 2));
+            Debug.LogError("No col mesh found!");
+            return Vector3.zero;
+        }
         //return new Vector3(collider.bounds.size.x * collider.transform.localScale.x, collider.bounds.size.y * collider.transform.localScale.y, collider.bounds.size.z * collider.transform.localScale.z);
     }
 /*
@@ -153,8 +158,6 @@ public static class EUtils
     public static GameObject GetNearestObjectOfType<T>(Vector3 from) where T:MonoBehaviour
     {
         MonoBehaviour[] scripts = GameObject.FindObjectsOfType(typeof(T)) as MonoBehaviour[];
-        //LinQ (It is slower!)
-        //return scripts.OrderBy(go => Vector3.Distance(go.transform.position, from)).FirstOrDefault().gameObject;
         //Faster
         if (scripts.Length > 0)
         {

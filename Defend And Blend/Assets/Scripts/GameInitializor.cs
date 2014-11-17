@@ -8,6 +8,5 @@ public class GameInitializor : MonoBehaviour
     {
 	    //Init game stuff here
         GameValues.Reset();
-        SoundManager.Load();//Initialize SoundManager.
 	}
 }

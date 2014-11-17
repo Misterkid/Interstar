@@ -18,7 +18,6 @@ public class BlenderCatch : MonoBehaviour
             for(int i = 0; i < monsters.Count; i++)
             {
                 monsters[i].Die();
-                monsters[i] = null;
                 GameValues.SCORE++;
             }
             monsters = new List<Monster>();
