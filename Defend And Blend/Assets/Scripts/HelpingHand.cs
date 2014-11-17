@@ -44,13 +44,7 @@ public class HelpingHand : MonoBehaviour
             {
                 rightObject.transform.localPosition = new Vector3(rightObject.transform.localPosition.x + (openPressure * Time.deltaTime), rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
                 leftObject.transform.localPosition = new Vector3(leftObject.transform.localPosition.x - (openPressure * Time.deltaTime), leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
-                /*
-                if(rightObject.transform.localPosition.x > rightObjectStart)
-                    rightObject.transform.localPosition = new Vector3(rightObjectStart, rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
 
-                if (leftObject.transform.localPosition.x < leftObjectStart)
-                    leftObject.transform.localPosition = new Vector3(leftObjectStart, leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
-                */
              }
             else if(closePressure > 0 && rightObject.transform.localPosition.x > minPressure)
             {

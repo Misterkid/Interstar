@@ -49,7 +49,7 @@ public class WaveSpawnerTwo : MonoBehaviour
     {
         yield return new WaitForSeconds(0);
         
-        while (true)
+        while (true)//Mark check this out!
         {       
             //Check if the max number of enemies is already spawned
             //If not, keep looping till the max enemies / wave are spawned
