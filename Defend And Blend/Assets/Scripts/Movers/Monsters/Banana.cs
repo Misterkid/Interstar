@@ -32,7 +32,7 @@ public class Banana : Monster
             }
 
            //Clone prefeb object and place it in the game!
-            GameObject clone = GameObject.Instantiate(bananaPeel, position, transform.rotation) as GameObject;//Drop peel
+            /*GameObject clone = */GameObject.Instantiate(bananaPeel, position, transform.rotation) /*as GameObject*/;//Drop peel
             peelCount--;//one less peel to drop
         }
     }

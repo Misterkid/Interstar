@@ -6,8 +6,6 @@ using System.Timers;
  * Author: Eduard Meivogel
  * Website: https://www.facebook.com/EddyMeivogelProjects
  * Creation Year: 2014
- *
- *
  */
 /// <summary>
 /// NamedAudioSource

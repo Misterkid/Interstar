@@ -2,7 +2,11 @@
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
-
+/* 
+ * Author: Eduard Meivogel
+ * Website: https://www.facebook.com/EddyMeivogelProjects
+ * Creation Year: 2014
+ */
 public class SndMngrWindow : EditorWindow 
 {
     private string audioName = "NamedAudioSource(Fill In a name please)";

@@ -79,7 +79,7 @@ public static class EUtils
         string retText = "<color=" + htmlHex + ">" + text + "</color>";
         return retText;
     }
-
+    /*
     public static Vector3 GetObjectUnitSize(GameObject gameObject)
     {
         MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
@@ -106,6 +106,7 @@ public static class EUtils
             return Vector3.zero;
         }
     }
+     * */
     public static Vector3 GetObjectCollUnitSize(GameObject gameObject)
     {
         Collider collider = gameObject.GetComponent<Collider>();
@@ -119,7 +120,7 @@ public static class EUtils
         }
         //return new Vector3(collider.bounds.size.x * collider.transform.localScale.x, collider.bounds.size.y * collider.transform.localScale.y, collider.bounds.size.z * collider.transform.localScale.z);
     }
-/*
+    
     /// <summary>
     /// Get the objects unitsize (scale is counted too!)
     /// </summary> 
@@ -128,7 +129,6 @@ public static class EUtils
         Mesh objectMesh = gameObject.GetComponent<MeshFilter>().sharedMesh;
         return new Vector3(objectMesh.bounds.size.x * gameObject.transform.localScale.x, objectMesh.bounds.size.y * gameObject.transform.localScale.y, objectMesh.bounds.size.z * gameObject.transform.localScale.z);
     }
-    */
 
 
     /// <summary>

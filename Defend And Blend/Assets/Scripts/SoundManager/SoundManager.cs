@@ -6,8 +6,6 @@ using System.Collections.Generic;
  * Author: Eduard Meivogel
  * Website: https://www.facebook.com/EddyMeivogelProjects
  * Creation Year: 2014
- *
- *
  */
 /// <summary>
 /// SoundManager
@@ -44,27 +42,21 @@ public sealed class SoundManager
     }
     SoundManager()
     {
-        //Initialize here
-        Init();
-    }
-    #region Private Methods
-    private void Init()
-    {
-        if(!PlayerPrefs.HasKey("e_sm_music"))//Is there a music key?
+        if (!PlayerPrefs.HasKey("e_sm_music"))//Is there a music key?
         {
             PlayerPrefs.SetFloat("e_sm_music", 1);//Create one and set to 1
             Debug.Log("e_sm_music has been added to PlayerPrefs");
         }
         soundValues.Add(SoundTypes.MUSIC, PlayerPrefs.GetFloat("e_sm_music"));//add it to dictionary
         //Repeat
-        if(!PlayerPrefs.HasKey("e_sm_effect"))
+        if (!PlayerPrefs.HasKey("e_sm_effect"))
         {
             PlayerPrefs.SetFloat("e_sm_effect", 1);
             Debug.Log("e_sm_effect has been added to PlayerPrefs");
         }
         soundValues.Add(SoundTypes.EFFECT, PlayerPrefs.GetFloat("e_sm_effect"));
 
-        if(!PlayerPrefs.HasKey("e_sm_voice"))
+        if (!PlayerPrefs.HasKey("e_sm_voice"))
         {
             PlayerPrefs.SetFloat("e_sm_voice", 1);
             Debug.Log("e_sm_voice has been added to PlayerPrefs");
@@ -78,7 +70,6 @@ public sealed class SoundManager
         }
         soundValues.Add(SoundTypes.AMBIENT, PlayerPrefs.GetFloat("e_sm_ambient"));
     }
-    #endregion
     #region Public Methods
     /// <summary>
     /// Play a sound at position with a soundtype. Can it loop? and does it need a parent?
@@ -102,6 +93,7 @@ public sealed class SoundManager
     }
     /// <summary>
     /// Change the Volume of a sound type.
+    /// Use SoundManager.Instance.soundValues[SoundManager.SoundTypes.TYPE]
     /// </summary>
     public void ChangeVolume(float volume,SoundManager.SoundTypes type)
     {

@@ -12,7 +12,7 @@ public class Monster : Mover
     public float maxPressure = 80;//Maximum pressure above this pressure this object dies
     public bool isInholding = false;//do we hold this object?
     public GameObject explosionEffect;//Explosion particle
-
+    public AudioClip stunnedClip;
     protected float nextAttack;//The next attack.
     protected bool isInAttackRange = false;//Are we in range?
 
@@ -94,6 +94,8 @@ public class Monster : Mover
     }
     public virtual void Stun(float time)//STUN with a specific time
     {
+        if (stunnedClip != null)
+            SoundManager.Instance.PlaySound(stunnedClip, transform.position, SoundManager.SoundTypes.EFFECT, false, transform);
         isStunned = true;//stunned
         stunTime = time;//time we are stunning
         stunTimeEnd = Time.time + stunTime;//the stunning end time.
