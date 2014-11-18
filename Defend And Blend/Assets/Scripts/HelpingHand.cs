@@ -11,6 +11,7 @@ public class HelpingHand : MonoBehaviour
 
     public bool AutoMoveX = false;
     public bool AutoMoveY = false;
+    public bool AutoGrab = false;
 
     private WaveSpawnerTwo waveSpawner;
     private bool isHoldingObject = false;
@@ -28,7 +29,7 @@ public class HelpingHand : MonoBehaviour
 	    //Controls Auto
         AutoMove();
 
-        //transform.Translate((Input.GetAxis("Horizontal") * 10) * Time.deltaTime, (Input.GetAxis("Vertical") * 10) * Time.deltaTime, 0);
+        transform.Translate((Input.GetAxis("Horizontal") * 10) * Time.deltaTime, (Input.GetAxis("Vertical") * 10) * Time.deltaTime, 0);
 
         if (transform.position.y < minHeight)
         {
@@ -113,7 +114,7 @@ public class HelpingHand : MonoBehaviour
             {
                 if (monster != null)
                 {
-                    if (!monster.isInBlender)
+                    if (!monster.isInBlender && transform.position.x == monster.transform.position.x)
                     {
                         Vector3 targetPosition = new Vector3(transform.position.x, monster.transform.position.y, transform.position.z);
                         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
@@ -126,7 +127,7 @@ public class HelpingHand : MonoBehaviour
             BlenderCatch blender = GameObject.FindObjectOfType<BlenderCatch>();//EUtils.GetNearestObject(waveSpawner.SpawnedMonsters, transform.position);
             if (AutoMoveX)
             {
-                if (blender != null)
+                if (blender != null && transform.position.y == blender.transform.position.y + 7.50f)
                 {
                     Vector3 targetPosition = new Vector3(blender.transform.position.x, transform.position.y, transform.position.z);
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);

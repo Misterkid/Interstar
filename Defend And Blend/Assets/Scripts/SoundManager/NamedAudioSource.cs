@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Timers;
+//using System.Timers;
 
 /* 
  * Author: Eduard Meivogel
@@ -18,12 +18,21 @@ public class NamedAudioSource : MonoBehaviour
     public AudioSource audioSource;
     private bool isAlwaysThere = false;
     private bool destroy = false;
+    private float soundTimerEnd = 0;
     private void Start()
     {
         if (audioSource != null)
         {
             isAlwaysThere = true;
             PlaySound(audioSource.clip, audioSource.transform.position, _type, audioSource.loop);
+        }
+    }
+    void Update()
+    {
+        if (Time.time >= soundTimerEnd)
+        {
+            SoundManager.Instance.RemoveSound(this);
+            Destroy(this.gameObject);
         }
     }
     public void PlaySound(AudioClip audioClip,Vector3 position, SoundManager.SoundTypes audioType,bool loop = false)
@@ -45,31 +54,10 @@ public class NamedAudioSource : MonoBehaviour
         audioSource.loop = loop;
         if(!loop && !isAlwaysThere)
         {
-            Timer endTimer = new Timer(Mathf.Ceil(audioClip.length * 1000) );
-            endTimer.Elapsed += EndTimer_Elapsed;
-            endTimer.Start();
+            soundTimerEnd = Time.time + audioClip.length;//Mathf.Ceil(audioClip.length * 1000);
+
         }
         audioSource.Play();
 
-    }
-
-    void EndTimer_Elapsed(object sender, ElapsedEventArgs e)
-    {
-        Timer timer = sender as Timer;
-        timer.Stop();
-        timer.Elapsed -= EndTimer_Elapsed;
-        timer.Dispose();
-        timer = null;
-       // Destroy(this.gameObject);
-        destroy = true;
-        //throw new System.NotImplementedException();
-    }
-    void Update()
-    {
-        if(destroy)
-        {
-            SoundManager.Instance.RemoveSound(this);
-            Destroy(this.gameObject);
-        }
     }
 }
