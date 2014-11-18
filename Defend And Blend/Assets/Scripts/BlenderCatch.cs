@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 public class BlenderCatch : MonoBehaviour 
 {
-    private List<Monster> monsters = new List<Monster>();
+    private List<GameObject> monsters = new List<GameObject>();
 	// Use this for initialization
 	void Start () 
     {
-	
+
 	}
 	
 	// Update is called once per frame
@@ -17,10 +17,11 @@ public class BlenderCatch : MonoBehaviour
         {
             for(int i = 0; i < monsters.Count; i++)
             {
-                monsters[i].Die();
+                Monster monster = monsters[i].GetComponent<Monster>();
+                monster.Die();
                 GameValues.SCORE++;
             }
-            monsters = new List<Monster>();
+            monsters = new List<GameObject>();
         }
 	}
     void OnCollisionEnter(Collision other)
@@ -31,7 +32,11 @@ public class BlenderCatch : MonoBehaviour
             if (!monster.isInholding)
             {
                 GameValues.SCORE++;
-                monsters.Add(monster);
+                monster.isInBlender = true;
+                monsters.Add(monster.gameObject);
+                //We are gone!
+                WaveSpawnerTwo waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
+                waveSpawner.SpawnedMonsters.Remove(monster.gameObject);
                 //monster.Die();
             }
         }

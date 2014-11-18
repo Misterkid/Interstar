@@ -184,6 +184,40 @@ public static class EUtils
 
         return null;
     }
+    /// <summary>
+    /// Get the nearest object from list
+    /// </summary>
+    //    public static GameObject GetNearestObjectOfType<T>(Vector3 from) where T:MonoBehaviour
+     public static GameObject GetNearestObject(List<GameObject> gameObjects,Vector3 from,GameObject skip = null)
+    {
+        //MonoBehaviour[] scripts = GameObject.FindObjectsOfType(typeof(T)) as MonoBehaviour[];
+        //Faster
+        if (gameObjects.Count > 0)
+        {
+            GameObject nearestGameObject = null;//The nearest pickup object
+            for (int i = 0; i < gameObjects.Count; i++)//Loop trough it
+            {
+                if (nearestGameObject != null)//not null? then we could look which pickup object is closer to move to!
+                {
+                    //distance check.
+                    if (Vector3.Distance(nearestGameObject.transform.position, from) > Vector3.Distance(gameObjects[i].transform.position, from))
+                    {
+                        //set new nearest pickup object
+                        if (skip != gameObjects[i])
+                            nearestGameObject = gameObjects[i].gameObject;
+                    }
+                }
+                else
+                {
+                    //Its null then I guess the next object in here is the closest.
+                    nearestGameObject = gameObjects[i].gameObject;
+                }
+            }
+            return nearestGameObject;//Return nearest Gameobject
+        }
+
+        return null;
+    }
 
     /// <summary>
     /// Get the Farrest object of type

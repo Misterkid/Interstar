@@ -4,28 +4,32 @@ public class HelpingHand : MonoBehaviour
 {
     public GameObject rightObject;
     public GameObject leftObject;
-    //public int[] monstersList;
     public float maxHeight;
     public float minHeight;
     public float maxPressure = 1;
     public float minPressure = 0;
-   // private float rightObjectStart;
-    //private float leftObjectStart;
+
+    public bool AutoMoveX = false;
+    public bool AutoMoveY = false;
+
+    private WaveSpawnerTwo waveSpawner;
     private bool isHoldingObject = false;
     private Monster holdingObject;
     private float squeezePressure;
 	// Use this for initialization
 	void Start () 
     {
-
+        waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-	    //Controls
-        transform.Translate((Input.GetAxis("Horizontal") * 10) * Time.deltaTime, (Input.GetAxis("Vertical") * 10) * Time.deltaTime, 0);
-        
+	    //Controls Auto
+        AutoMove();
+
+        //transform.Translate((Input.GetAxis("Horizontal") * 10) * Time.deltaTime, (Input.GetAxis("Vertical") * 10) * Time.deltaTime, 0);
+
         if (transform.position.y < minHeight)
         {
             transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
@@ -37,7 +41,6 @@ public class HelpingHand : MonoBehaviour
         //pressure
         if(rightObject != null && leftObject != null)
         {
-            //squeezePressure = rightObjectStart - (rightObjectStart * Input.GetAxis("RTrigger"));//Get the trigger / pressure value.
             float openPressure = Input.GetAxis("RTrigger");
             float closePressure = Input.GetAxis("LTrigger");
             if (openPressure > 0 && rightObject.transform.localPosition.x < maxPressure)
@@ -52,52 +55,101 @@ public class HelpingHand : MonoBehaviour
                 leftObject.transform.localPosition = new Vector3(leftObject.transform.localPosition.x + (closePressure * Time.deltaTime), leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
                 
             }
-           // Debug.Log(squeezePressure);
-            //Close
 
-            //rightObject.transform.localPosition = new Vector3(squeezePressure, rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
-            //leftObject.transform.localPosition = new Vector3(-squeezePressure, leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
             BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>() as BoxCollider;
             boxCollider.size = new Vector3( (rightObject.transform.localPosition.x) * 2, boxCollider.size.y, boxCollider.size.z);
             squeezePressure = maxPressure - Vector3.Distance(rightObject.transform.localPosition, leftObject.transform.localPosition);
         }
-
+        //While holding a object check if the pressure is below minumum if so let it go.
+        // Also check if the pressure is above maximum if so Kill the holding object.
         if(isHoldingObject)
         {
-            //if (holdingObject != null)
-            //{
-                //Debug.Log(Input.GetAxis("RTrigger") * 100 + ":" + holdingObject.minPressure);
-                if (holdingObject != null && squeezePressure * 100 < holdingObject.minPressure)
-                {
-                    holdingObject.transform.parent = null;
-                    //Debug.Log(holdingObject.transform.localPosition);
-                   // Debug.Log(Input.GetAxis("RTrigger") * 100);
-                    isHoldingObject = false;
-                    holdingObject.LetGo();
-                    holdingObject.Stun(1);
-                    holdingObject = null;
-                }
-                if (holdingObject != null && squeezePressure * 100 > holdingObject.maxPressure)
-                {
-                    isHoldingObject = false;
-                    holdingObject.Die();
-                    GameValues.SCORE--;
-                    holdingObject = null;
-                }
-            //}
+            if (holdingObject != null && squeezePressure * 100 < holdingObject.minPressure)
+            {
+                holdingObject.transform.parent = null;
+                isHoldingObject = false;
+                holdingObject.LetGo();
+                holdingObject.Stun(1);
+                holdingObject = null;
+            }
+            if (holdingObject != null && squeezePressure * 100 > holdingObject.maxPressure)
+            {
+                isHoldingObject = false;
+                holdingObject.Die();
+                GameValues.SCORE--;
+                holdingObject = null;
+            }
         }
 	}
-    //private void OnTriggerEnter(Collider other)
+    private void AutoMove()
+    {
+        if((AutoMoveX || AutoMoveY )&& !isHoldingObject)
+        {
+            Monster monster = null;
+            GameObject monsterGo = null;
+            monsterGo = EUtils.GetNearestObject(waveSpawner.SpawnedMonsters, transform.position);//EUtils.GetNearestObjectOfType<Monster>(transform.position);
+            if (monsterGo != null)
+            {
+                monster = monsterGo.GetComponent<Monster>();
+                if(monster.isInBlender)
+                    monsterGo = EUtils.GetNearestObject(waveSpawner.SpawnedMonsters, transform.position, monsterGo);
+                
+                if (monsterGo != null)
+                    monster = monsterGo.GetComponent<Monster>();
+            }
+
+            if (AutoMoveX)
+            {
+                if (monster != null)
+                {
+                    if (!monster.isInBlender)
+                    {
+                        Vector3 targetPosition = new Vector3(monster.transform.position.x, transform.position.y, transform.position.z);
+                        transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
+                    }
+                }
+            }
+            if (AutoMoveY)
+            {
+                if (monster != null)
+                {
+                    if (!monster.isInBlender)
+                    {
+                        Vector3 targetPosition = new Vector3(transform.position.x, monster.transform.position.y, transform.position.z);
+                        transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
+                    }
+                }
+            }
+        }
+        else if((AutoMoveX || AutoMoveY )&& isHoldingObject)
+        {
+            BlenderCatch blender = GameObject.FindObjectOfType<BlenderCatch>();//EUtils.GetNearestObject(waveSpawner.SpawnedMonsters, transform.position);
+            if (AutoMoveX)
+            {
+                if (blender != null)
+                {
+                    Vector3 targetPosition = new Vector3(blender.transform.position.x, transform.position.y, transform.position.z);
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
+                }
+            }
+            if (AutoMoveY)
+            {
+                if (blender != null)
+                {
+                    Vector3 targetPosition = new Vector3(transform.position.x, blender.transform.position.y + 7.50f, transform.position.z);
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
+                }
+            }
+        }
+    }
+    //Hold the monster when the pressure is above the minimum.
     private void OnTriggerStay(Collider other)
     {
-       // Debug.Log(Input.GetAxis("RTrigger") * 100);
         if (!isHoldingObject)
         {
-            //Debug.Log(squeezePressure + ":" + squeezePressure * 100);
             Monster monster = other.GetComponent<Monster>();
             if (monster != null)
             {
-                //Debug.Log(Input.GetAxis("RTrigger") * 100 + ":" + monster.minPressure);
                 if (squeezePressure * 100 > monster.minPressure)
                 {
                     monster.transform.parent = this.transform;

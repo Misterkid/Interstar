@@ -13,6 +13,7 @@ public class Monster : Mover
     public bool isInholding = false;//do we hold this object?
     public GameObject explosionEffect;//Explosion particle
     public AudioClip stunnedClip;
+    public bool isInBlender = false;
     protected float nextAttack;//The next attack.
     protected bool isInAttackRange = false;//Are we in range?
 
@@ -43,7 +44,7 @@ public class Monster : Mover
 	// Update is called once per frame
     protected override void Update() 
     {
-        if (!isInholding)//Is this not in holding?
+        if (!isInholding && !isInBlender)//Is this not in holding?
         {
             if (!isStunned)//is it not stunned?
             {
@@ -143,6 +144,10 @@ public class Monster : Mover
         GameObject clone = GameObject.Instantiate(explosionEffect, transform.position, transform.rotation) as GameObject;
         Explosion explosion = clone.GetComponent<Explosion>();
         explosion.explode(renderer.material.color);
+        //We are gone!
+        WaveSpawnerTwo waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
+        waveSpawner.SpawnedMonsters.Remove(this.gameObject);
+
         Destroy(this.gameObject);
     }
 }

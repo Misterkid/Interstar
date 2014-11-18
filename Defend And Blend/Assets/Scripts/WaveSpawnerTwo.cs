@@ -21,12 +21,14 @@ public class WaveSpawnerTwo : MonoBehaviour
     public int enemiesInWave;
     //Wait time after a wave is finished
     public float waitBetweenWaves;
-    //Seconds between the spawn of next enemy in wave.
+    //Seconds between the spawn of next enemy in wave.s
     public int timeBetweenNextEnemy = 2;
     
     //public Wave references to the class Wave.
     // 
     public Wave[] waves;
+
+    public List<GameObject> SpawnedMonsters = new List<GameObject>();
 // <-- Ending with declaring the vars. --> //
 
     // Use this for initialization
@@ -65,7 +67,7 @@ public class WaveSpawnerTwo : MonoBehaviour
 
                 //Debug.Log(monsters[waves[currentWave].monsters[MN]]);
                 GameObject clone = Instantiate(monsters[waves[currentWave].monsters[MN]], spawnPosition, spawnRotation) as GameObject;
-
+                SpawnedMonsters.Add(clone);
                 // Make the monster go to the target
                 Monster monster = clone.GetComponent<Monster>();//target
                 monster.target = target;
