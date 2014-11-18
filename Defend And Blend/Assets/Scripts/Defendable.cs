@@ -9,7 +9,15 @@ public class Defendable : MonoBehaviour
     /// The players current health
     /// </summary>
     private float currentHealth;
-
+    private float CurrentHealth
+    {
+        get { return currentHealth; }
+        set
+        {
+            currentHealth = value;
+            HandleHealth();
+        }
+    }
     /// <summary>
     /// The player's max health
     /// </summary>
@@ -30,7 +38,6 @@ public class Defendable : MonoBehaviour
     /// </summary>
     public Image visualHealth;
 
- 
     /// <summary>
     /// The minimum value of the health's x pos
     /// </summary>
@@ -41,48 +48,23 @@ public class Defendable : MonoBehaviour
     /// </summary>
     private float fullHealthXPos;
 
-    /// <summary>
-    /// The current xValue of the health
-    /// </summary>
-    private float currentXValue;
-
-    private float CurrentHealth
-    {
-        get { return currentHealth; }
-        set 
-        { 
-            currentHealth = value;
-            HandleHealth();
-        }
-    }
-
-    //End of Testing some hpbars.
 
 	// Use this for initialization
 	void Start () 
     {
-        Debug.Log(currentHealth);
-
-        //Debug.Log(healthTransform.localPosition);
-
         //Caches the the max value of the xPos is the start position (12)			
-        fullHealthXPos = healthTransform.localPosition.x;
-
-        Debug.Log(healthTransform.rect.width);
-        
+        fullHealthXPos = healthTransform.localPosition.x;      
         //The minValue of the xPos is startPos - the width of the bar
         // minXvalue = 12 - 250 = -238.			
         zeroHealthXPos = healthTransform.localPosition.x - healthTransform.rect.width;
-
         //In the start, the currentHealth is always the maxHealth (100)
         currentHealth = maxHealth;
-
 	}
 	
     private void HandleHealth()
     {
         healthText.text = "Health: " + currentHealth;
-        currentXValue = handleHealthColor(currentHealth, 0, 100, zeroHealthXPos, fullHealthXPos);
+        
        
         float percentage = maxHealth / 100;// 1%
         float current = currentHealth / percentage; //175 / 1 = 1.75

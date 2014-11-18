@@ -22,7 +22,9 @@ public class WaveSpawnerTwo : MonoBehaviour
     //Wait time after a wave is finished
     public float waitBetweenWaves;
     //Seconds between the spawn of next enemy in wave.s
-    public int timeBetweenNextEnemy = 2;
+    private float timeBetweenNextEnemy = 6;
+    //Seconds between the spawn of next enemy in wave.s
+    private float timeBetweenNextWave = 1;
     
     //public Wave references to the class Wave.
     // 
@@ -38,19 +40,29 @@ public class WaveSpawnerTwo : MonoBehaviour
         currentWave = 0;
         // In the first wave there will be <2> enemies.
         enemiesInWave = 2;
-       
-        
         setCurrentWave();
+        
+       
         StartCoroutine(SpawnWaves());
 
         if (monsters.Length <= 0)
             Debug.LogError("You forgot the monsters!");
 	}
-
+    IEnumerator waitForNextEnemy()
+    {
+        Debug.Log("Waiting "+ timeBetweenNextEnemy +"s for deploying enemy");
+        yield return new WaitForSeconds(timeBetweenNextEnemy);
+    }
+    IEnumerator waitForNextWave()
+    {
+        Debug.Log("Waiting " + timeBetweenNextWave + "s for deploying wave");
+        yield return new WaitForSeconds(timeBetweenNextWave);
+    }
     IEnumerator SpawnWaves()
     {
-        yield return new WaitForSeconds(0);
-        
+        //This yield is used for the time between the first and the second enemy.
+        //yield return new WaitForSeconds(10);
+        StartCoroutine(waitForNextEnemy());
         while (true)//Mark check this out!
         {       
             //Check if the max number of enemies is already spawned
@@ -77,7 +89,7 @@ public class WaveSpawnerTwo : MonoBehaviour
                 
             }         
             yield return new WaitForSeconds(waitBetweenWaves);
-           
+
             // Current wave = current wave + 1.
             // Will count 'currentwave' each time + 1
             currentWave += 1;
@@ -91,6 +103,10 @@ public class WaveSpawnerTwo : MonoBehaviour
         }
     }
 
+
+  
+
+
 	// Update is called once per frame
 	void Update () 
     {
@@ -100,6 +116,6 @@ public class WaveSpawnerTwo : MonoBehaviour
     void setCurrentWave()
     {
         if (currentWaveText != null)
-            currentWaveText.text = "Current Wave: " + currentWave;
+            currentWaveText.text = "Wave # " + (currentWave + 1);
     }
 }
