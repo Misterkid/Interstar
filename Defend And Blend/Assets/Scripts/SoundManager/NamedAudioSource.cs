@@ -17,7 +17,6 @@ public class NamedAudioSource : MonoBehaviour
     public SoundManager.SoundTypes _type;
     public AudioSource audioSource;
     private bool isAlwaysThere = false;
-    private bool destroy = false;
     private float soundTimerEnd = 0;
     private void Start()
     {
