@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 /* 
  * Author: Eduard Meivogel
  * Website: https://www.facebook.com/EddyMeivogelProjects
