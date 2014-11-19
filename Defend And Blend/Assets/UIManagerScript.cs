@@ -7,29 +7,28 @@ public class UIManagerScript : MonoBehaviour
 
     public Animator CameraAnimator;
 
-    public Animator OptionsTextAnimator;
-    public Animator HighscoresAnimator;
+  //  public Animator OptionsTextAnimator;
+  //  public Animator HighscoresAnimator;
 
     void Awake()
     {
-        CameraAnimator.SetBool("GameIsPaused", false);
+        
     }
 
 	// Use this for initialization
 	void Start () 
     {
-        ;
-
-        OptionsTextAnimator.SetBool("isHidden", true);
-        HighscoresAnimator.SetBool("isHidden", true);
+       CameraAnimator.SetBool("GameIsPaused", false);
+        //OptionsTextAnimator.SetBool("isHidden", true);
+        //HighscoresAnimator.SetBool("isHidden", true);
 	}
 
     public void Update()
     {
-        Debug.Log(CameraAnimator.GetBool("GameIsPaused"));
+       // Debug.Log(CameraAnimator.GetBool("GameIsPaused"));
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
-            Debug.Log("Escape is ingedrukt!");
+            Debug.Log("Escape	 is ingedrukt!");
             if (!CameraAnimator.GetBool("GameIsPaused"))
             {
                 //gameIsPaused = true;
@@ -56,6 +55,7 @@ public class UIManagerScript : MonoBehaviour
     public void openOptions()
     {
         //Wanneer isHidden al true is, maak hem false
+        /*
         if (OptionsTextAnimator.GetBool("isHidden"))
         {
             HighscoresAnimator.SetBool("isHidden", true);
@@ -65,10 +65,12 @@ public class UIManagerScript : MonoBehaviour
         {
             OptionsTextAnimator.SetBool("isHidden", true);
         }
+        */
     }
 
     public void openHighScores()
     {
+        /*
         //Wanneer isHidden al true is, maak hem false
         if (HighscoresAnimator.GetBool("isHidden"))
         {
@@ -79,6 +81,7 @@ public class UIManagerScript : MonoBehaviour
         {
             HighscoresAnimator.SetBool("isHidden", true);
         }
+        */
     }
     public void openPauseScreen()
     {
