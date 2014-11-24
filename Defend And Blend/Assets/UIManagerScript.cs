@@ -3,12 +3,11 @@ using System.Collections;
 
 public class UIManagerScript : MonoBehaviour 
 {
-    
-
+  
     public Animator CameraAnimator;
-
-  //  public Animator OptionsTextAnimator;
-  //  public Animator HighscoresAnimator;
+    public Animator BookAnimator;
+    public Animator rp_StartGame;
+    public GameObject wooot;
 
     void Awake()
     {
@@ -19,72 +18,29 @@ public class UIManagerScript : MonoBehaviour
 	void Start () 
     {
        CameraAnimator.SetBool("GameIsPaused", false);
-        //OptionsTextAnimator.SetBool("isHidden", true);
-        //HighscoresAnimator.SetBool("isHidden", true);
+
+       //rp_StartGame.SetBool("isInVisible", true);
+       //Debug.Log(rp_StartGame.GetBool("isInVisible"));
+
+       //
 	}
 
     public void Update()
     {
-       // Debug.Log(CameraAnimator.GetBool("GameIsPaused"));
-        if (Input.GetKeyDown(KeyCode.Escape) == true)
-        {
-            Debug.Log("Escape	 is ingedrukt!");
-            if (!CameraAnimator.GetBool("GameIsPaused"))
-            {
-                //gameIsPaused = true;
-                CameraAnimator.SetBool("GameIsPaused", true);
-                Debug.Log("Leuk Spelletje is op pauze gezet");
-            }
-            else if (CameraAnimator.GetBool("GameIsPaused"))
-            {
-                CameraAnimator.SetBool("GameIsPaused", false);
-                Debug.Log("Leuk Spelletje is nu niet meer op pauze hoor!");
-
-                // Misschien komt hier een countdown (3, 2, 1)
-                // Wanneer het spelletje start na de animatie.
-            }   
-                
-        }
+       
     }
 	
 	public void StartGame()
     {
-        Application.LoadLevel("Eddy_test");
+        if (rp_StartGame.GetBool("isInVisible") == true)
+        {
+            rp_StartGame.SetBool("isInVisible", false);
+        }
+        else if (rp_StartGame.GetBool("isInVisible") == false)
+        {
+            rp_StartGame.SetBool("isInVisible", true);
+        }
     }
 
-    public void openOptions()
-    {
-        //Wanneer isHidden al true is, maak hem false
-        /*
-        if (OptionsTextAnimator.GetBool("isHidden"))
-        {
-            HighscoresAnimator.SetBool("isHidden", true);
-            OptionsTextAnimator.SetBool("isHidden", false);
-        }
-        else if (!OptionsTextAnimator.GetBool("isHidden"))
-        {
-            OptionsTextAnimator.SetBool("isHidden", true);
-        }
-        */
-    }
-
-    public void openHighScores()
-    {
-        /*
-        //Wanneer isHidden al true is, maak hem false
-        if (HighscoresAnimator.GetBool("isHidden"))
-        {
-            HighscoresAnimator.SetBool("isHidden", false);
-            OptionsTextAnimator.SetBool("isHidden", true);
-        }
-        else if (!HighscoresAnimator.GetBool("isHidden"))
-        {
-            HighscoresAnimator.SetBool("isHidden", true);
-        }
-        */
-    }
-    public void openPauseScreen()
-    {
-       
-    }
+   
 }
