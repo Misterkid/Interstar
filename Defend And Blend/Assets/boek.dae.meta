@@ -33,7 +33,7 @@ ModelImporter:
     400026: polySurface2
     4300000: polySurface2
     4300002: book
-    7400000: Take 001
+    7400000: turnPage_anim
     9500000: //RootNode
     13700000: book
     13700002: polySurface2
@@ -52,7 +52,61 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: turnPage_anim
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: book
+        weight: 1
+      - path: joint16
+        weight: 1
+      - path: joint16/joint17
+        weight: 1
+      - path: joint16/joint18
+        weight: 1
+      - path: joint16/page_joint_1
+        weight: 1
+      - path: joint16/page_joint_1/page_joint_2
+        weight: 1
+      - path: joint16/page_joint_1/page_joint_2/page_joint_3
+        weight: 1
+      - path: joint16/page_joint_1/page_joint_2/page_joint_3/page_joint_4
+        weight: 1
+      - path: joint16/page_joint_1/page_joint_2/page_joint_3/page_joint_4/page_joint_5
+        weight: 1
+      - path: joint16/page_joint_1/page_joint_2/page_joint_3/page_joint_4/page_joint_5/page_joint_6
+        weight: 1
+      - path: joint16/page_joint_1/page_joint_2/page_joint_3/page_joint_4/page_joint_5/page_joint_6/page_joint_7
+        weight: 1
+      - path: joint16/page_joint_1/page_joint_2/page_joint_3/page_joint_4/page_joint_5/page_joint_6/page_joint_7/page_joint_8
+        weight: 1
+      - path: polySurface2
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
