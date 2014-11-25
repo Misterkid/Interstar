@@ -102,6 +102,6 @@ public class UIManagerScript : MonoBehaviour
 
     void Update()
     {
-        BookAnimator.Play(0);
+        //BookAnimator.Play(stateName: turnPage_anim, );
     }
 }
