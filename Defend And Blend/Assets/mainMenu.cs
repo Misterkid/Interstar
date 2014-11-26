@@ -7,6 +7,8 @@ public class mainMenu : MonoBehaviour
     public Animator RP_StartGame;
     public Animator BookAnimator;
 
+    
+
 	// Use this for initialization
 	void Awake() 
 	{
@@ -38,4 +40,9 @@ public class mainMenu : MonoBehaviour
         }
 
 	}
+
+    public void setGameVolume()
+    {
+
+    }
 }

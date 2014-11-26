@@ -11,6 +11,8 @@ public class UIManagerScript : MonoBehaviour
     public GameObject rp_Options;
     public GameObject rp_Highscores;
     public GameObject rp_Credits;
+
+    public AudioSource backgroundMusic;
     
     void Awake()
     {
@@ -25,7 +27,7 @@ public class UIManagerScript : MonoBehaviour
 
     public void StartNewGame()
     {
-        Application.LoadLevel("eddy_test");
+        Application.LoadLevel("healthbar_test");
     }
 
 	public void openStartGame()
@@ -103,5 +105,10 @@ public class UIManagerScript : MonoBehaviour
     void Update()
     {
         //BookAnimator.Play(stateName: turnPage_anim, );
+    }
+
+    public void setGameVolume(float vol)
+    {
+        backgroundMusic.volume = vol;
     }
 }
