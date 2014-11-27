@@ -27,6 +27,7 @@ public class UIManagerScript : MonoBehaviour
 
     public void StartNewGame()
     {
+        BookAnimator.SetTrigger("turnPage_anim");
         Application.LoadLevel("healthbar_test");
     }
 
@@ -34,7 +35,7 @@ public class UIManagerScript : MonoBehaviour
     {
         //First we need to turn off the other pages.
         turnOffAllRightPages();
-
+        BookAnimator.SetTrigger("turnPage_anim");
         if (rp_StartGame.active == true)
         {
             rp_StartGame.SetActive(false);
@@ -48,7 +49,7 @@ public class UIManagerScript : MonoBehaviour
     {
         //First we need to turn off the other pages.
         turnOffAllRightPages();
-
+        BookAnimator.SetTrigger("turnPage_anim");
         if (rp_Options.active == true)
         {
             rp_Options.SetActive(false);
@@ -63,7 +64,7 @@ public class UIManagerScript : MonoBehaviour
     {
         //First we need to turn off the other pages.
         turnOffAllRightPages();
-
+        BookAnimator.SetTrigger("turnPage_anim");
         if (rp_Highscores.active == true)
         {
             rp_Highscores.SetActive(false);
@@ -78,7 +79,8 @@ public class UIManagerScript : MonoBehaviour
     {
         //First we need to turn off the other pages.
         turnOffAllRightPages();
-
+        
+        BookAnimator.SetTrigger("turnPage_anim");
         if (rp_Credits.active == true)
         {
             rp_Credits.SetActive(false);
@@ -104,11 +106,14 @@ public class UIManagerScript : MonoBehaviour
 
     void Update()
     {
-        //BookAnimator.Play(stateName: turnPage_anim, );
+        //BookAnimator.Play(stateName: "turnPage_anim" );
+        
     }
 
     public void setGameVolume(float vol)
     {
         backgroundMusic.volume = vol;
     }
+
+
 }
