@@ -79,6 +79,7 @@ public sealed class SoundManager
         gameObject.transform.position = position;
         if (parent != null)
             gameObject.transform.parent = parent;
+
         NamedAudioSource namedAudioSource = gameObject.AddComponent<NamedAudioSource>();
         namedAudioSource.PlaySound(audioClip, position, soundType,loop);
         namedAudioSources.Add(namedAudioSource);
@@ -90,6 +91,10 @@ public sealed class SoundManager
     {
         namedAudioSources.Remove(namedAudioSource);
     }
+    public void AddSound(NamedAudioSource namedAudioSource)
+    {
+        namedAudioSources.Add(namedAudioSource);
+    }
     /// <summary>
     /// Change the Volume of a sound type.
     /// Use SoundManager.Instance.soundValues[SoundManager.SoundTypes.TYPE]
@@ -97,13 +102,27 @@ public sealed class SoundManager
     public void ChangeVolume(float volume,SoundManager.SoundTypes type)
     {
         soundValues[type] = volume;
+        List<NamedAudioSource> destroyedSources = new List<NamedAudioSource>();
         for(int i = 0; i < namedAudioSources.Count; i++)
         {
             if(namedAudioSources[i]._type == type)
             {
-                namedAudioSources[i].audioSource.volume = soundValues[type];
+                if (namedAudioSources[i] != null)
+                    namedAudioSources[i].audioSource.volume = soundValues[type];
+                else
+                    destroyedSources.Add(namedAudioSources[i]);//queue for deletion
             }
         }
+        for (int d = 0; d < destroyedSources.Count; d++)
+        {
+            namedAudioSources.Remove(destroyedSources[d]);//EXTERMINATE! EXTERMINATE!
+        }
+        destroyedSources = null;
+
+        PlayerPrefs.SetFloat("e_sm_music", soundValues[SoundTypes.MUSIC]);//Create one and set to 1
+        PlayerPrefs.SetFloat("e_sm_effect", soundValues[SoundTypes.EFFECT]);
+        PlayerPrefs.SetFloat("e_sm_voice", soundValues[SoundTypes.VOICE]);
+        PlayerPrefs.SetFloat("e_sm_ambient", soundValues[SoundTypes.AMBIENT]);
     }
     #endregion
 }

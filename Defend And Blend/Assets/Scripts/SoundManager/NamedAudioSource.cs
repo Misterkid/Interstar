@@ -16,22 +16,25 @@ public class NamedAudioSource : MonoBehaviour
 {
     public SoundManager.SoundTypes _type;
     public AudioSource audioSource;
-    private bool isAlwaysThere = false;
+    //private bool isAlwaysThere = false;
     private float soundTimerEnd = 0;
     private void Start()
     {
         if (audioSource != null)
         {
-            isAlwaysThere = true;
+            //isAlwaysThere = true;
             PlaySound(audioSource.clip, audioSource.transform.position, _type, audioSource.loop);
         }
     }
     void Update()
     {
-        if (Time.time >= soundTimerEnd)
+        if (!audioSource.loop)
         {
-            SoundManager.Instance.RemoveSound(this);
-            Destroy(this.gameObject);
+            if (Time.time >= soundTimerEnd)
+            {
+                SoundManager.Instance.RemoveSound(this);
+                Destroy(this.gameObject);
+            }
         }
     }
     public void PlaySound(AudioClip audioClip,Vector3 position, SoundManager.SoundTypes audioType,bool loop = false)
@@ -41,17 +44,18 @@ public class NamedAudioSource : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         else
         {
-            isAlwaysThere = true;
+            //isAlwaysThere = true;
             loop = audioSource.loop;
+            SoundManager.Instance.AddSound(this);
         }
         if (audioSource.clip == null)
             audioSource.clip = audioClip;
 
         _type = audioType;
         audioSource.volume = SoundManager.Instance.soundValues[audioType];
-
         audioSource.loop = loop;
-        if(!loop && !isAlwaysThere)
+
+        if(!loop)
         {
             soundTimerEnd = Time.time + audioClip.length;//Mathf.Ceil(audioClip.length * 1000);
 

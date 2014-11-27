@@ -80,6 +80,7 @@ public class SndMngrWindow : EditorWindow
                 AudioSource audioSource = newGameObject.GetComponent<AudioSource>();
                 audioSource.clip = audioClip;
                 namedAudioSource._type = audioType;
+                namedAudioSource.audioSource = audioSource;
             }
         }
         EditorGUILayout.EndVertical();
