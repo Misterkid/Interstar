@@ -20,6 +20,7 @@ public class SndMngrWindow : EditorWindow
         //SoundManager.Instance.
        // musicVol = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
         //SoundManager.Instance.Load();
+
     }
 
     void OnGUI()
