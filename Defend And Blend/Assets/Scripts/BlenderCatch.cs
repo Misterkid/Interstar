@@ -16,6 +16,9 @@ public class BlenderCatch : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        if (GameValues.ISPAUSED)
+            return;
+
 	    if(Input.GetButton("Fire1"))
         {
             for(int i = 0; i < monsters.Count; i++)
@@ -32,6 +35,7 @@ public class BlenderCatch : MonoBehaviour
         {
             cameraAnimator.SetTrigger("StopShake");
         }
+
 	}
     void OnCollisionEnter(Collision other)
     {

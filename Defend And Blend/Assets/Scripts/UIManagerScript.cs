@@ -32,7 +32,8 @@ public class UIManagerScript : MonoBehaviour
         soundeffects.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
 
         if (CameraAnimator != null)
-            CameraAnimator.SetBool("GameIsPaused", true);
+            CameraAnimator.SetTrigger("ToGame");
+            //CameraAnimator.SetBool("GameIsPaused", true);
         //StartCoroutine("waitTillPauseAnimation");
         //Time.timeScale = 0;
 	}
@@ -48,12 +49,14 @@ public class UIManagerScript : MonoBehaviour
             if (GameValues.ISPAUSED == true)
             {
                 if (CameraAnimator != null)
-                    CameraAnimator.SetBool("GameIsPaused", false);
+                    CameraAnimator.SetTrigger("ToPause");
+                    //CameraAnimator.SetBool("GameIsPaused", false);
             }
             else
             {
                 if (CameraAnimator != null)
-                    CameraAnimator.SetBool("GameIsPaused", true);
+                    CameraAnimator.SetTrigger("ToGame");
+                    //CameraAnimator.SetBool("GameIsPaused", true);
             }
             Debug.Log("Is het spel op pauze? " + GameValues.ISPAUSED);
         }
@@ -125,31 +128,6 @@ public class UIManagerScript : MonoBehaviour
             rp_Credits.SetActive(true);
         }
     }
-    /*
-    bool togglePause()
-    {
-        if(Time.timeScale == 1)
-        {
-            Debug.Log("NEE!");
-            
-            Time.timeScale = 0;
-            return (false);
-            Debug.Log(Time.timeScale);
-        }
-        else
-        {
-            Debug.Log("JA?");
-            
-
-           
-            Time.timeScale = 1;
-            return (true);
-            //Time.timeScale = 0;
-            //return (true);
-        }
-            
-    }
-    */
     public void quitGame()
     {
         Application.Quit();
@@ -162,30 +140,6 @@ public class UIManagerScript : MonoBehaviour
         rp_Highscores.SetActive(false);
         rp_Credits.SetActive(false);
     }
-
-    IEnumerator waitTillPauseAnimation()
-    {
-        
-        if (gameIsPaused == false)
-        {
-            if (CameraAnimator != null)
-                CameraAnimator.SetBool("GameIsPaused", false);
-            yield return new WaitForSeconds(2f);
-            Time.timeScale = 0;
-        }
-        else if (gameIsPaused)
-        {
-            yield return new WaitForSeconds(2f);
-            gameIsPaused = false;
-            Time.timeScale = 1;
-        }
-       
-        
-        Debug.Log("Waited for 2frames?");
-    }
-
-   
-
     public void setMusicVolume(float vol)
     {
         //backgroundMusic.volume = vol;
