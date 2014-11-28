@@ -14,6 +14,7 @@ public class Monster : Mover
     public GameObject explosionEffect;//Explosion particle
     public AudioClip stunnedClip;
     public bool isInBlender = false;
+    public Color explosionColor;
     protected float nextAttack;//The next attack.
     protected bool isInAttackRange = false;//Are we in range?
 
@@ -143,7 +144,7 @@ public class Monster : Mover
     {
         GameObject clone = GameObject.Instantiate(explosionEffect, transform.position, transform.rotation) as GameObject;
         Explosion explosion = clone.GetComponent<Explosion>();
-        explosion.explode(renderer.material.color);
+        explosion.explode(explosionColor);
         //We are gone!
         WaveSpawnerTwo waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
         waveSpawner.SpawnedMonsters.Remove(this.gameObject);
