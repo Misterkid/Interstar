@@ -1,24 +1,24 @@
 fileFormatVersion: 2
-guid: a3162cd73df1ba04b9b4dfa6ca764c8c
+guid: 928485e81da0b0444926bb3b90e869bc
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: joint1
-    100002: joint2
-    100004: joint3
-    100006: //RootNode
-    100008: polySurface225
-    100010: polySurface232
-    400000: joint1
-    400002: joint2
-    400004: joint3
-    400006: //RootNode
-    400008: polySurface225
-    400010: polySurface232
-    4300000: polySurface232
+    100000: //RootNode
+    100002: joint1
+    100004: joint2
+    100006: joint3
+    100008: joint4
+    100010: polySurface262
+    400000: //RootNode
+    400002: joint1
+    400004: joint2
+    400006: joint3
+    400008: joint4
+    400010: polySurface262
+    4300000: polySurface262
     7400000: Take 001
     9500000: //RootNode
-    13700000: polySurface232
+    13700000: polySurface262
   materials:
     importMaterials: 1
     materialName: 0
@@ -39,7 +39,7 @@ ModelImporter:
       name: Take 001
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 24
+      lastFrame: 48
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -65,11 +65,11 @@ ModelImporter:
         weight: 1
       - path: joint1/joint2
         weight: 1
-      - path: joint1/joint2/joint3
+      - path: joint1/joint2/joint4
         weight: 1
-      - path: polySurface225
+      - path: joint1/joint3
         weight: 1
-      - path: polySurface225/polySurface232
+      - path: polySurface262
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}

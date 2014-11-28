@@ -22,6 +22,8 @@ public class Monster : Mover
     private bool isStunned = false;//are we stunned
     private float stunTimeEnd;//Did the stun timer end?
     private bool hasSpeedBoost = false;//can only be boosted once.
+    private float animationSpeed;
+    private Animator animator;
 	// Use this for initialization
     protected override void Start()
     {
@@ -30,6 +32,11 @@ public class Monster : Mover
         if (attackDistance <= 0)
             attackDistance = 0.1f;
 
+        animator = GetComponent<Animator>();
+        if (animator != null)
+        {
+            animationSpeed = animator.speed;
+        }
         base.Start();
     }
     private void IgnoreCollision()
@@ -45,6 +52,9 @@ public class Monster : Mover
 	// Update is called once per frame
     protected override void Update() 
     {
+        if (GameValues.ISPAUSED)
+            return;
+
         if (!isInholding && !isInBlender)//Is this not in holding?
         {
             if (!isStunned)//is it not stunned?
@@ -91,6 +101,10 @@ public class Monster : Mover
             if (Time.time >= stunTimeEnd)//stay stunned until stun time ends
             {
                 isStunned = false;//we arn't stunned anymore
+                if (animator != null)
+                {
+                    animator.speed = 1;
+                }
             }
         }
     }
@@ -98,6 +112,12 @@ public class Monster : Mover
     {
         if (stunnedClip != null)
             SoundManager.Instance.PlaySound(stunnedClip, transform.position, SoundManager.SoundTypes.EFFECT, false, transform);
+
+        if(animator != null)
+        {
+            animator.speed = 0;
+        }
+
         isStunned = true;//stunned
         stunTime = time;//time we are stunning
         stunTimeEnd = Time.time + stunTime;//the stunning end time.

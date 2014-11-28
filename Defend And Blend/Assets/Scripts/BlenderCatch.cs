@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 public class BlenderCatch : MonoBehaviour 
 {
+    public float CamShakeTime = 1.5f;
+    private float shakeTime = 0;
     private List<GameObject> monsters = new List<GameObject>();
+    private Animator cameraAnimator;
 	// Use this for initialization
 	void Start () 
     {
-
+        cameraAnimator = Camera.main.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -21,7 +24,13 @@ public class BlenderCatch : MonoBehaviour
                 monster.Die();
                 GameValues.SCORE++;
             }
+            cameraAnimator.SetTrigger("Shake");
+            shakeTime = Time.time + CamShakeTime;
             monsters = new List<GameObject>();
+        }
+        if (Time.time >= shakeTime)
+        {
+            cameraAnimator.SetTrigger("StopShake");
         }
 	}
     void OnCollisionEnter(Collision other)
