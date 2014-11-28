@@ -13,7 +13,6 @@ public class MainManu : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-	    
 	}
     //Start the game by calling the StartAnimation Trigger
     public void StartTheGame()

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class UIManagerScript : MonoBehaviour 
 {
-  
     public Animator CameraAnimator;
     public Animator BookAnimator;
 
@@ -11,6 +12,11 @@ public class UIManagerScript : MonoBehaviour
     public GameObject rp_Options;
     public GameObject rp_Highscores;
     public GameObject rp_Credits;
+
+    public Slider backgroundmusic;
+    public Slider soundeffects;
+
+    bool gameIsPaused = false;
 
     //public AudioSource backgroundMusic;
     
@@ -22,8 +28,34 @@ public class UIManagerScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-       CameraAnimator.SetBool("GameIsPaused", false);     
+        backgroundmusic.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
+        soundeffects.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
+        
+        
+        CameraAnimator.SetBool("GameIsPaused", true);
+        //StartCoroutine("waitTillPauseAnimation");
+        //Time.timeScale = 0;
 	}
+
+    void Update()
+    {
+
+        //Debug.Log(gameIsPaused);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameValues.ISPAUSED = GameValues.ISPAUSED ? false : true;
+
+            if (GameValues.ISPAUSED == true)
+            {
+                CameraAnimator.SetBool("GameIsPaused", false);
+            }
+            else
+            {
+                CameraAnimator.SetBool("GameIsPaused", true);
+            }
+            Debug.Log("Is het spel op pauze? " + GameValues.ISPAUSED);
+        }
+    }
 
     public void StartNewGame()
     {
@@ -91,7 +123,31 @@ public class UIManagerScript : MonoBehaviour
             rp_Credits.SetActive(true);
         }
     }
+    /*
+    bool togglePause()
+    {
+        if(Time.timeScale == 1)
+        {
+            Debug.Log("NEE!");
+            
+            Time.timeScale = 0;
+            return (false);
+            Debug.Log(Time.timeScale);
+        }
+        else
+        {
+            Debug.Log("JA?");
+            
 
+           
+            Time.timeScale = 1;
+            return (true);
+            //Time.timeScale = 0;
+            //return (true);
+        }
+            
+    }
+    */
     public void quitGame()
     {
         Application.Quit();
@@ -105,13 +161,29 @@ public class UIManagerScript : MonoBehaviour
         rp_Credits.SetActive(false);
     }
 
-    void Update()
+    IEnumerator waitTillPauseAnimation()
     {
-        //BookAnimator.Play(stateName: "turnPage_anim" );
         
+        if (gameIsPaused == false)
+        {
+            CameraAnimator.SetBool("GameIsPaused", false);
+            yield return new WaitForSeconds(2f);
+            Time.timeScale = 0;
+        }
+        else if (gameIsPaused)
+        {
+            yield return new WaitForSeconds(2f);
+            gameIsPaused = false;
+            Time.timeScale = 1;
+        }
+       
+        
+        Debug.Log("Waited for 2frames?");
     }
 
-    public void setGameVolume(float vol)
+   
+
+    public void setMusicVolume(float vol)
     {
         //backgroundMusic.volume = vol;
         //SoundManager.Instance.PlaySound()
@@ -119,5 +191,8 @@ public class UIManagerScript : MonoBehaviour
 
     }
 
-
+    public void setSoundEffectsVolume(float vol)
+    {
+        SoundManager.Instance.ChangeVolume(vol, SoundManager.SoundTypes.EFFECT);
+    }
 }
