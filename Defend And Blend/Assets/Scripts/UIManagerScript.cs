@@ -30,9 +30,9 @@ public class UIManagerScript : MonoBehaviour
     {
         backgroundmusic.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
         soundeffects.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
-        
-        
-        CameraAnimator.SetBool("GameIsPaused", true);
+
+        if (CameraAnimator != null)
+            CameraAnimator.SetBool("GameIsPaused", true);
         //StartCoroutine("waitTillPauseAnimation");
         //Time.timeScale = 0;
 	}
@@ -47,11 +47,13 @@ public class UIManagerScript : MonoBehaviour
 
             if (GameValues.ISPAUSED == true)
             {
-                CameraAnimator.SetBool("GameIsPaused", false);
+                if (CameraAnimator != null)
+                    CameraAnimator.SetBool("GameIsPaused", false);
             }
             else
             {
-                CameraAnimator.SetBool("GameIsPaused", true);
+                if (CameraAnimator != null)
+                    CameraAnimator.SetBool("GameIsPaused", true);
             }
             Debug.Log("Is het spel op pauze? " + GameValues.ISPAUSED);
         }
@@ -166,7 +168,8 @@ public class UIManagerScript : MonoBehaviour
         
         if (gameIsPaused == false)
         {
-            CameraAnimator.SetBool("GameIsPaused", false);
+            if (CameraAnimator != null)
+                CameraAnimator.SetBool("GameIsPaused", false);
             yield return new WaitForSeconds(2f);
             Time.timeScale = 0;
         }
