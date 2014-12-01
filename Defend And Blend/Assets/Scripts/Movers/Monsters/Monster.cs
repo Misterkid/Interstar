@@ -78,6 +78,7 @@ public class Monster : Mover
 	}
     public void Hold()//Hold object!
     {
+        animator.speed = 0f;
         rigidbody.isKinematic = true;//No gravity and such
         isInholding = true;//we are holding this now
     }

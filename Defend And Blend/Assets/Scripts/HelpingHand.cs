@@ -4,6 +4,7 @@ public class HelpingHand : MonoBehaviour
 {
     public GameObject rightObject;
     public GameObject leftObject;
+    public float holdHeight;
     public float maxHeight;
     public float minHeight;
     public float maxPressure = 1;
@@ -13,6 +14,8 @@ public class HelpingHand : MonoBehaviour
     public bool AutoMoveY = false;
     public bool AutoGrab = false;
 
+
+    public Animation handAnimation;
     private WaveSpawnerTwo waveSpawner;
     private bool isHoldingObject = false;
     private Monster holdingObject;
@@ -21,6 +24,11 @@ public class HelpingHand : MonoBehaviour
 	void Start () 
     {
         waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
+        handAnimation["Squeeze"].enabled = true;
+        handAnimation["Squeeze"].weight = 1f;
+        handAnimation["Squeeze"].time = handAnimation["Squeeze"].length;
+        handAnimation["Squeeze"].speed = 0f;
+        //Debug.Log("Time: " + handAnimation["Squeeze"].time + " : " + handAnimation["Squeeze"].length);
 	}
 	
 	// Update is called once per frame
@@ -54,12 +62,23 @@ public class HelpingHand : MonoBehaviour
             {
                 rightObject.transform.localPosition = new Vector3(rightObject.transform.localPosition.x - (closePressure * Time.deltaTime), rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
                 leftObject.transform.localPosition = new Vector3(leftObject.transform.localPosition.x + (closePressure * Time.deltaTime), leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
-                
+            }
+            else
+            {
+
             }
 
             BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>() as BoxCollider;
             boxCollider.size = new Vector3( (rightObject.transform.localPosition.x) * 2, boxCollider.size.y, boxCollider.size.z);
-            squeezePressure = maxPressure - Vector3.Distance(rightObject.transform.localPosition, leftObject.transform.localPosition);
+            squeezePressure = (maxPressure * 2) - Vector3.Distance(rightObject.transform.localPosition, leftObject.transform.localPosition);
+
+            squeezePressure = squeezePressure / 2;//maxPressure/squeezePressure ;
+
+            float animationTime = ((handAnimation["Squeeze"].length ) / 100) * (squeezePressure * 100);
+            handAnimation["Squeeze"].time = handAnimation["Squeeze"].length - animationTime;
+
+            if (!handAnimation.isPlaying)
+                handAnimation.Play("Squeeze");
         }
         //While holding a object check if the pressure is below minumum if so let it go.
         // Also check if the pressure is above maximum if so Kill the holding object.
@@ -81,6 +100,7 @@ public class HelpingHand : MonoBehaviour
                 holdingObject = null;
             }
         }
+        Debug.Log(squeezePressure * 100);
 	}
     private void AutoMove()
     {
@@ -155,7 +175,7 @@ public class HelpingHand : MonoBehaviour
                 {
                     monster.transform.parent = this.transform;
                     monster.Hold();
-                    monster.transform.localPosition = Vector3.zero;
+                    monster.transform.localPosition = new Vector3(0, holdHeight, 0);
 
                     Banana banana = other.GetComponent<Banana>();
                     if (banana != null)

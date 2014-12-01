@@ -1,0 +1,250 @@
+fileFormatVersion: 2
+guid: 99f1e3c1a274fb84ab66999ef75d3f32
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: hand
+    100002: //RootNode
+    100004: index1
+    100006: index2
+    100008: index3
+    100010: index4
+    100012: middle1
+    100014: middle2
+    100016: middle3
+    100018: middle4
+    100020: palm
+    100022: pinky1
+    100024: pinky2
+    100026: pinky3
+    100028: pinky4
+    100030: ring1
+    100032: ring2
+    100034: ring3
+    100036: ring4
+    100038: thumb1
+    100040: thumb2
+    100042: thumb3
+    400000: hand
+    400002: //RootNode
+    400004: index1
+    400006: index2
+    400008: index3
+    400010: index4
+    400012: middle1
+    400014: middle2
+    400016: middle3
+    400018: middle4
+    400020: palm
+    400022: pinky1
+    400024: pinky2
+    400026: pinky3
+    400028: pinky4
+    400030: ring1
+    400032: ring2
+    400034: ring3
+    400036: ring4
+    400038: thumb1
+    400040: thumb2
+    400042: thumb3
+    4300000: hand
+    7400000: Squeeze
+    7400002: Shake
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: hand
+    13700002: palm
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 3
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Squeeze
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hand
+        weight: 1
+      - path: palm
+        weight: 1
+      - path: palm/index1
+        weight: 1
+      - path: palm/index1/index2
+        weight: 1
+      - path: palm/index1/index2/index3
+        weight: 1
+      - path: palm/index1/index2/index3/index4
+        weight: 1
+      - path: palm/middle1
+        weight: 1
+      - path: palm/middle1/middle2
+        weight: 1
+      - path: palm/middle1/middle2/middle3
+        weight: 1
+      - path: palm/middle1/middle2/middle3/middle4
+        weight: 1
+      - path: palm/pinky1
+        weight: 1
+      - path: palm/pinky1/pinky2
+        weight: 1
+      - path: palm/pinky1/pinky2/pinky3
+        weight: 1
+      - path: palm/pinky1/pinky2/pinky3/pinky4
+        weight: 1
+      - path: palm/ring1
+        weight: 1
+      - path: palm/ring1/ring2
+        weight: 1
+      - path: palm/ring1/ring2/ring3
+        weight: 1
+      - path: palm/ring1/ring2/ring3/ring4
+        weight: 1
+      - path: palm/thumb1
+        weight: 1
+      - path: palm/thumb1/thumb2
+        weight: 1
+      - path: palm/thumb1/thumb2/thumb3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Shake
+      takeName: Take 001
+      firstFrame: 100
+      lastFrame: 115
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hand
+        weight: 1
+      - path: palm
+        weight: 1
+      - path: palm/index1
+        weight: 1
+      - path: palm/index1/index2
+        weight: 1
+      - path: palm/index1/index2/index3
+        weight: 1
+      - path: palm/index1/index2/index3/index4
+        weight: 1
+      - path: palm/middle1
+        weight: 1
+      - path: palm/middle1/middle2
+        weight: 1
+      - path: palm/middle1/middle2/middle3
+        weight: 1
+      - path: palm/middle1/middle2/middle3/middle4
+        weight: 1
+      - path: palm/pinky1
+        weight: 1
+      - path: palm/pinky1/pinky2
+        weight: 1
+      - path: palm/pinky1/pinky2/pinky3
+        weight: 1
+      - path: palm/pinky1/pinky2/pinky3/pinky4
+        weight: 1
+      - path: palm/ring1
+        weight: 1
+      - path: palm/ring1/ring2
+        weight: 1
+      - path: palm/ring1/ring2/ring3
+        weight: 1
+      - path: palm/ring1/ring2/ring3/ring4
+        weight: 1
+      - path: palm/thumb1
+        weight: 1
+      - path: palm/thumb1/thumb2
+        weight: 1
+      - path: palm/thumb1/thumb2/thumb3
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 0
+  userData: 
