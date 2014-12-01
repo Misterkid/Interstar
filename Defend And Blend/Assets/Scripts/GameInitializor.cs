@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Parse; 
 
 public class GameInitializor : MonoBehaviour 
 {
@@ -8,5 +9,14 @@ public class GameInitializor : MonoBehaviour
     {
 	    //Init game stuff here
         GameValues.Reset();
+
+
+       /*
+
+        ParseObject gameScore = new ParseObject("GameScore");
+        gameScore["score"] = 1337;
+        gameScore["playerName"] = "Sean Plott";
+        gameScore.SaveAsync();
+      */
 	}
 }

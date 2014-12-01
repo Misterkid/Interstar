@@ -53,12 +53,15 @@ public class Defendable : MonoBehaviour
 	void Start () 
     {
         //Caches the the max value of the xPos is the start position (12)			
-        fullHealthXPos = healthTransform.localPosition.x;      
-        //The minValue of the xPos is startPos - the width of the bar
-        // minXvalue = 12 - 250 = -238.			
-        zeroHealthXPos = healthTransform.localPosition.x - healthTransform.rect.width;
-        //In the start, the currentHealth is always the maxHealth (100)
-        currentHealth = maxHealth;
+        if (healthTransform != null)
+        {
+            fullHealthXPos = healthTransform.localPosition.x;
+            //The minValue of the xPos is startPos - the width of the bar
+            // minXvalue = 12 - 250 = -238.			
+            zeroHealthXPos = healthTransform.localPosition.x - healthTransform.rect.width;
+            //In the start, the currentHealth is always the maxHealth (100)
+            currentHealth = maxHealth;
+        }
 	}
 	
     private void HandleHealth()

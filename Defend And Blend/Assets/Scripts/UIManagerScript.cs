@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Parse;
 
 public class UIManagerScript : MonoBehaviour 
 {
@@ -17,6 +18,12 @@ public class UIManagerScript : MonoBehaviour
     public Slider soundeffects;
 
     bool gameIsPaused = false;
+
+   
+
+   
+  
+//private Task signUpTask = user.SignUpAsync();
 
     //public AudioSource backgroundMusic;
     
@@ -36,6 +43,8 @@ public class UIManagerScript : MonoBehaviour
             //CameraAnimator.SetBool("GameIsPaused", true);
         //StartCoroutine("waitTillPauseAnimation");
         //Time.timeScale = 0;
+
+        
 	}
 
     void Update()
