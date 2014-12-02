@@ -27,7 +27,7 @@ public class LoginScript : MonoBehaviour
     public void resetAll()
     {
         loggedIn = false;
-        fullName = "Voor en Achternaam";
+        fullName = "Username";
         session = "001";
         mailaddress = "E-mailadres.nl";
         password = "Password";
@@ -38,6 +38,8 @@ public class LoginScript : MonoBehaviour
     }
     void OnGUI()
     {
+        GUI.Box(new Rect(Screen.width / 2 - 125, Screen.height / 2 - 75F, 250, 175), "Login / Registreren");
+        
         
         if (firstScreen)
         {
@@ -58,11 +60,21 @@ public class LoginScript : MonoBehaviour
         }
         if (loginScreen)
         {
+            /* Username */
+            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 42.5F, 200, 20), "Username");
             fullName = GUI.TextField(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 25F, 200, 20), fullName, 25);
-            session = GUI.TextField(new Rect(Screen.width / 2 - 100, Screen.height / 2, 200, 20), session, 25);
-            password = GUI.PasswordField(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 25F, 200, 20), password, "*"[0], 25);
-            backButton = GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 50F, 100, 20), "Back");
-            loginButton = GUI.Button(new Rect(Screen.width / 2, Screen.height / 2 + 50F, 100, 20), "Login");
+
+            /* Session */
+            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 2.5F, 200, 20), "Trainingssessie");
+            session = GUI.TextField(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 15, 200, 20), session, 25);
+
+            /* Session */
+            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 37.5F, 200, 20), "Wachtwoord");
+            password = GUI.PasswordField(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 55F, 200, 20), password, "*"[0], 25);
+
+
+            backButton = GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 75F, 100, 20), "Back");
+            loginButton = GUI.Button(new Rect(Screen.width / 2, Screen.height / 2 + 75F, 100, 20), "Login");
 
             if (backButton)
             {
@@ -94,11 +106,20 @@ public class LoginScript : MonoBehaviour
         }
         if (registerScreen)
         {
+            /* Username */
+            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 42.5F, 200, 20), "Gebruikersnaam");
             fullName = GUI.TextField(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 25F, 200, 20), fullName, 25);
-            mailaddress = GUI.TextField(new Rect(Screen.width / 2 - 100, Screen.height / 2, 200, 20), mailaddress, 50);
-            password = GUI.PasswordField(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 25, 200, 20), password, "*"[0], 25);
-            backButton = GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 50F, 100, 20), "Back");
-            registerButton = GUI.Button(new Rect(Screen.width / 2, Screen.height / 2 + 50F, 100, 20), "Registreren");
+
+            /* E-mailadres */
+            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 2.5F, 200, 20), "E-mailadres");
+            mailaddress = GUI.TextField(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 15, 200, 20), mailaddress, 50);
+
+            /* E-mailadres */
+            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 37.5F, 200, 20), "Wachtwoord");
+            password = GUI.PasswordField(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 55F, 200, 20), password, "*"[0], 25);
+            
+            backButton = GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 75F, 100, 20), "Terug");
+            registerButton = GUI.Button(new Rect(Screen.width / 2, Screen.height / 2 + 75F, 100, 20), "Registreren");
 
             if (backButton)
             {

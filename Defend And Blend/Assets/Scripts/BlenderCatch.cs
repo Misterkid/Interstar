@@ -7,6 +7,7 @@ public class BlenderCatch : MonoBehaviour
     private float shakeTime = 0;
     private List<GameObject> monsters = new List<GameObject>();
     private Animator cameraAnimator;
+    public Animator drawerAnimator;
 	// Use this for initialization
 	void Start () 
     {
@@ -28,6 +29,7 @@ public class BlenderCatch : MonoBehaviour
                 GameValues.SCORE++;
             }
             cameraAnimator.SetTrigger("Shake");
+            drawerAnimator.SetBool("isPlaying", true);
             shakeTime = Time.time + CamShakeTime;
             monsters = new List<GameObject>();
         }
