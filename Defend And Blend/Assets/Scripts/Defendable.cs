@@ -56,24 +56,37 @@ public class Defendable : MonoBehaviour
         if (healthTransform != null)
         {
             fullHealthXPos = healthTransform.localPosition.x;
+            
+            Debug.Log(fullHealthXPos + "< FullHealth Pos");
+
+            Debug.Log(healthTransform.rect.width + "Grootte healthtransfrom");
             //The minValue of the xPos is startPos - the width of the bar
             // minXvalue = 12 - 250 = -238.			
             zeroHealthXPos = healthTransform.localPosition.x - healthTransform.rect.width;
+            Debug.Log(zeroHealthXPos + "< ZeroHealth Pos");
             //In the start, the currentHealth is always the maxHealth (100)
             currentHealth = maxHealth;
+
+            
         }
 	}
 	
     private void HandleHealth()
     {
-        healthText.text = "Health: " + currentHealth;
+        healthText.text = currentHealth + "%";
         
        
         float percentage = maxHealth / 100;// 1%
         float current = currentHealth / percentage; //175 / 1 = 1.75
                                                     //-(100 - 1.75) =
                                                     //
+
+        currentHealth = currentHealth * 3;
+
         healthTransform.localPosition = new Vector3(-(100 - current), 0, 0);
+
+        Debug.Log(healthTransform.localPosition.x);
+
 
         if (currentHealth > maxHealth / 2) // I have more than 50% health.
         {

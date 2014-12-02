@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class BlenderCatch : MonoBehaviour 
 {
-    public float CamShakeTime = 1.5f;
+    public float CamShakeTime = 0.5f;
     private float shakeTime = 0;
     private List<GameObject> monsters = new List<GameObject>();
     private Animator cameraAnimator;
@@ -29,7 +29,10 @@ public class BlenderCatch : MonoBehaviour
                 GameValues.SCORE++;
             }
             cameraAnimator.SetTrigger("Shake");
-            drawerAnimator.SetBool("isPlaying", true);
+            //Debug.Log(drawerAnimator);
+            //drawerAnimator.animation.Play(true);
+            drawerAnimator.SetTrigger("Shake");
+            //drawerAnimator.SetBool("isPlaying", true);
             shakeTime = Time.time + CamShakeTime;
             monsters = new List<GameObject>();
         }
