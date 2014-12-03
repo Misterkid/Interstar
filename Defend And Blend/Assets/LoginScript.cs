@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Parse;
+using System.Threading.Tasks;
 
 public class LoginScript : MonoBehaviour
 {
@@ -23,6 +24,14 @@ public class LoginScript : MonoBehaviour
     {
         resetAll();
         
+    }
+    public void Update()
+    {
+        if (loggedIn)
+        {
+            Debug.Log("Login Successfully!");
+            StartMainMenu();
+        }
     }
     public void resetAll()
     {
@@ -93,13 +102,10 @@ public class LoginScript : MonoBehaviour
                         firstScreen = false;
                         loginScreen = false;
                         registerScreen = false;
-
+                        
                         loggedIn = true;
 
-                        if (loggedIn)
-                        {
-                            Debug.Log("Login Successfully!");
-                        }
+              
                     }
                 });
             }
@@ -134,11 +140,19 @@ public class LoginScript : MonoBehaviour
                     Password = password,
                     Email = mailaddress
                 };
-                user.SignUpAsync();
+
+                Task signUpTask = user.SignUpAsync();
                 
                     Debug.Log("User: " + fullName + " Succesfully registered.");
                
             }
         }
     }
-}
+       
+    public void StartMainMenu()
+        {
+            Application.LoadLevel("MainMenu");
+        }
+     
+   }
+

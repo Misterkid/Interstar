@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO;
-
-
+using Parse;
+using System.Threading.Tasks;
 
 
 public class GameValues 
 {
+
+    //public user = ParseUser.CurrentUser;
     public static int SCORE = 0;
     public static int CURRENTWAVE = 0;
     public static bool ISPAUSED = false;
@@ -18,11 +20,10 @@ public class GameValues
     }
     public void Start()
     {
-       /* ParseObject testObject = new ParseObject("TestObject");
-        testObject["foo"] = "bar";
-        testObject.SaveAsync();
-
-        */
+        ParseObject gameScore = new ParseObject("GameScore");
+        gameScore["score"] = 100;
+        gameScore["playerID"] = ParseUser.CurrentUser;
+        Task saveTask = gameScore.SaveAsync();
         
     }
 }

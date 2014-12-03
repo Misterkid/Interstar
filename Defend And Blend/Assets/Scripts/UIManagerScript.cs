@@ -74,7 +74,7 @@ public class UIManagerScript : MonoBehaviour
     public void StartNewGame()
     {
         BookAnimator.SetTrigger("turnPage_anim");
-        Application.LoadLevel("healthbar_test");
+        Application.LoadLevel("level_1");
     }
 
 	public void openStartGame()

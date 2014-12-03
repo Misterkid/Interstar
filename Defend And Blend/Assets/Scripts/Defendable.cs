@@ -58,18 +58,11 @@ public class Defendable : MonoBehaviour
         if (healthTransform != null)
         {
             fullHealthXPos = healthTransform.localPosition.x;
-            
-            Debug.Log(fullHealthXPos + "< FullHealth Pos");
-
-            Debug.Log(healthTransform.rect.width + "Grootte healthtransfrom");
-            //The minValue of the xPos is startPos - the width of the bar
-            // minXvalue = 12 - 250 = -238.			
+           
             zeroHealthXPos = healthTransform.localPosition.x - healthTransform.rect.width;
             Debug.Log(zeroHealthXPos + "< ZeroHealth Pos");
-            //In the start, the currentHealth is always the maxHealth (100)
+           
             currentHealth = maxHealth;
-
-            
         }
 	}
 	
