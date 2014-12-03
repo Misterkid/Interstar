@@ -61,8 +61,8 @@ public class WaveSpawnerTwo : MonoBehaviour
     IEnumerator SpawnWaves()
     {
         //This yield is used for the time between the first and the second enemy.
-        //yield return new WaitForSeconds(10);
-        StartCoroutine(waitForNextEnemy());
+        yield return new WaitForSeconds(3.5F);
+        //StartCoroutine(waitForNextEnemy());
         while (true)//Mark check this out!
         {       
             //Check if the max number of enemies is already spawned

@@ -60,7 +60,6 @@ public class Defendable : MonoBehaviour
             fullHealthXPos = healthTransform.localPosition.x;
            
             zeroHealthXPos = healthTransform.localPosition.x - healthTransform.rect.width;
-            Debug.Log(zeroHealthXPos + "< ZeroHealth Pos");
            
             currentHealth = maxHealth;
         }
@@ -68,15 +67,13 @@ public class Defendable : MonoBehaviour
 	
     private void HandleHealth()
     {
-        healthText.text = currentHealth + "%";
+        healthText.text = currentHealth + "% / ";
         
         
         currentXPos = (currentHealth / 100) * zeroHealthXPos;
         currentXPos = zeroHealthXPos - currentXPos;
 
         healthTransform.localPosition = new Vector3(currentXPos, 0, 0);
-
-    
 
 
         if (currentHealth > maxHealth / 2) // I have more than 50% health.

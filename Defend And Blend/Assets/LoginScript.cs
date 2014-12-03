@@ -30,7 +30,7 @@ public class LoginScript : MonoBehaviour
         if (loggedIn)
         {
             Debug.Log("Login Successfully!");
-            StartMainMenu();
+            //StartMainMenu();
         }
     }
     public void resetAll()
@@ -105,7 +105,7 @@ public class LoginScript : MonoBehaviour
                         
                         loggedIn = true;
 
-              
+                        Debug.Log(ParseUser.CurrentUser);
                     }
                 });
             }
@@ -144,7 +144,7 @@ public class LoginScript : MonoBehaviour
                 Task signUpTask = user.SignUpAsync();
                 
                     Debug.Log("User: " + fullName + " Succesfully registered.");
-               
+                    
             }
         }
     }

@@ -19,9 +19,9 @@ public class UIManagerScript : MonoBehaviour
 
     bool gameIsPaused = false;
 
-   
 
-   
+
+    public Text TestText;
   
 //private Task signUpTask = user.SignUpAsync();
 
@@ -119,6 +119,7 @@ public class UIManagerScript : MonoBehaviour
         else if (rp_Highscores.active == false)
         {
             rp_Highscores.SetActive(true);
+            //TestText
         }
     }
 
