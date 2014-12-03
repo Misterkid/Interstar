@@ -48,6 +48,8 @@ public class Defendable : MonoBehaviour
     /// </summary>
     private float fullHealthXPos;
 
+    private float currentXPos;
+
 
 	// Use this for initialization
 	void Start () 
@@ -75,17 +77,12 @@ public class Defendable : MonoBehaviour
     {
         healthText.text = currentHealth + "%";
         
+        currentXPos = (currentHealth / 100) * zeroHealthXPos;
+        currentXPos = zeroHealthXPos - currentXPos;
+
+        healthTransform.localPosition = new Vector3(currentXPos, 0, 0);
+
        
-        float percentage = maxHealth / 100;// 1%
-        float current = currentHealth / percentage; //175 / 1 = 1.75
-                                                    //-(100 - 1.75) =
-                                                    //
-
-        currentHealth = currentHealth * 3;
-
-        healthTransform.localPosition = new Vector3(-(100 - current), 0, 0);
-
-        Debug.Log(healthTransform.localPosition.x);
 
 
         if (currentHealth > maxHealth / 2) // I have more than 50% health.
