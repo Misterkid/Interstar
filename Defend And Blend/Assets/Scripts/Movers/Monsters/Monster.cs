@@ -15,6 +15,8 @@ public class Monster : Mover
     public AudioClip stunnedClip;
     public bool isInBlender = false;
     public Color explosionColor;
+
+    public Vector3 pickUpHandPosition = Vector3.zero;
     protected float nextAttack;//The next attack.
     protected bool isInAttackRange = false;//Are we in range?
 
@@ -78,9 +80,12 @@ public class Monster : Mover
 	}
     public void Hold()//Hold object!
     {
-        animator.speed = 0f;
-        rigidbody.isKinematic = true;//No gravity and such
-        isInholding = true;//we are holding this now
+        if (!isInBlender)
+        {
+            animator.speed = 0f;
+            rigidbody.isKinematic = true;//No gravity and such
+            isInholding = true;//we are holding this now
+        }
     }
     public void LetGo()//Let go!
     {
@@ -127,7 +132,10 @@ public class Monster : Mover
     {
         RaycastHit[] hit;//Get all objects that we hit
         bool foundHit = false;//found a target to hit
-        hit =  Physics.RaycastAll(transform.position, transform.forward * 0.5f, attackDistance);
+        Vector3 castPosition = new Vector3(transform.position.x, transform.position.y + (EUtils.GetObjectCollUnitSize(gameObject).y), transform.position.z);
+        hit =  Physics.RaycastAll(castPosition, transform.forward /* * 0.5f*/, attackDistance);
+        //Debug.DrawRay(castPosition, transform.forward * attackDistance, Color.red);
+       // Debug.Log(hit.Length);
         for(int i = 0; i < hit.Length; i++)
         {
             if(hit[i].collider == target.collider)

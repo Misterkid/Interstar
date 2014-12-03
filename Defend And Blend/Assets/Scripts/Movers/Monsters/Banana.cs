@@ -28,11 +28,15 @@ public class Banana : Monster
             //Raycast down from object position
             if(Physics.Raycast(transform.position,-transform.up,out hit,10))
             {
-                position.y = hit.point.y;//Change y position to the hitting y position.
+
+                GameObject clone = GameObject.Instantiate(bananaPeel.gameObject, position, transform.rotation) as GameObject;//Drop peel
+                Physics.IgnoreCollision(clone.collider, collider);
+                position.y = hit.point.y + (EUtils.GetObjectCollUnitSize(clone).y / 2);//Change y position to the hitting y position.
+                clone.transform.position = position;
+                Debug.Log((EUtils.GetObjectCollUnitSize(clone).y / 2));
             }
 
            //Clone prefeb object and place it in the game!
-            /*GameObject clone = */GameObject.Instantiate(bananaPeel, position, transform.rotation) /*as GameObject*/;//Drop peel
             peelCount--;//one less peel to drop
         }
     }

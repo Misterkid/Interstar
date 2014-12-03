@@ -4,7 +4,7 @@ public class HelpingHand : MonoBehaviour
 {
     public GameObject rightObject;
     public GameObject leftObject;
-    public float holdHeight;
+   // public float holdHeight;
     public float maxHeight;
     public float minHeight;
     public float maxPressure = 1;
@@ -84,23 +84,28 @@ public class HelpingHand : MonoBehaviour
         // Also check if the pressure is above maximum if so Kill the holding object.
         if(isHoldingObject)
         {
-            if (holdingObject != null && squeezePressure * 100 < holdingObject.minPressure)
+            if (holdingObject != null && !holdingObject.isInBlender)
             {
-                holdingObject.transform.parent = null;
-                isHoldingObject = false;
-                holdingObject.LetGo();
-                holdingObject.Stun(1);
-                holdingObject = null;
-            }
-            if (holdingObject != null && squeezePressure * 100 > holdingObject.maxPressure)
-            {
-                isHoldingObject = false;
-                holdingObject.Die();
-                GameValues.SCORE--;
-                holdingObject = null;
+                if (squeezePressure * 100 < holdingObject.minPressure)
+                {
+                    holdingObject.transform.localPosition = new Vector3(holdingObject.pickUpHandPosition.x, holdingObject.pickUpHandPosition.y, 0);
+
+                    holdingObject.transform.parent = null;
+                    isHoldingObject = false;
+                    holdingObject.LetGo();
+                    holdingObject.Stun(1);
+                    holdingObject = null;
+                }
+                else if (squeezePressure * 100 > holdingObject.maxPressure)
+                {
+                    isHoldingObject = false;
+                    holdingObject.Die();
+                    GameValues.SCORE--;
+                    holdingObject = null;
+                }
             }
         }
-        Debug.Log(squeezePressure * 100);
+        //Debug.Log(squeezePressure * 100);
 	}
     private void AutoMove()
     {
@@ -169,13 +174,15 @@ public class HelpingHand : MonoBehaviour
         if (!isHoldingObject)
         {
             Monster monster = other.GetComponent<Monster>();
-            if (monster != null)
+            if (monster != null && !monster.isInBlender)
             {
                 if (squeezePressure * 100 > monster.minPressure)
                 {
                     monster.transform.parent = this.transform;
                     monster.Hold();
-                    monster.transform.localPosition = new Vector3(0, holdHeight, 0);
+                    //monster.transform.localPosition = new Vector3(0, holdHeight, 0);
+
+                    monster.transform.localPosition = monster.pickUpHandPosition;
 
                     Banana banana = other.GetComponent<Banana>();
                     if (banana != null)
