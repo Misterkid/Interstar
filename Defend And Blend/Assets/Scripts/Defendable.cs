@@ -77,12 +77,13 @@ public class Defendable : MonoBehaviour
     {
         healthText.text = currentHealth + "%";
         
+        
         currentXPos = (currentHealth / 100) * zeroHealthXPos;
         currentXPos = zeroHealthXPos - currentXPos;
 
         healthTransform.localPosition = new Vector3(currentXPos, 0, 0);
 
-       
+    
 
 
         if (currentHealth > maxHealth / 2) // I have more than 50% health.
