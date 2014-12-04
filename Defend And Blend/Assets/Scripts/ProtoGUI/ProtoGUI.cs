@@ -16,7 +16,7 @@ public class ProtoGUI : MonoBehaviour
     {
         // Temporary disabled, to avoid the error spam... Hate it! haha
         
-        //scoreText.text = "Score: " + GameValues.SCORE;
+        scoreText.text = "Score: " + GameValues.SCORE;
 
     }
 }
