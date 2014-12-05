@@ -36,7 +36,8 @@ public class Kiwi : Monster
                 {
                     //Debug.Log("BOOM");
                     nextAttack = Time.time + attackSpeed;//Set up next attack
-                    Bullet clone = GameObject.Instantiate(bullet, transform.position, transform.rotation) as Bullet;//Clone bullet prefeb
+                    Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + (EUtils.GetObjectCollUnitSize(gameObject).y/2), transform.position.z);
+                    Bullet clone = GameObject.Instantiate(bullet, spawnPosition, transform.rotation) as Bullet;//Clone bullet prefeb
                     
                     SoundManager.Instance.PlaySound(bulletAudioClip, transform.position, SoundManager.SoundTypes.EFFECT, false, transform);//Play Sound at some position with soundtype of Effect  not looping and parent of this gameobject.
                     clone.Shoot(damage, target);//The bullet goes torwards the target\
