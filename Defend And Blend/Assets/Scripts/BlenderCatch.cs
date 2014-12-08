@@ -8,19 +8,24 @@ public class BlenderCatch : MonoBehaviour
     private List<GameObject> monsters = new List<GameObject>();
     private Animator cameraAnimator;
     public Animator drawerAnimator;
+    public Animator smoothAnimator;
+
+    public GameObject SmoothObject;
 	// Use this for initialization
 	void Start () 
     {
         cameraAnimator = Camera.main.GetComponent<Animator>();
+        
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
+       
         if (GameValues.ISPAUSED)
             return;
 
-	    if(Input.GetButton("Fire1"))
+	    if (Input.GetButtonDown ("Fire1")) 
         {
             for(int i = 0; i < monsters.Count; i++)
             {
@@ -28,13 +33,11 @@ public class BlenderCatch : MonoBehaviour
                 monster.Die();
                 GameValues.SCORE++;
             }
-            cameraAnimator.SetTrigger("Shake");
-            //Debug.Log(drawerAnimator);
-            //drawerAnimator.animation.Play(true);
-            drawerAnimator.SetTrigger("Shake");
-            //drawerAnimator.SetBool("isPlaying", true);
-            shakeTime = Time.time + CamShakeTime;
-            monsters = new List<GameObject>();
+            
+            // Made an function when its blending. 
+            Blend();
+
+           
         }
         if (Time.time >= shakeTime)
         {
@@ -59,4 +62,24 @@ public class BlenderCatch : MonoBehaviour
             }
         }
     }
+
+    public void Blend()
+    {
+            //SmoothObject.active = true;
+
+            smoothAnimator.SetTrigger("Smoothy");
+
+                cameraAnimator.SetTrigger("Shake");
+                
+                //drawerAnimator.animation.Play(true);
+                drawerAnimator.SetTrigger("Shake");
+
+                //drawerAnimator.SetBool("isPlaying", true);
+                shakeTime = Time.time + CamShakeTime;
+                monsters = new List<GameObject>();
+
+                
+    }
 }
+
+    

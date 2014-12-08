@@ -22,7 +22,7 @@ public class WaveSpawnerTwo : MonoBehaviour
     //Wait time after a wave is finished
     public float waitBetweenWaves;
     //Seconds between the spawn of next enemy in wave.s
-    private float timeBetweenNextEnemy = 6;
+    private float timeBetweenNextEnemy = 1.5F;
     //Seconds between the spawn of next enemy in wave.s
     private float timeBetweenNextWave = 1;
     
