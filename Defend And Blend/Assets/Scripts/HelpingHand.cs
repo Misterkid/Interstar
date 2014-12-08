@@ -183,11 +183,11 @@ public class HelpingHand : MonoBehaviour
                     //monster.transform.localPosition = new Vector3(0, holdHeight, 0);
 
                     monster.transform.localPosition = monster.pickUpHandPosition;
-
+                    /*
                     Banana banana = other.GetComponent<Banana>();
                     if (banana != null)
                         banana.DropPeel();
-
+                    */
                     isHoldingObject = true;
                     holdingObject = monster;
                 }

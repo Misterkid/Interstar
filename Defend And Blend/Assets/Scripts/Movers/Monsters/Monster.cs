@@ -169,7 +169,7 @@ public class Monster : Mover
 #endif
         }
     }
-    public void Die()
+    public virtual void Die()
     {
         GameObject clone = GameObject.Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
         Explosion explosion = clone.GetComponent<Explosion>();

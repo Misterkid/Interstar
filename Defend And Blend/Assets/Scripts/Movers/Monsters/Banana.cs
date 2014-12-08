@@ -40,6 +40,11 @@ public class Banana : Monster
             peelCount--;//one less peel to drop
         }
     }
+    public override void Die()
+    {
+        DropPeel();
+        base.Die();
+    }
     /*
     protected override void OnCollisionEnter(Collision collision)
     {
