@@ -11,7 +11,7 @@ public class GameInitializor : MonoBehaviour
     {
 	    //Init game stuff here
         GameValues.Reset();
-
+        //DataLoader dl = new DataLoader();
         /*
         ParseObject gameScore = new ParseObject("GameScore");
         gameScore["score"] = 1337;

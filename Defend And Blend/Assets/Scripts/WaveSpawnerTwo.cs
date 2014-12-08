@@ -36,6 +36,9 @@ public class WaveSpawnerTwo : MonoBehaviour
     // Use this for initialization
 	void Start () 
     {
+        DataLoader.LoadWaves();
+        waves = ConfigData.waveDatas.ToArray();
+        DataLoader.LoadMonsters();
         // The player will start at Wave 1.
         currentWave = 0;
         // In the first wave there will be <2> enemies.
@@ -81,9 +84,13 @@ public class WaveSpawnerTwo : MonoBehaviour
                 GameObject clone = Instantiate(monsters[waves[currentWave].monsters[MN]], spawnPosition, spawnRotation) as GameObject;
                 SpawnedMonsters.Add(clone);
                 // Make the monster go to the target
-                Monster monster = clone.GetComponent<Monster>();//target
-                monster.target = target;
-
+                Monster monster = clone.GetComponent<Monster>();
+               // monster.
+                monster.target = target;//target
+                monster.speed = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].speed;
+                monster.damage = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].damage;
+                monster.minPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].minSueezePower;
+                monster.maxPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].maxSqueezePower;
                 // Waiting a few (2) seconds, to prefend monsters will spawn on each others.
                 yield return new WaitForSeconds(timeBetweenNextEnemy);
                 

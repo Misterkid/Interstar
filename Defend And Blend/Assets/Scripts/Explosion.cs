@@ -31,7 +31,9 @@ public class Explosion : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        pointLight.intensity -= 1 * Time.deltaTime;
+        if (pointLight != null)
+            pointLight.intensity -= 1 * Time.deltaTime;
+
         if(!particleSystem.IsAlive())
         {
             Destroy(gameObject);

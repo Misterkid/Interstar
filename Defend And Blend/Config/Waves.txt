@@ -1,0 +1,13 @@
+// 0=aardbei, 1=banaan, 2=kiwi, 3=granaatappel, 4=sinaasappel
+// tussen het spawnen van de vruchten zit 1,5 seconden
+// als de laatste vrucht kapot is, zal het nog 5 seconden duren voordat de volgende wave begint
+0:0,0,0
+1:0,2,0,0
+2:0,2,1,0,0
+3:2,1,2,0,0
+4:0,0,0,0,0,2,1,0
+5:0,0,0,0,3
+6:0,0,3,1,0,0,1,0,4
+7:0,1,2,3,4,0,1,2
+8:1,2,1,3,1,0,1,4,1
+9:2,2,2,2,2,2,2,2
