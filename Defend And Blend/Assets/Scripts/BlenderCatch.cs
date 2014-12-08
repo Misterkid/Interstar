@@ -24,12 +24,24 @@ public class BlenderCatch : MonoBehaviour
        
         if (GameValues.ISPAUSED)
             return;
-
-	    if (Input.GetButtonDown ("Fire1")) 
+        
+	    if (Input.GetButtonUp ("Fire1") ) 
         {
             for(int i = 0; i < monsters.Count; i++)
             {
+
                 Monster monster = monsters[i].GetComponent<Monster>();
+                //points
+                /*
+                if(monster is Strawberry)
+                {
+                    //for(int m = 1; m < )
+                }
+                 * */
+
+                Debug.Log(monster);
+
+
                 monster.Die();
                 GameValues.SCORE++;
             }
@@ -65,20 +77,11 @@ public class BlenderCatch : MonoBehaviour
 
     public void Blend()
     {
-            //SmoothObject.active = true;
-
-            smoothAnimator.SetTrigger("Smoothy");
-
-                cameraAnimator.SetTrigger("Shake");
-                
-                //drawerAnimator.animation.Play(true);
-                drawerAnimator.SetTrigger("Shake");
-
-                //drawerAnimator.SetBool("isPlaying", true);
-                shakeTime = Time.time + CamShakeTime;
-                monsters = new List<GameObject>();
-
-                
+        Debug.Log("Blending!");
+        smoothAnimator.SetTrigger("Smoothy");
+        cameraAnimator.SetTrigger("Shake");
+        drawerAnimator.SetTrigger("Shake");
+        monsters = new List<GameObject>();        
     }
 }
 
