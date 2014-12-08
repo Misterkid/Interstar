@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using Parse;
 using System.Threading.Tasks;
+
 
 public class LoginScript : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class LoginScript : MonoBehaviour
 
     public bool loggedIn;
 
+    //public int score;
+
     public void Start()
     {
         resetAll();
@@ -29,8 +32,16 @@ public class LoginScript : MonoBehaviour
     {
         if (loggedIn)
         {
-            Debug.Log("Login Successfully!");
-            //StartMainMenu();
+            ParseQuery<ParseObject> query = ParseObject.GetQuery("GameScore");
+            query.GetAsync("Z9xQiqBEe6").ContinueWith(t =>
+            {
+                ParseObject gameScore = t.Result;
+                int score = gameScore.Get<int>("score");
+                string name = gameScore.Get<string>("playerName");
+
+                Debug.Log("Naam: "+ name + "-  Score: " +score);
+            });
+            
         }
     }
     public void resetAll()
@@ -105,7 +116,6 @@ public class LoginScript : MonoBehaviour
                         
                         loggedIn = true;
 
-                        Debug.Log(ParseUser.CurrentUser);
                     }
                 });
             }

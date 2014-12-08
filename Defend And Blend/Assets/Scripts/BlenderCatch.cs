@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class BlenderCatch : MonoBehaviour 
 {
-    public float CamShakeTime = 0.5f;
+    public float CamShakeTime = 1f;
     private float shakeTime = 0;
     private List<GameObject> monsters = new List<GameObject>();
     private Animator cameraAnimator;
