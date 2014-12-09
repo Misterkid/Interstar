@@ -78,7 +78,9 @@ public class HelpingHand : MonoBehaviour
             handAnimation["Squeeze"].time = handAnimation["Squeeze"].length - animationTime;
 
             if (!handAnimation.isPlaying)
+            {
                 handAnimation.Play("Squeeze");
+            }
         }
         //While holding a object check if the pressure is below minumum if so let it go.
         // Also check if the pressure is above maximum if so Kill the holding object.

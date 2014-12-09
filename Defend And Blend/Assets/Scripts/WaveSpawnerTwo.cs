@@ -36,9 +36,14 @@ public class WaveSpawnerTwo : MonoBehaviour
     // Use this for initialization
 	void Start () 
     {
+        //Config
         DataLoader.LoadWaves();
         waves = ConfigData.waveDatas.ToArray();
         DataLoader.LoadMonsters();
+        DataLoader.LoadConfig();
+        timeBetweenNextEnemy = ConfigData.gameConfig.timeBetweenSpawns;
+        waitBetweenWaves = ConfigData.gameConfig.timeBetweenWaves;
+        //End config
         // The player will start at Wave 1.
         currentWave = 0;
         // In the first wave there will be <2> enemies.
@@ -94,7 +99,7 @@ public class WaveSpawnerTwo : MonoBehaviour
                 // Waiting a few (2) seconds, to prefend monsters will spawn on each others.
                 yield return new WaitForSeconds(timeBetweenNextEnemy);
                 
-            }         
+            }     
             yield return new WaitForSeconds(waitBetweenWaves);
 
             // Current wave = current wave + 1.

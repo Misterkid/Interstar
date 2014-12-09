@@ -12,6 +12,31 @@ public class DataLoader
 
 
     }
+    public static void LoadConfig()
+    {
+        StreamReader configReader;
+        configReader = new StreamReader(Application.dataPath + "/../Config/Config.txt");
+        string line = "";
+
+        while ((line = configReader.ReadLine()) != null)
+        {
+            if (!line.Contains("//"))
+            {
+                line = line.Replace(" ",string.Empty);
+                if(line.Contains("timeBetweenSpawns="))
+                {
+                    line = line.Replace("timeBetweenSpawns=", string.Empty);
+                    Debug.Log(line);
+                    ConfigData.gameConfig.timeBetweenSpawns = float.Parse(line);
+                }
+                else if (line.Contains("timeBetweenWaves="))
+                {
+                    line = line.Replace("timeBetweenWaves=", string.Empty);
+                    ConfigData.gameConfig.timeBetweenWaves = float.Parse(line);
+                }
+            }
+        }
+    }
     public static void LoadMonsters()
     {
         ConfigData.monsterDatas = new List<ConfigData.ConfMonster>();
