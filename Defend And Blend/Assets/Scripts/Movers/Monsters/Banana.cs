@@ -21,14 +21,13 @@ public class Banana : Monster
     public void DropPeel()
     {
         //ToDo
-        if (peelCount > 0)
+        if (peelCount > 0 && !isInBlender)
         {
             Vector3 position = transform.position;//Current position
             RaycastHit hit;//For the raycast hit result
             //Raycast down from object position
             if(Physics.Raycast(transform.position,-transform.up,out hit,10))
             {
-
                 GameObject clone = GameObject.Instantiate(bananaPeel.gameObject, position, transform.rotation) as GameObject;//Drop peel
                 Physics.IgnoreCollision(clone.collider, collider);
                 position.y = hit.point.y + (EUtils.GetObjectCollUnitSize(clone).y / 2);//Change y position to the hitting y position.

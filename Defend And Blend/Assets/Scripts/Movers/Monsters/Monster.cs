@@ -41,7 +41,8 @@ public class Monster : Mover
         }
         base.Start();
     }
-    private void IgnoreCollision()
+   // private void IgnoreCollision()
+    public virtual void IgnoreCollision()
     {
         //Ignore all collisions with the same tag
         GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Monster");//get all gameobject with the tag Monster

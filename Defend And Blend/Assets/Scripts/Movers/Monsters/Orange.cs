@@ -21,6 +21,11 @@ public class Orange : Monster
         base.Update();
     }
     */
+    public override void IgnoreCollision()
+    {
+        return;
+        //base.IgnoreCollision();
+    }
     protected override void OnCollisionEnter(Collision collision)
     {
         Monster otherMonster = collision.gameObject.GetComponent<Monster>();//Get Defendable Collision

@@ -1,11 +1,11 @@
 //MonsterID : speed,damage,minPressure,maxPressure
 //Aardbei
-0:0.6,5,75,85
+0:0.6,5,70,90
 //Banaan
-1:1.2,10,60,70
+1:1.2,10,50,70
 //Kiwi
-2:0.9,2,50,60
+2:0.9,2,50,70
 //Granaatappel
-3:1.8,25,35,45
+3:1.8,25,30,40
 //Sinaasappel
-4:3,15,30,40
+4:3,15,25,45
