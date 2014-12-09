@@ -56,7 +56,6 @@ public class HelpingHand : MonoBehaviour
             {
                 rightObject.transform.localPosition = new Vector3(rightObject.transform.localPosition.x + (openPressure * Time.deltaTime), rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
                 leftObject.transform.localPosition = new Vector3(leftObject.transform.localPosition.x - (openPressure * Time.deltaTime), leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
-
              }
             else if(closePressure > 0 && rightObject.transform.localPosition.x > minPressure)
             {
@@ -79,7 +78,19 @@ public class HelpingHand : MonoBehaviour
 
             if (!handAnimation.isPlaying)
             {
-                handAnimation.Play("Squeeze");
+                Debug.Log(rightObject.transform.localPosition.x);
+                //Debug.Log(squeezePressure);
+                if (handAnimation.clip.name == "Squeeze" && rightObject.transform.localPosition.x > maxPressure)
+                    handAnimation.Play("Shake");
+                else
+                    handAnimation.Play("Squeeze");
+                //if(squeezePressure * 100 >= 100)
+                //{
+                    
+               // }
+                //else
+                    //
+                 
             }
         }
         //While holding a object check if the pressure is below minumum if so let it go.
