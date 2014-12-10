@@ -82,13 +82,17 @@ public class UIManagerScript : MonoBehaviour
         //First we need to turn off the other pages.
         turnOffAllRightPages();
         BookAnimator.SetTrigger("turnPage_anim");
-        if (rp_StartGame.active == true)
+        if (rp_StartGame != null)
         {
-            rp_StartGame.SetActive(false);
-        }
-        else if (rp_StartGame.active == false)
-        {
-            rp_StartGame.SetActive(true);
+
+	        if (rp_StartGame.active == true)
+	        {
+	            rp_StartGame.SetActive(false);
+	        }
+	        else if (rp_StartGame.active == false)
+	        {
+	            rp_StartGame.SetActive(true);
+	        }
         }
     }
     public void openOptions()
@@ -145,7 +149,10 @@ public class UIManagerScript : MonoBehaviour
 
     public void turnOffAllRightPages()
     {
-        rp_StartGame.SetActive(false);
+        if (rp_StartGame != null)
+        {
+        	rp_StartGame.SetActive(false);
+        }
         rp_Options.SetActive(false);
         rp_Highscores.SetActive(false);
         rp_Credits.SetActive(false);
