@@ -12,7 +12,7 @@ using System.Collections.Generic;
 /// </summary> 
 public sealed class SoundManager
 {
-    static readonly SoundManager _instance = new SoundManager();
+    static private SoundManager _instance;// = new SoundManager();
     #region Private Variables
     private List<NamedAudioSource> namedAudioSources = new List<NamedAudioSource>();//NamedAudioSource[] audioSources;
     #endregion
@@ -36,7 +36,7 @@ public sealed class SoundManager
     {
         get
         {
-            return _instance;
+            return _instance = _instance ?? new SoundManager();
         }
     }
     SoundManager()

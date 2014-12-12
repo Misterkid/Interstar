@@ -29,14 +29,52 @@ public class HelpingHand : MonoBehaviour
         handAnimation["Squeeze"].time = handAnimation["Squeeze"].length;
         handAnimation["Squeeze"].speed = 0f;
         //Debug.Log("Time: " + handAnimation["Squeeze"].time + " : " + handAnimation["Squeeze"].length);
+        UDPInputController.Instance.OnInput += OnInputReceived;
 	}
-	
+    private void OnDestroy()
+    {
+        //NotificationCenter.RemoveObserver(LogController.EventRequestFrameData, OnRequestFrameData);
+
+        //if (GamepadController.Instance != null)
+           // GamepadController.Instance.OnInput -= OnInputReceived;
+
+        if (UDPInputController.Instance != null)
+            UDPInputController.Instance.OnInput -= OnInputReceived;
+    }
+
+    private void OnInputReceived(float input1, float input2)
+    {
+
+       // lastInput1 = input1;
+        //lastInput2 = input2;
+
+        float normalizedInput1 = CalibrationSettings.GetNormalizedValue(Side.Left, input1);
+        float normalizedInput2 = CalibrationSettings.GetNormalizedValue(Side.Right, input2);
+
+        //lastNormalizedInput1 = normalizedInput1;
+        //lastNormalizedInput2 = normalizedInput2;
+
+        float value = normalizedInput2 - normalizedInput1;
+        Debug.Log(value);
+        // abort input if we are still animating the grabber
+       // if (isBroken || isClosing)
+            //return;
+
+        // open or close the grabber depending on negative or positive input
+        /*
+        if (value < 0)
+            Close(Mathf.Abs(value));
+        else if (value > 0)
+            Open(value);
+         */ 
+    }
+
 	// Update is called once per frame
 	void Update () 
     {
 	    //Controls Auto
         AutoMove();
-
+        
         transform.Translate((Input.GetAxis("Horizontal") * 10) * Time.deltaTime, (Input.GetAxis("Vertical") * 10) * Time.deltaTime, 0);
 
         if (transform.position.y < minHeight)
