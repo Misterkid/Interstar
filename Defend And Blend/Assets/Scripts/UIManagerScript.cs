@@ -19,7 +19,9 @@ public class UIManagerScript : MonoBehaviour
 
     bool gameIsPaused = false;
 
-
+   // public class HelpingHand; 
+    
+    public HelpingHand helpingHand;
 
     public Text TestText;
   
@@ -37,13 +39,14 @@ public class UIManagerScript : MonoBehaviour
     {
         backgroundmusic.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
         soundeffects.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
+       
+        helpingHand = GameObject.FindObjectOfType<HelpingHand>();
 
         if (CameraAnimator != null)
             CameraAnimator.SetTrigger("ToGame");
             //CameraAnimator.SetBool("GameIsPaused", true);
-        //StartCoroutine("waitTillPauseAnimation");
-        //Time.timeScale = 0;
-
+       
+        
         
 	}
 
@@ -168,5 +171,42 @@ public class UIManagerScript : MonoBehaviour
     public void setSoundEffectsVolume(float vol)
     {
         SoundManager.Instance.ChangeVolume(vol, SoundManager.SoundTypes.EFFECT);
+    }
+
+    public void setAutoXMovement(bool autoX)
+    {
+        if (helpingHand.AutoMoveX == false)
+        {
+            helpingHand.AutoMoveX = true;
+        }
+        else
+        {
+            helpingHand.AutoMoveX = false;
+        }
+        Debug.Log("X-as goes automaticly? :" + helpingHand.AutoMoveX);
+    }
+    public void setAutoYMovement(bool autoY)
+    {
+        if (helpingHand.AutoMoveY == false)
+        {
+            helpingHand.AutoMoveY = true;
+        }
+        else
+        {
+            helpingHand.AutoMoveY = false;
+        }
+        Debug.Log("Y-as goes automaticly? :" + helpingHand.AutoMoveY);
+    }
+    public void setAutoGrab(bool autoGrab)
+    {
+        if (helpingHand.AutoGrab == false)
+        {
+            helpingHand.AutoGrab = true;
+        }
+        else
+        {
+            helpingHand.AutoGrab = false;
+        }
+        Debug.Log("Grabbing Automaticly? :" + helpingHand.AutoGrab);
     }
 }
