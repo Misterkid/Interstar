@@ -10,25 +10,37 @@ public class BlenderCatch : MonoBehaviour
     public Animator drawerAnimator;
     public Animator smoothAnimator;
 
-    public GameObject SmoothObject;
+    public  GameObject SmoothObject;
     public bool isBlending = false;
+
+
+ 
 	// Use this for initialization
 	void Start () 
     {
         cameraAnimator = Camera.main.GetComponent<Animator>();
-        //SmoothObject.SetActive(false);
-        
+        SmoothObject.active = false;
+       
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-       
+        //Debug.Log(SmoothObject.active);
+        
+        //Debug.Log("isBlending" + isBlending);
         if (GameValues.ISPAUSED)
             return;
         
 	    if (Input.GetButtonUp ("Fire1") ) 
         {
+            isBlending = true;
+
+            if(SmoothObject.active == false)
+            {
+                SmoothObject.active = true;
+                smoothAnimator.SetBool("SmoothAnimation", true);
+            }
             for(int i = 0; i < monsters.Count; i++)
             {
 
@@ -41,27 +53,38 @@ public class BlenderCatch : MonoBehaviour
                 }
                  * */
 
-                Debug.Log(monster);
+                //Debug.Log(monster);
 
-
+                
                 monster.Die();
                 GameValues.SCORE++;
                 shakeTime = Time.time +( CamShakeTime + 1000);
             }
-            SmoothObject.SetActive(true);
+            Debug.Log(smoothAnimator.IsInTransition(0));
             // Made an function when its blending. 
+            // isBlending = true;
             Blend();
-            isBlending = true;
-
+            //Debug.Log(shakeTime);
+           
            
         }
         if (Time.time >= shakeTime && isBlending)
         {
             cameraAnimator.SetTrigger("StopShake");
+
+            //smoothAnimator.SetBool("SmoothAnimation") = false;
+            
+
             //
             isBlending = false;
-            SmoothObject.SetActive(false);
-            Debug.Log("False!");
+            //AfterBlend();
+           // 
+            //Debug.Log("False!");
+        }
+        //SmoothObject.SetActive(false);
+        if (isBlending == false)
+        {
+            
         }
 
 	}
@@ -85,10 +108,18 @@ public class BlenderCatch : MonoBehaviour
 
     public void Blend()
     {
-        smoothAnimator.SetTrigger("Smoothy");
+        SmoothObject.active = true;
+        smoothAnimator.SetBool("SmoothAnimation", true);
         cameraAnimator.SetTrigger("Shake");
         drawerAnimator.SetTrigger("Shake");
-        monsters = new List<GameObject>();        
+        monsters = new List<GameObject>();
+    }
+
+
+    public void AfterBlend()
+    {
+        smoothAnimator.SetBool("SmoothAnimation", false);
+        SmoothObject.SetActive(false);
     }
 }
 
