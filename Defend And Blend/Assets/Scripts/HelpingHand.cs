@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+//using System;
 public class HelpingHand : MonoBehaviour 
 {
     public GameObject rightObject;
@@ -22,6 +23,12 @@ public class HelpingHand : MonoBehaviour
     private bool isHoldingObject = false;
     private Monster holdingObject;
     private float squeezePressure;
+
+    //Jildert logging
+    private float lastInput1;
+    private float lastInput2;
+    private float lastNormalizedInput1;
+    private float lastNormalizedInput2;
 	// Use this for initialization
 	void Start () 
     {
@@ -30,20 +37,64 @@ public class HelpingHand : MonoBehaviour
         handAnimation["Squeeze"].weight = 1f;
         handAnimation["Squeeze"].time = handAnimation["Squeeze"].length;
         handAnimation["Squeeze"].speed = 0f;
-        UDPInputController.Instance.OnInput += OnInputReceived;
+        if (!useController)
+            UDPInputController.Instance.OnInput += OnInputReceived;
+
+        //Jildert logging
+        NotificationCenter.AddObserver(LogController.EventRequestFrameData, OnRequestFrameData);
 	}
+    //Jildert logging
+    private void OnRequestFrameData(Notification notification)
+    {
+        // add all frame data
+        LogDataModel logModel = notification.Sender as LogDataModel;
+        if (logModel != null)
+        {
+            logModel.SetValue(LogFrameDataColumns.LeftRaw.ToString(), lastInput1.ToString("f3"));
+            logModel.SetValue(LogFrameDataColumns.RightRaw.ToString(), lastInput2.ToString("f3"));
+            logModel.SetValue(LogFrameDataColumns.LeftNormalized.ToString(), lastNormalizedInput1.ToString("f3"));
+            logModel.SetValue(LogFrameDataColumns.RightNormalized.ToString(), lastNormalizedInput2.ToString("f3"));
+            logModel.SetValue(LogFrameDataColumns.HandPositionX.ToString(), transform.position.x.ToString("f3"));
+            logModel.SetValue(LogFrameDataColumns.HandPositionY.ToString(), transform.position.x.ToString("f3"));
+
+            logModel.SetValue(LogFrameDataColumns.Pressure.ToString(),squeezePressure.ToString("f3"));
+
+            if (holdingObject != null)
+            {
+                logModel.SetValue(LogFrameDataColumns.HoldingObjectName.ToString(), holdingObject.name);
+                logModel.SetValue(LogFrameDataColumns.MinObjectPressure.ToString(), holdingObject.minPressure.ToString("f3"));
+                logModel.SetValue(LogFrameDataColumns.MaxObjectPressure.ToString(), holdingObject.maxPressure.ToString("f3"));
+            }
+            else
+            {
+                logModel.SetValue(LogFrameDataColumns.HoldingObjectName.ToString(), "No Object");
+                logModel.SetValue(LogFrameDataColumns.MinObjectPressure.ToString(), "0");
+                logModel.SetValue(LogFrameDataColumns.MaxObjectPressure.ToString(), "100");
+            }
+            //logModel.SetValue(LogFrameDataColumns.HandWidth.ToString(), handValue.ToString("f3"));
+            //logModel.SetValue(LogFrameDataColumns.HasItem.ToString(), hasItem.ToString());
+            //logModel.SetValue(LogFrameDataColumns.Shortage.ToString(), isBroken.ToString());
+        }
+    }
+
     private void OnDestroy()
     {
         if (UDPInputController.Instance != null)
             UDPInputController.Instance.OnInput -= OnInputReceived;
+        //Jildert logging
+        NotificationCenter.RemoveObserver(LogController.EventRequestFrameData, OnRequestFrameData);
     }
 
     private void OnInputReceived(float input1, float input2)
     {
         if (!useController)
         {
+            lastInput1 = input1;
+            lastInput2 = input2;
             float normalizedInput1 = CalibrationSettings.GetNormalizedValue(Side.Left, input1);
             float normalizedInput2 = CalibrationSettings.GetNormalizedValue(Side.Right, input2);
+            lastNormalizedInput1 = normalizedInput1;
+            lastNormalizedInput2 = normalizedInput2;
             //Open/Close
             Squeezing(normalizedInput1, normalizedInput2);
         }
