@@ -14,7 +14,7 @@ public class HelpingHand : MonoBehaviour
     public bool AutoMoveY = false;
     public bool AutoGrab = false;
     public bool useController = true;
-
+    public bool useStick = true;
     public Animation handAnimation;
 
     private GameObject targetMonster;
@@ -34,11 +34,6 @@ public class HelpingHand : MonoBehaviour
 	}
     private void OnDestroy()
     {
-        //NotificationCenter.RemoveObserver(LogController.EventRequestFrameData, OnRequestFrameData);
-
-        //if (GamepadController.Instance != null)
-           // GamepadController.Instance.OnInput -= OnInputReceived;
-
         if (UDPInputController.Instance != null)
             UDPInputController.Instance.OnInput -= OnInputReceived;
     }
@@ -59,21 +54,41 @@ public class HelpingHand : MonoBehaviour
     {
 	    //Controls Auto
         AutoMove();
-        
-        transform.Translate((Input.GetAxis("Horizontal") * 10) * Time.deltaTime, (Input.GetAxis("Vertical") * 10) * Time.deltaTime, 0);
-
-        if (transform.position.y < minHeight)
-        {
-            transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
-        }
-        if(transform.position.y > maxHeight)
-        {
-            transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
-        }
         //pressure
         float openPressure = Input.GetAxis("RTrigger");
         float closePressure = Input.GetAxis("LTrigger");
-        if (useController)
+
+        if (useStick)
+        {
+            transform.Translate((Input.GetAxis("Horizontal") * 10) * Time.deltaTime, (Input.GetAxis("Vertical") * 10) * Time.deltaTime, 0);
+            if (transform.position.y < minHeight)
+            {
+                transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
+            }
+            if (transform.position.y > maxHeight)
+            {
+                transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
+            }
+        }
+        else
+        {
+            if(!AutoMoveX)
+            {
+                if (openPressure > closePressure)
+                    transform.Translate(openPressure * 10 * Time.deltaTime,0,0);
+                else if( openPressure < closePressure)
+                    transform.Translate(-closePressure * 10 * Time.deltaTime, 0, 0);
+            }
+            if(!AutoMoveY)
+            {
+                if (openPressure > closePressure)
+                    transform.Translate(0,openPressure * 10 * Time.deltaTime, 0);
+                else if (openPressure < closePressure)
+                    transform.Translate(0,-closePressure * 10 * Time.deltaTime, 0);
+            }
+        }
+
+        if (useController && !AutoGrab)
             Squeezing(openPressure, closePressure);
         //While holding a object check if the pressure is below minumum if so let it go.
         // Also check if the pressure is above maximum if so Kill the holding object.
@@ -102,47 +117,42 @@ public class HelpingHand : MonoBehaviour
         }
         //Debug.Log(squeezePressure * 100);
 	}
-    private void VisualSqueeze(float squeezePressure)
+    private void VisualSqueeze(float pressure)
     {
-        //squeezePressure = 0 ~ 100%
-        //maxPressure * squeezePressure = ?? / 100 = position
-        float newRightX = ((maxPressure) * squeezePressure) / 100;   //rightObject.transform.localPosition.x
-        float newLeftX = -((maxPressure) * squeezePressure) / 100;
+        squeezePressure = pressure / 100;
+        float newRightX = ((maxPressure) * pressure) / 100;   //rightObject.transform.localPosition.x
+        float newLeftX = -((maxPressure) * pressure) / 100;
         rightObject.transform.localPosition = new Vector3(1 - newRightX, rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
         leftObject.transform.localPosition = new Vector3(-1 - newLeftX, leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
-        Debug.Log(leftObject.transform.localPosition.x);
+
+
+        BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>() as BoxCollider;
+        boxCollider.size = new Vector3((rightObject.transform.localPosition.x) * 2, boxCollider.size.y, boxCollider.size.z);
+
+        float animationTime = ((handAnimation["Squeeze"].length) / 100) * (squeezePressure * 100);
+        handAnimation["Squeeze"].time = handAnimation["Squeeze"].length - animationTime;
+
+        if (handAnimation.clip.name == "Squeeze" && rightObject.transform.localPosition.x >= maxPressure)
+            handAnimation.Play("Shake");
+        else if (rightObject.transform.localPosition.x < maxPressure)
+            handAnimation.Play("Squeeze");
+
+
+        //Debug.Log(leftObject.transform.localPosition.x);
     }
     private void Squeezing(float openPressure,float closePressure)
     {
         if (rightObject != null && leftObject != null)
         {
-            if (openPressure > 0 && rightObject.transform.localPosition.x < maxPressure)
-            {
-                rightObject.transform.localPosition = new Vector3(rightObject.transform.localPosition.x + (openPressure * Time.deltaTime), rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
-                leftObject.transform.localPosition = new Vector3(leftObject.transform.localPosition.x - (openPressure * Time.deltaTime), leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
-            }
-            else if (closePressure > 0 && rightObject.transform.localPosition.x > minPressure)
-            {
-                rightObject.transform.localPosition = new Vector3(rightObject.transform.localPosition.x - (closePressure * Time.deltaTime), rightObject.transform.localPosition.y, rightObject.transform.localPosition.z);
-                leftObject.transform.localPosition = new Vector3(leftObject.transform.localPosition.x + (closePressure * Time.deltaTime), leftObject.transform.localPosition.y, leftObject.transform.localPosition.z);
-            }
+            squeezePressure -= (openPressure * Time.deltaTime);
+            squeezePressure += (closePressure * Time.deltaTime);
+            if (squeezePressure > maxPressure)
+                squeezePressure = maxPressure;
+            else if (squeezePressure < minPressure)
+                squeezePressure = minPressure;
 
-            BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>() as BoxCollider;
-            boxCollider.size = new Vector3((rightObject.transform.localPosition.x) * 2, boxCollider.size.y, boxCollider.size.z);
-            squeezePressure = (maxPressure * 2) - Vector3.Distance(rightObject.transform.localPosition, leftObject.transform.localPosition);
+            VisualSqueeze(squeezePressure * 100);
 
-            squeezePressure = squeezePressure / 2;//maxPressure/squeezePressure ;
-
-            float animationTime = ((handAnimation["Squeeze"].length) / 100) * (squeezePressure * 100);
-            handAnimation["Squeeze"].time = handAnimation["Squeeze"].length - animationTime;
-
-            if (!handAnimation.isPlaying)
-            {
-                if (handAnimation.clip.name == "Squeeze" && rightObject.transform.localPosition.x > maxPressure)
-                    handAnimation.Play("Shake");
-                else
-                    handAnimation.Play("Squeeze");
-            }
         }
     }
     private void AutoMove()
@@ -185,7 +195,11 @@ public class HelpingHand : MonoBehaviour
             {
                 if (monster != null)
                 {
-                    if (!monster.isInBlender && transform.position.x == monster.transform.position.x)
+
+                    //Vector3.Distance(transform.position, monster.transform.position) < 1)
+                    //if (!monster.isInBlender && transform.position.x == monster.transform.position.x)
+
+                    if (!monster.isInBlender && Mathf.Abs(transform.position.x - monster.transform.position.x) < 1)
                     {
                         Vector3 targetPosition = new Vector3(transform.position.x, monster.transform.position.y, transform.position.z);
                         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
@@ -198,7 +212,7 @@ public class HelpingHand : MonoBehaviour
                 {
                     if (!monster.isInBlender && Vector3.Distance(transform.position, monster.transform.position) < 1)
                     {
-                        VisualSqueeze(monster.minPressure + 1);
+                        VisualSqueeze(monster.minPressure + 4);
                     }
                 }
             }
@@ -208,7 +222,8 @@ public class HelpingHand : MonoBehaviour
             BlenderCatch blender = GameObject.FindObjectOfType<BlenderCatch>();//EUtils.GetNearestObject(waveSpawner.SpawnedMonsters, transform.position);
             if (AutoMoveX)
             {
-                if (blender != null && transform.position.y == blender.transform.position.y + 7.50f)
+                //if (blender != null && /*transform.position.y == blender.transform.position.y + 7.50f*/)
+                if (blender != null && Mathf.Abs(transform.position.y - blender.transform.position.y) > 5.50f)
                 {
                     Vector3 targetPosition = new Vector3(blender.transform.position.x, transform.position.y, transform.position.z);
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
@@ -226,20 +241,11 @@ public class HelpingHand : MonoBehaviour
             {
                 if (blender != null)
                 {
-                     if (transform.position.y == blender.transform.position.y + 7.50f && transform.position.x == blender.transform.position.x)
-                     {
-                         Debug.Log("Hello");
-                         VisualSqueeze(0);
-                         /*
-                         holdingObject.transform.localPosition = new Vector3(holdingObject.pickUpHandPosition.x, holdingObject.pickUpHandPosition.y, 0);
-                         holdingObject.transform.parent = null;
-                         isHoldingObject = false;
-                         holdingObject.LetGo();
-                         holdingObject.Stun(1);
-                         holdingObject = null;
-                         targetMonster = null;
-                          */ 
-                     }
+                     //if (transform.position.y == blender.transform.position.y + 7.50f && Mathf.Abs(transform.position.x - blender.transform.position.x) < 1)
+                    if (Mathf.Abs(transform.position.y - blender.transform.position.y) > 5.50f && Mathf.Abs(transform.position.x - blender.transform.position.x) < 1)
+                    {
+                        VisualSqueeze(0);
+                    }
                 }
             }
         }
@@ -256,14 +262,8 @@ public class HelpingHand : MonoBehaviour
                 {
                     monster.transform.parent = this.transform;
                     monster.Hold();
-                    //monster.transform.localPosition = new Vector3(0, holdHeight, 0);
-
                     monster.transform.localPosition = monster.pickUpHandPosition;
-                    /*
-                    Banana banana = other.GetComponent<Banana>();
-                    if (banana != null)
-                        banana.DropPeel();
-                    */
+
                     isHoldingObject = true;
                     holdingObject = monster;
                 }
