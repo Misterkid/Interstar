@@ -71,9 +71,6 @@ public class HelpingHand : MonoBehaviour
                 logModel.SetValue(LogFrameDataColumns.MinObjectPressure.ToString(), "0");
                 logModel.SetValue(LogFrameDataColumns.MaxObjectPressure.ToString(), "100");
             }
-            //logModel.SetValue(LogFrameDataColumns.HandWidth.ToString(), handValue.ToString("f3"));
-            //logModel.SetValue(LogFrameDataColumns.HasItem.ToString(), hasItem.ToString());
-            //logModel.SetValue(LogFrameDataColumns.Shortage.ToString(), isBroken.ToString());
         }
     }
 

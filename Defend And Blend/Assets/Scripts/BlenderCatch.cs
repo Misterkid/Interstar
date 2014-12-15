@@ -19,7 +19,7 @@ public class BlenderCatch : MonoBehaviour
 	void Start () 
     {
         cameraAnimator = Camera.main.GetComponent<Animator>();
-        SmoothObject.active = false;
+        //SmoothObject.SetActive(false);
        
 	}
 	
@@ -39,7 +39,7 @@ public class BlenderCatch : MonoBehaviour
             if(SmoothObject.active == false)
             {
                 SmoothObject.active = true;
-                smoothAnimator.SetBool("SmoothAnimation", true);
+                smoothAnimator.SetTrigger("Smooth");
             }
             for(int i = 0; i < monsters.Count; i++)
             {
@@ -60,26 +60,15 @@ public class BlenderCatch : MonoBehaviour
                 GameValues.SCORE++;
                 shakeTime = Time.time +( CamShakeTime + 1000);
             }
-            Debug.Log(smoothAnimator.IsInTransition(0));
+            //Debug.Log(smoothAnimator.IsInTransition(0));
             // Made an function when its blending. 
             // isBlending = true;
             Blend();
-            //Debug.Log(shakeTime);
-           
-           
         }
         if (Time.time >= shakeTime && isBlending)
         {
             cameraAnimator.SetTrigger("StopShake");
-
-            //smoothAnimator.SetBool("SmoothAnimation") = false;
-            
-
-            //
             isBlending = false;
-            //AfterBlend();
-           // 
-            //Debug.Log("False!");
         }
         //SmoothObject.SetActive(false);
         if (isBlending == false)
@@ -108,8 +97,8 @@ public class BlenderCatch : MonoBehaviour
 
     public void Blend()
     {
-        SmoothObject.active = true;
-        smoothAnimator.SetBool("SmoothAnimation", true);
+        //SmoothObject.active = true;
+        smoothAnimator.SetTrigger("Smooth");
         cameraAnimator.SetTrigger("Shake");
         drawerAnimator.SetTrigger("Shake");
         monsters = new List<GameObject>();
@@ -118,8 +107,8 @@ public class BlenderCatch : MonoBehaviour
 
     public void AfterBlend()
     {
-        smoothAnimator.SetBool("SmoothAnimation", false);
-        SmoothObject.SetActive(false);
+        smoothAnimator.SetTrigger("StopSmooth");
+       // SmoothObject.SetActive(false);
     }
 }
 
