@@ -93,9 +93,9 @@ public class BlenderCatch : MonoBehaviour
     {
         if (SmoothObject.activeSelf == true)
         {
+            smoothAnimator.SetTrigger("StopSmooth");
             SmoothObject.SetActive(false);
             //SmoothObject.active = false;
-            smoothAnimator.SetTrigger("StopSmooth");
         }
         cameraAnimator.SetTrigger("StopShake");
         spiceJarsAnimator.SetTrigger("StopShake");
