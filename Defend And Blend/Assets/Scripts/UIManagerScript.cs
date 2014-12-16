@@ -17,13 +17,18 @@ public class UIManagerScript : MonoBehaviour
     public Slider backgroundmusic;
     public Slider soundeffects;
 
-    bool gameIsPaused = false;
+    public Button continueButton;
+    public Button newGameButton;
+    public Button optionsButton;
+    public Button creditsButton;
+    public Button mainMenuButton;
 
-   // public class HelpingHand; 
-    
-    public HelpingHand helpingHand;
+ 
 
-    public Text TestText;
+       
+    public HelpingHand theHand;
+
+
   
 //private Task signUpTask = user.SignUpAsync();
 
@@ -31,16 +36,19 @@ public class UIManagerScript : MonoBehaviour
     
     void Awake()
     {
+        turnOffButtons();
         turnOffAllRightPages();
     }
 
 	// Use this for initialization
 	void Start () 
     {
+        
+
         backgroundmusic.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
         soundeffects.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
        
-        helpingHand = GameObject.FindObjectOfType<HelpingHand>();
+        //helpingHand = GameObject.FindObjectOfType<HelpingHand>();
 
         if (CameraAnimator != null)
             CameraAnimator.SetTrigger("ToGame");
@@ -50,25 +58,50 @@ public class UIManagerScript : MonoBehaviour
         
 	}
 
+    void turnOffButtons()
+    {
+        continueButton.interactable = false;
+        newGameButton.interactable = false;
+        creditsButton.interactable = false;
+        optionsButton.interactable = false;
+        mainMenuButton.interactable = false;
+    }
+
+    void turnOnButtons()
+    {
+        continueButton.interactable = true;
+        newGameButton.interactable = true;
+        creditsButton.interactable = true;
+        optionsButton.interactable = true;
+        mainMenuButton.interactable = true;
+    }
+
     void Update()
     {
-
-        //Debug.Log(gameIsPaused);
+        Debug.Log(optionsButton.IsInteractable());
+        //Debug.Log(GameValues.ISPAUSED);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameValues.ISPAUSED = GameValues.ISPAUSED ? false : true;
 
             if (GameValues.ISPAUSED == true)
             {
+                turnOnButtons();
+
+
+
                 if (CameraAnimator != null)
                     CameraAnimator.SetTrigger("ToPause");
                     //CameraAnimator.SetBool("GameIsPaused", false);
             }
             else
             {
+                turnOffButtons();
+                turnOffAllRightPages();
                 if (CameraAnimator != null)
                     CameraAnimator.SetTrigger("ToGame");
                     //CameraAnimator.SetBool("GameIsPaused", true);
+                
             }
             Debug.Log("Is het spel op pauze? " + GameValues.ISPAUSED);
         }
@@ -76,8 +109,18 @@ public class UIManagerScript : MonoBehaviour
 
     public void StartNewGame()
     {
+        Debug.Log("A new game has started.");
         BookAnimator.SetTrigger("turnPage_anim");
         Application.LoadLevel("level_1");
+    }
+    public void continueGame()
+    {
+        Debug.Log("You pressed continue.");
+        turnOffButtons();
+        turnOffAllRightPages();
+        GameValues.ISPAUSED = false;
+        if (CameraAnimator != null)
+            CameraAnimator.SetTrigger("ToGame");
     }
 
 	public void openStartGame()
@@ -157,7 +200,10 @@ public class UIManagerScript : MonoBehaviour
         	rp_StartGame.SetActive(false);
         }
         rp_Options.SetActive(false);
-        rp_Highscores.SetActive(false);
+        if (rp_StartGame != null)
+        {
+            rp_Highscores.SetActive(false);
+        }
         rp_Credits.SetActive(false);
     }
     public void setMusicVolume(float vol)
@@ -175,38 +221,22 @@ public class UIManagerScript : MonoBehaviour
 
     public void setAutoXMovement(bool autoX)
     {
-        if (helpingHand.AutoMoveX == false)
-        {
-            helpingHand.AutoMoveX = true;
-        }
-        else
-        {
-            helpingHand.AutoMoveX = false;
-        }
-        Debug.Log("X-as goes automaticly? :" + helpingHand.AutoMoveX);
+        theHand.AutoMoveX = autoX;
+        
+        Debug.Log("X-as goes automaticly? :" + theHand.AutoMoveX);
     }
     public void setAutoYMovement(bool autoY)
     {
-        if (helpingHand.AutoMoveY == false)
-        {
-            helpingHand.AutoMoveY = true;
-        }
-        else
-        {
-            helpingHand.AutoMoveY = false;
-        }
-        Debug.Log("Y-as goes automaticly? :" + helpingHand.AutoMoveY);
+        theHand.AutoMoveY = autoY;
+        Debug.Log("Y-as goes automaticly? :" + theHand.AutoMoveY);
     }
     public void setAutoGrab(bool autoGrab)
     {
-        if (helpingHand.AutoGrab == false)
-        {
-            helpingHand.AutoGrab = true;
-        }
-        else
-        {
-            helpingHand.AutoGrab = false;
-        }
-        Debug.Log("Grabbing Automaticly? :" + helpingHand.AutoGrab);
+        theHand.AutoGrab = autoGrab;
+        Debug.Log("Grabbing Automaticly? :" + theHand.AutoGrab);
     }
+
+
+
+    
 }
