@@ -1,13 +1,21 @@
 fileFormatVersion: 2
-guid: 4e229c3cd01b2524a9370f147c20a705
+guid: a746425e058b9af47b07cd62a01889a8
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: umbrella
+    100000: Kruidengeel
+    100002: //RootNode
+    100004: polySurface26
+    400000: Kruidengeel
+    400002: //RootNode
+    400004: polySurface26
+    2300000: Kruidengeel
+    2300002: polySurface26
+    3300000: Kruidengeel
+    3300002: polySurface26
+    4300000: polySurface26
+    4300002: Kruidengeel
+    7400000: Take 001
     9500000: //RootNode
   materials:
     importMaterials: 1
