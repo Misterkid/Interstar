@@ -78,7 +78,7 @@ public class UIManagerScript : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(optionsButton.IsInteractable());
+       // Debug.Log(optionsButton.IsInteractable());
         //Debug.Log(GameValues.ISPAUSED);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -87,8 +87,6 @@ public class UIManagerScript : MonoBehaviour
             if (GameValues.ISPAUSED == true)
             {
                 turnOnButtons();
-
-
 
                 if (CameraAnimator != null)
                     CameraAnimator.SetTrigger("ToPause");

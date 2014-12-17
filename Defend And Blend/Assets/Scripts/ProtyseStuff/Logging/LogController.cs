@@ -28,7 +28,7 @@ public class LogController : MonoBehaviour
 	private string GetPath() {
 
 		string userId = "User_" + "0000";/* GameStateController.UserID;*/
-        string sessionId = "Session_" + "1"; /*GameStateController.SessionID;*/
+        string sessionId = "Session_" + "0001"; /*GameStateController.SessionID;*/
 
 		string time = DateTime.Now.ToString("HH.mm.ss");
 
@@ -41,7 +41,7 @@ public class LogController : MonoBehaviour
 		else
 			personalPath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 
-		return string.Format("{0}/Knijper/Logs/{1}/{2}/{3}_",personalPath, userId, sessionId, time);
+		return string.Format("{0}/Defend And Blend/Logs/{1}/{2}/{3}_",personalPath, userId, sessionId, time);
 	}
 /*
 	public void LogGameData(Item item) {

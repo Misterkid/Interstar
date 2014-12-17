@@ -68,50 +68,45 @@ public class WaveSpawnerTwo : MonoBehaviour
     }
     IEnumerator SpawnWaves()
     {
-
-        while (GameValues.ISPAUSED) 
-        { 
-            //Pause
-        }
         //This yield is used for the time between the first and the second enemy.
         yield return new WaitForSeconds(3.5F);
         //StartCoroutine(waitForNextEnemy());
         while (true)//Mark check this out!
-        {       
+        {    
+
             //Check if the max number of enemies is already spawned
             //If not, keep looping till the max enemies / wave are spawned
             for (int MN = 0; MN < waves[currentWave].monsters.Length; MN++)
             {
-               
-                // Setting up the spawnpositions of the spawnable.
-                Vector3 spawnPosition = new Vector3(spawnValues.x, spawnValues.y, spawnValues.z);
-                // Setting up the rotation of the spawnable (is needed for 'Instantiate')
-                // What it does I'll actually need to find it out.
-                Quaternion spawnRotation = Quaternion.identity;
-                //currentWave = waves.Length;
-
-                //Debug.Log(monsters[waves[currentWave].monsters[MN]]);
-                GameObject clone = Instantiate(monsters[waves[currentWave].monsters[MN]], spawnPosition, spawnRotation) as GameObject;
-                SpawnedMonsters.Add(clone);
-                // Make the monster go to the target
-                Monster monster = clone.GetComponent<Monster>();
-               // monster.
-                monster.target = target;//target
-                monster.speed = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].speed;
-                monster.damage = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].damage;
-                monster.minPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].minSueezePower;
-                monster.maxPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].maxSqueezePower;
-                // Waiting a few (2) seconds, to prefend monsters will spawn on each others.
-                while (GameValues.ISPAUSED)
+                if(!GameValues.ISPAUSED)
                 {
-                    //Pause
+                    // Setting up the spawnpositions of the spawnable.
+                    Vector3 spawnPosition = new Vector3(spawnValues.x, spawnValues.y, spawnValues.z);
+                    // Setting up the rotation of the spawnable (is needed for 'Instantiate')
+                    // What it does I'll actually need to find it out.
+                    Quaternion spawnRotation = Quaternion.identity;
+                    //currentWave = waves.Length;
+
+                    //Debug.Log(monsters[waves[currentWave].monsters[MN]]);
+                    GameObject clone = Instantiate(monsters[waves[currentWave].monsters[MN]], spawnPosition, spawnRotation) as GameObject;
+                    SpawnedMonsters.Add(clone);
+                    // Make the monster go to the target
+                    Monster monster = clone.GetComponent<Monster>();
+                    // monster.
+                    monster.target = target;//target
+                    monster.speed = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].speed;
+                    monster.damage = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].damage;
+                    monster.minPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].minSueezePower;
+                    monster.maxPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].maxSqueezePower;
+                    // Waiting a few (2) seconds, to prefend monsters will spawn on each others.
                 }
+                else
+                {
+                    MN = MN - 1;
+                }
+
                 yield return new WaitForSeconds(timeBetweenNextEnemy);
                 
-            }
-            while (GameValues.ISPAUSED)
-            {
-                //Pause
             }
             yield return new WaitForSeconds(waitBetweenWaves);
 
@@ -126,6 +121,7 @@ public class WaveSpawnerTwo : MonoBehaviour
             setCurrentWave();
 
         }
+
     }
 
 
