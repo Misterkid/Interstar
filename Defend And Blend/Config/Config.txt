@@ -1,2 +1,2 @@
-timeBetweenSpawns = 2.5
+timeBetweenSpawns = 5
 timeBetweenWaves = 12

@@ -68,6 +68,11 @@ public class WaveSpawnerTwo : MonoBehaviour
     }
     IEnumerator SpawnWaves()
     {
+
+        while (GameValues.ISPAUSED) 
+        { 
+            //Pause
+        }
         //This yield is used for the time between the first and the second enemy.
         yield return new WaitForSeconds(3.5F);
         //StartCoroutine(waitForNextEnemy());
@@ -97,9 +102,17 @@ public class WaveSpawnerTwo : MonoBehaviour
                 monster.minPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].minSueezePower;
                 monster.maxPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].maxSqueezePower;
                 // Waiting a few (2) seconds, to prefend monsters will spawn on each others.
+                while (GameValues.ISPAUSED)
+                {
+                    //Pause
+                }
                 yield return new WaitForSeconds(timeBetweenNextEnemy);
                 
-            }     
+            }
+            while (GameValues.ISPAUSED)
+            {
+                //Pause
+            }
             yield return new WaitForSeconds(waitBetweenWaves);
 
             // Current wave = current wave + 1.

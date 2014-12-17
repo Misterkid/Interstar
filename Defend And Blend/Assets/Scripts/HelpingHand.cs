@@ -100,6 +100,9 @@ public class HelpingHand : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        if (GameValues.ISPAUSED)
+            return;//Do nothing while paused
+
 	    //Controls Auto
         AutoMove();
         //pressure
@@ -214,17 +217,39 @@ public class HelpingHand : MonoBehaviour
             if(targetMonster == null)
                 targetMonster = EUtils.GetNearestObject(waveSpawner.SpawnedMonsters, transform.position);
 
-            RaycastHit hit;
+            RaycastHit[] hit;
             if (targetMonster != null)
             {
-                BlenderCatch blender = GameObject.FindObjectOfType<BlenderCatch>();
+                //BlenderCatch blender = GameObject.FindObjectOfType<BlenderCatch>();
+                Defendable defendAble = GameObject.FindObjectOfType<Defendable>();
+                //Vector3 castPosition = new Vector3(transform.position.x, transform.position.y + (EUtils.GetObjectCollUnitSize(gameObject).y), transform.position.z);
+                hit = Physics.RaycastAll(targetMonster.transform.position, -Vector3.up /* * 0.5f*/, float.MaxValue);
+                //Debug.DrawRay(castPosition, transform.forward * attackDistance, Color.red);
+               // Debug.Log(hit.Length);
+                for (int i = 0; i < hit.Length; i++)
+                {
+                    Debug.Log(hit[i].collider);
+                    Defendable blenderCatch = hit[i].collider.GetComponent<Defendable>();
+                    if(blenderCatch != null)
+                    {
+                        targetMonster = null;
+                        return;
+                    }
+                    /*
+                    if (hit[i].collider == target.collider)
+                    {
 
+                    }
+                    */
+                }
+
+                /*
                 Ray ray = new Ray(targetMonster.transform.position, -Vector3.up);
                 if (blender.collider.Raycast(ray,out hit,float.MaxValue))
                 {
                     targetMonster = null;
                     return;
-                }
+                }*/
                 monster = targetMonster.GetComponent<Monster>();
             }
 
@@ -290,9 +315,9 @@ public class HelpingHand : MonoBehaviour
                 if (blender != null)
                 {
                      //if (transform.position.y == blender.transform.position.y + 7.50f && Mathf.Abs(transform.position.x - blender.transform.position.x) < 1)
-                    if (Mathf.Abs(transform.position.y - blender.transform.position.y) > 5.50f && Mathf.Abs(transform.position.x - blender.transform.position.x) < 1)
+                    if (Mathf.Abs(transform.position.y - blender.transform.position.y) > 5.50f && Mathf.Abs(transform.position.x - blender.transform.position.x) < 0.5f)
                     {
-                        VisualSqueeze(0);
+                        VisualSqueeze(1);
                     }
                 }
             }
