@@ -23,7 +23,9 @@ public class UIManagerScript : MonoBehaviour
     public Button creditsButton;
     public Button mainMenuButton;
 
- 
+    // Trying to fade in and out the HUD while on pause.
+    public Animator hudBeneden;
+
 
        
     public HelpingHand theHand;
@@ -87,6 +89,7 @@ public class UIManagerScript : MonoBehaviour
             if (GameValues.ISPAUSED == true)
             {
                 turnOnButtons();
+                hudBeneden.SetTrigger("ToPause");
 
                 if (CameraAnimator != null)
                     CameraAnimator.SetTrigger("ToPause");
@@ -94,6 +97,7 @@ public class UIManagerScript : MonoBehaviour
             }
             else
             {
+                hudBeneden.SetTrigger("ToGame");
                 turnOffButtons();
                 turnOffAllRightPages();
                 if (CameraAnimator != null)
