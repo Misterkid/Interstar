@@ -306,7 +306,7 @@ public class HelpingHand : MonoBehaviour
             {
                 if (blender != null)
                 {
-                    Vector3 targetPosition = new Vector3(transform.position.x, blender.transform.position.y + 7.50f, transform.position.z);
+                    Vector3 targetPosition = new Vector3(transform.position.x, blender.transform.position.y + 5.75f, transform.position.z);
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
                 }
             }
