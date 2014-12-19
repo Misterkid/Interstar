@@ -117,6 +117,7 @@ public class UIManagerScript : MonoBehaviour
     }
     public void continueGame()
     {
+        hudBeneden.SetTrigger("ToGame");
         Debug.Log("You pressed continue.");
         turnOffButtons();
         turnOffAllRightPages();
@@ -128,8 +129,8 @@ public class UIManagerScript : MonoBehaviour
 	public void openStartGame()
     {
         //First we need to turn off the other pages.
-        //turnOffAllRightPages();
-        BookAnimator.SetTrigger("turnPage_anim");
+        turnOffAllRightPages();
+        //BookAnimator.SetTrigger("turnPage_anim");
         if (rp_StartGame != null)
         {
 
