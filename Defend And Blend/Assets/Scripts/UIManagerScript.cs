@@ -112,7 +112,7 @@ public class UIManagerScript : MonoBehaviour
     public void StartNewGame()
     {
         Debug.Log("A new game has started.");
-        BookAnimator.SetTrigger("turnPage_anim");
+        //BookAnimator.SetTrigger("turnPage_anim");
         Application.LoadLevel("level_1");
     }
     public void continueGame()
@@ -128,7 +128,7 @@ public class UIManagerScript : MonoBehaviour
 	public void openStartGame()
     {
         //First we need to turn off the other pages.
-        turnOffAllRightPages();
+        //turnOffAllRightPages();
         BookAnimator.SetTrigger("turnPage_anim");
         if (rp_StartGame != null)
         {
@@ -147,7 +147,7 @@ public class UIManagerScript : MonoBehaviour
     {
         //First we need to turn off the other pages.
         turnOffAllRightPages();
-        BookAnimator.SetTrigger("turnPage_anim");
+        //BookAnimator.SetTrigger("turnPage_anim");
         if (rp_Options.active == true)
         {
             rp_Options.SetActive(false);
@@ -161,7 +161,7 @@ public class UIManagerScript : MonoBehaviour
     public void openHighscores()
     {
         //First we need to turn off the other pages.
-        BookAnimator.SetTrigger("turnPage_anim");
+        //BookAnimator.SetTrigger("turnPage_anim");
         turnOffAllRightPages();
         
         if (rp_Highscores.active == true)
@@ -180,7 +180,7 @@ public class UIManagerScript : MonoBehaviour
         //First we need to turn off the other pages.
         turnOffAllRightPages();
         
-        BookAnimator.SetTrigger("turnPage_anim");
+        //BookAnimator.SetTrigger("turnPage_anim");
         if (rp_Credits.active == true)
         {
             rp_Credits.SetActive(false);
