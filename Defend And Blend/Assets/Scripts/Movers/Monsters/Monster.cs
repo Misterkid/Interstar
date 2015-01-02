@@ -3,13 +3,14 @@ using System.Collections;
 
 public class Monster : Mover
 {
-
+    
     public Defendable target;//Target to walk tos
     public float damage;//Ammount of damage it does to the defendable target.
     public float attackSpeed;//attacking speed
     public float attackDistance;//Attacking distance
     public float minPressure = 10;//Minumum pressure under this pressure the object falls
     public float maxPressure = 80;//Maximum pressure above this pressure this object dies
+    public int fruitSize;
     public bool isInholding = false;//do we hold this object?
     public GameObject explosionEffect;//Explosion particle
     public AudioClip stunnedClip;
@@ -41,6 +42,8 @@ public class Monster : Mover
         }
         base.Start();
     }
+    
+
    // private void IgnoreCollision()
     public virtual void IgnoreCollision()
     {
@@ -55,6 +58,8 @@ public class Monster : Mover
 	// Update is called once per frame
     protected override void Update() 
     {
+        //Debug.Log(this.fruitSize);
+        
         if (GameValues.ISPAUSED)
             return;
 

@@ -5,22 +5,41 @@ using UnityEngine.UI;
 
 public class Bookdata : MonoBehaviour {
 
-    public InputField UserIDField;
-    public string UserID;
-    public string SessionID;
+    public GameValues theGameValues;
 
-    public bool hasPressedPlay;
+    public GameObject UserIDGameObject;
+    public string Teststring;
     
-
+    void Awake()
+    {
+        Debug.Log("Startbook has been loaded");
+    }
     // Use this for initialization
 	void Start() 
     {
-        hasPressedPlay = false;
+       
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-         
+        
+        Teststring = UserIDGameObject.GetComponent<InputField>().text;
+        Debug.Log(Teststring);
 	}
+
+    public void LoadFirstLevel()
+    {
+        if (Teststring.Length > 0)
+        {
+            
+            //theGameValues.
+        }
+        //string _password = inputPassword.GetComponent<InputField>().text;
+        //UserIDGameObject.GetComponent<InputField>().text;
+
+        
+
+        Application.LoadLevel("Level_1");
+    }
 }

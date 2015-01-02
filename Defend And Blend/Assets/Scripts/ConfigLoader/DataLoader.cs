@@ -57,7 +57,8 @@ public class DataLoader
                 monster.damage = int.Parse(monsterData[1]);
                 monster.minSueezePower = int.Parse(monsterData[2]);
                 monster.maxSqueezePower = int.Parse(monsterData[3]);
-
+                monster.fruitSize = int.Parse(monsterData[4]);
+                
                 ConfigData.monsterDatas.Add(monster);
             }
 

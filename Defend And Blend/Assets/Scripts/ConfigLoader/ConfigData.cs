@@ -14,6 +14,7 @@ public class ConfigData
         public int damage;
         public int minSueezePower;
         public int maxSqueezePower;
+        public int fruitSize;
     }
     public struct GameConfig
     {
