@@ -103,6 +103,7 @@ public class WaveSpawnerTwo : MonoBehaviour
                         monster.damage = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].damage;
                         monster.minPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].minSueezePower;
                         monster.maxPressure = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].maxSqueezePower;
+                        monster.fruitSize = ConfigData.monsterDatas[waves[currentWave].monsters[MN]].fruitSize;
                         // Waiting a few (2) seconds, to prefend monsters will spawn on each others.
                     }
                     else
