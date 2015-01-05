@@ -18,22 +18,13 @@ public class Explosion : MonoBehaviour
             SoundManager.Instance.PlaySound(explosionClip, transform.position, SoundManager.SoundTypes.EFFECT);
 
         particleSystem.startColor = color;
-
-        pointLight = gameObject.GetComponent<Light>();
-
-        if (pointLight != null)
-        {
-            pointLight.color = color;
-        }
         particleSystem.Play();
     }
 	
 	// Update is called once per frame
 	void Update () 
     {
-        if (pointLight != null)
-            pointLight.intensity -= 1 * Time.deltaTime;
-
+       // particleSystem.startColor = Mathf.Lerp()
         if(!particleSystem.IsAlive())
         {
             Destroy(gameObject);

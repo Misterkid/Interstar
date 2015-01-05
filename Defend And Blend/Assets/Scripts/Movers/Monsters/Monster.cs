@@ -178,6 +178,7 @@ public class Monster : Mover
     public virtual void Die()
     {
         GameObject clone = GameObject.Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
+        clone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
         Explosion explosion = clone.GetComponent<Explosion>();
         explosion.explode(explosionColor);
         //We are gone!
