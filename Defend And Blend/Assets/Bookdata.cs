@@ -29,8 +29,8 @@ public class Bookdata : MonoBehaviour {
     // Use this for initialization
 	void Start() 
     {
-        startBookAnimator.SetBool("hasPressedPlay", true);
-        bookCoverInfo.SetActive(true);
+       
+        
 	}
 	
 	// Update is called once per frame
@@ -43,6 +43,9 @@ public class Bookdata : MonoBehaviour {
 
     public void LoadFirstLevel()
     {
+        bookCoverInfo.SetActive(false);
+        startBookAnimator.SetBool("hasPressedPlay", true);
+        
         if (Teststring.Length > 0)
         {
             
@@ -53,7 +56,7 @@ public class Bookdata : MonoBehaviour {
 
         
 
-        Application.LoadLevel("Level_1");
+        //Application.LoadLevel("Level_1");
     }
     
     public void quitToDesktop()
