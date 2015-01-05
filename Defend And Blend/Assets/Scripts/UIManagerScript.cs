@@ -62,7 +62,10 @@ public class UIManagerScript : MonoBehaviour
 
     void turnOffButtons()
     {
-        continueButton.interactable = false;
+        if (continueButton != null)
+        {
+            continueButton.interactable = false;
+        }
         newGameButton.interactable = false;
         creditsButton.interactable = false;
         optionsButton.interactable = false;
@@ -71,7 +74,10 @@ public class UIManagerScript : MonoBehaviour
 
     void turnOnButtons()
     {
-        continueButton.interactable = true;
+        if (continueButton != null)
+        {
+            continueButton.interactable = true;
+        }
         newGameButton.interactable = true;
         creditsButton.interactable = true;
         optionsButton.interactable = true;
