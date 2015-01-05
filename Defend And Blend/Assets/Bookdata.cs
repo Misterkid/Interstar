@@ -10,7 +10,8 @@ public class Bookdata : MonoBehaviour {
     public string Teststring;
 
     // This Animator is made to open the book.
-    public Animator startBookAnimator;
+    //public Animator startBookAnimator;
+    
     public GameObject bookCoverInfo;
 
     // Load the two buttons (Play and Quit)
@@ -44,8 +45,8 @@ public class Bookdata : MonoBehaviour {
     public void LoadFirstLevel()
     {
         bookCoverInfo.SetActive(false);
-        startBookAnimator.SetBool("hasPressedPlay", true);
-        
+        //startBookAnimator.SetBool("hasPressedPlay", true);
+        Application.LoadLevel("Level_00_MainMenu");
         if (Teststring.Length > 0)
         {
             
