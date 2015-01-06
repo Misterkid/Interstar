@@ -5,7 +5,6 @@ public class Explosion : MonoBehaviour
 {
     public AudioClip explosionClip;
     private Light pointLight;
-   // private ParticleSystem particleSystem;
 	// Use this for initialization
 	void Start () 
     {
@@ -25,7 +24,7 @@ public class Explosion : MonoBehaviour
 	void Update () 
     {
        // particleSystem.startColor = Mathf.Lerp()
-        if(!particleSystem.IsAlive())
+        if (!particleSystem.IsAlive())
         {
             Destroy(gameObject);
         }

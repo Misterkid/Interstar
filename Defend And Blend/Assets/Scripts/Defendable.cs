@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class Defendable : MonoBehaviour 
 {   
     //Testing some shizzle
-    public ParticleSystem blenderSmoke;
+    public ParticleSystem blenderSmoke33;
+    public ParticleSystem blenderSmoke66;
     /// <summary>
     /// The players current health
     /// </summary>
@@ -98,10 +99,15 @@ public class Defendable : MonoBehaviour
             gameOver.DieGame();
         }
 
-        if (currentHealth < 66)
+        if (currentHealth < 33 && currentHealth > 0)
         {
-            if(!blenderSmoke.gameObject.active)
-                blenderSmoke.gameObject.SetActive(true);
+            if (!blenderSmoke33.gameObject.active)
+                blenderSmoke33.gameObject.SetActive(true);
+        }
+        else if(currentHealth < 66 && currentHealth > 33)
+        {
+            if (!blenderSmoke66.gameObject.active)
+                blenderSmoke66.gameObject.SetActive(true);
         }
         
     }

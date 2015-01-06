@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 public class BlenderCatch : MonoBehaviour 
 {
     public float CamShakeTime = 1f;
@@ -14,6 +15,8 @@ public class BlenderCatch : MonoBehaviour
     public  GameObject SmoothObject;
     public bool isBlending = false;
 
+    public int smoothPoints;
+    public Text smoothyText;
 
  
 	// Use this for initialization
@@ -21,7 +24,7 @@ public class BlenderCatch : MonoBehaviour
     {
         cameraAnimator = Camera.main.GetComponent<Animator>();
         //SmoothObject.SetActive(false);
-       
+        smoothyText.text = "0";
 	}
 	
 	// Update is called once per frame
@@ -34,13 +37,14 @@ public class BlenderCatch : MonoBehaviour
         
 	    if (Input.GetButtonUp ("Fire1") && !isBlending) 
         {
+           // int smoothPoints = 0;
             for(int i = 0; i < monsters.Count; i++)
             {
-
                 Monster monster = monsters[i].GetComponent<Monster>();
                 monster.Die();
                 GameValues.SCORE++;
             }
+            //
             //Debug.Log(smoothAnimator.IsInTransition(0));
             // Made an function when its blending. 
             // isBlending = true;
@@ -62,10 +66,12 @@ public class BlenderCatch : MonoBehaviour
         Monster monster = other.collider.GetComponent<Monster>();
         if (monster != null)
         {
-            if (!monster.isInholding)
+            if (!monster.isInholding /*&& smoothPoints < 60*/)
             {
                 GameValues.SCORE++;
                 monster.isInBlender = true;
+                smoothPoints += monster.fruitSize;
+                Debug.Log(smoothPoints);
                 monsters.Add(monster.gameObject);
                 //We are gone!
                 WaveSpawnerTwo waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
@@ -78,6 +84,22 @@ public class BlenderCatch : MonoBehaviour
     private void Blend()
     {
         //SmoothObject.active = true;
+        if (smoothPoints > 20 && smoothPoints < 40)
+        {
+            GameValues.SMOOTHYPOINTS += (smoothPoints * 2);
+        }
+        else if (smoothPoints > 40)
+        {
+            GameValues.SMOOTHYPOINTS += (smoothPoints * 4);
+        }
+        else
+        {
+            GameValues.SMOOTHYPOINTS += smoothPoints;
+        }
+        GameValues.SMOOTHYPOINTS += smoothPoints;
+        smoothyText.text = GameValues.SMOOTHYPOINTS.ToString();
+        smoothPoints = 0;
+
         if (SmoothObject.activeSelf == false)
         {
             //SmoothObject.active = true;

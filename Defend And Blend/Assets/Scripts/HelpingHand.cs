@@ -149,13 +149,40 @@ public class HelpingHand : MonoBehaviour
             {
                 if (squeezePressure * 100 < holdingObject.minPressure)
                 {
-                    holdingObject.transform.localPosition = new Vector3(holdingObject.pickUpHandPosition.x, holdingObject.pickUpHandPosition.y, 0);
+                    //Raycast
+                    bool blenderIsFull = false;
+                   // Defendable defendAble = GameObject.FindObjectOfType<Defendable>();
+                    RaycastHit[] hit = Physics.RaycastAll(targetMonster.transform.position, -Vector3.up /* * 0.5f*/, float.MaxValue);
+                    for (int i = 0; i < hit.Length; i++)
+                    {
+                        BlenderCatch blenderCatch = hit[i].collider.GetComponent<BlenderCatch>();
+                        if (blenderCatch != null)
+                        {
+                            if (blenderCatch.smoothPoints > 10)
+                                blenderIsFull = true;
 
-                    holdingObject.transform.parent = null;
-                    isHoldingObject = false;
-                    holdingObject.LetGo();
-                    holdingObject.Stun(1);
-                    holdingObject = null;
+                            break;
+                        }
+                    }
+                    if (!blenderIsFull)
+                    {
+                        holdingObject.transform.localPosition = new Vector3(holdingObject.pickUpHandPosition.x, holdingObject.pickUpHandPosition.y, 0);
+                        holdingObject.transform.parent = null;
+                        isHoldingObject = false;
+                        holdingObject.LetGo();
+                        holdingObject.Stun(1);
+                        holdingObject = null;
+                    }
+                    else
+                    {
+                        holdingObject.transform.localPosition = new Vector3(holdingObject.pickUpHandPosition.x - 4, holdingObject.pickUpHandPosition.y, 0);
+                        holdingObject.transform.parent = null;
+                        isHoldingObject = false;
+                        holdingObject.LetGo();
+                        holdingObject.Stun(1);
+                        holdingObject = null;
+                        Debug.Log("Blender is full!!!!!!!!");
+                    }
                 }
                 else if (squeezePressure * 100 > holdingObject.maxPressure)
                 {
@@ -228,28 +255,13 @@ public class HelpingHand : MonoBehaviour
                // Debug.Log(hit.Length);
                 for (int i = 0; i < hit.Length; i++)
                 {
-                    Debug.Log(hit[i].collider);
                     Defendable blenderCatch = hit[i].collider.GetComponent<Defendable>();
                     if(blenderCatch != null)
                     {
                         targetMonster = null;
                         return;
                     }
-                    /*
-                    if (hit[i].collider == target.collider)
-                    {
-
-                    }
-                    */
                 }
-
-                /*
-                Ray ray = new Ray(targetMonster.transform.position, -Vector3.up);
-                if (blender.collider.Raycast(ray,out hit,float.MaxValue))
-                {
-                    targetMonster = null;
-                    return;
-                }*/
                 monster = targetMonster.GetComponent<Monster>();
             }
 
@@ -257,7 +269,10 @@ public class HelpingHand : MonoBehaviour
             {
                 if (monster != null)
                 {
-                    if (!monster.isInBlender)
+                    Ray monsterRay = new Ray(monster.transform.position,-Vector3.up);
+                    RaycastHit monsterHit;
+
+                    if (!monster.isInBlender && Physics.Raycast(monsterRay, EUtils.GetObjectCollUnitSize(monster.gameObject).y + 1)/* && !monster.isStunned*/)
                     {
                         Vector3 targetPosition = new Vector3(monster.transform.position.x, transform.position.y, transform.position.z);
                         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
@@ -271,8 +286,10 @@ public class HelpingHand : MonoBehaviour
 
                     //Vector3.Distance(transform.position, monster.transform.position) < 1)
                     //if (!monster.isInBlender && transform.position.x == monster.transform.position.x)
+                    Ray monsterRay = new Ray(monster.transform.position, -Vector3.up);
+                    RaycastHit monsterHit;
 
-                    if (!monster.isInBlender && Mathf.Abs(transform.position.x - monster.transform.position.x) < 1)
+                    if (!monster.isInBlender && Physics.Raycast(monsterRay, EUtils.GetObjectCollUnitSize(monster.gameObject).y + 1)/*&& !monster.isStunned */&& Mathf.Abs(transform.position.x - monster.transform.position.x) < 1)
                     {
                         Vector3 targetPosition = new Vector3(transform.position.x, monster.transform.position.y, transform.position.z);
                         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
@@ -283,7 +300,10 @@ public class HelpingHand : MonoBehaviour
             {
                 if (monster != null)
                 {
-                    if (!monster.isInBlender && Vector3.Distance(transform.position, monster.transform.position) < 1)
+                    Ray monsterRay = new Ray(monster.transform.position, -Vector3.up);
+                    RaycastHit monsterHit;
+
+                    if (!monster.isInBlender && Physics.Raycast(monsterRay, EUtils.GetObjectCollUnitSize(monster.gameObject).y + 1)/* && !monster.isStunned*/ && Vector3.Distance(transform.position, monster.transform.position) < 1)
                     {
                         VisualSqueeze(monster.minPressure + 4);
                     }

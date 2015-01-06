@@ -16,13 +16,13 @@ public class Monster : Mover
     public AudioClip stunnedClip;
     public bool isInBlender = false;
     public Color explosionColor;
-
+    public GameObject bloodyParticle;
     public Vector3 pickUpHandPosition = Vector3.zero;
     protected float nextAttack;//The next attack.
     protected bool isInAttackRange = false;//Are we in range?
 
     private float stunTime;//How long are we stunned?
-    private bool isStunned = false;//are we stunned
+    public bool isStunned = false;//are we stunned
     private float stunTimeEnd;//Did the stun timer end?
     private bool hasSpeedBoost = false;//can only be boosted once.
     private float animationSpeed;
@@ -177,10 +177,25 @@ public class Monster : Mover
     }
     public virtual void Die()
     {
-        GameObject clone = GameObject.Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
-        clone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-        Explosion explosion = clone.GetComponent<Explosion>();
-        explosion.explode(explosionColor);
+        GameObject bloodyClone = GameObject.Instantiate(bloodyParticle, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
+        bloodyClone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+
+        if (!isInBlender)
+        {
+            GameObject explosionClone = GameObject.Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
+            explosionClone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+           
+            Explosion explosion = explosionClone.GetComponent<Explosion>();
+            explosion.explode(explosionColor);
+
+            Explosion bloodyExplosion = bloodyClone.GetComponent<Explosion>();
+            bloodyExplosion.explode(explosionColor);
+        }
+        else
+        {
+            Explosion bloodyExplosion = bloodyClone.GetComponent<Explosion>();
+            bloodyExplosion.explode(explosionColor);
+        }
         //We are gone!
         WaveSpawnerTwo waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
         waveSpawner.SpawnedMonsters.Remove(this.gameObject);
