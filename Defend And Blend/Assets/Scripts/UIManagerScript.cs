@@ -45,20 +45,20 @@ public class UIManagerScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-<<<<<<< HEAD
+
         
         if (backgroundmusic != null)
         backgroundmusic.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
         if (backgroundmusic != null)
         soundeffects.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
-=======
+
 
 
         if (backgroundmusic != null)
             backgroundmusic.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
         if (soundeffects != null)
             soundeffects.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
->>>>>>> origin/master
+
        
         //helpingHand = GameObject.FindObjectOfType<HelpingHand>();
 
