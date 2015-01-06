@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Defendable : MonoBehaviour 
 {   
     //Testing some shizzle
+    public ParticleSystem blenderSmoke;
     /// <summary>
     /// The players current health
     /// </summary>
@@ -60,16 +61,15 @@ public class Defendable : MonoBehaviour
             fullHealthXPos = healthTransform.localPosition.x;
            
             zeroHealthXPos = healthTransform.localPosition.x - healthTransform.rect.width;
-           
+
             currentHealth = maxHealth;
         }
+       
 	}
 	
     private void HandleHealth()
     {
         healthText.text = currentHealth + "% / ";
-        
-        
         currentXPos = (currentHealth / 100) * zeroHealthXPos;
         currentXPos = zeroHealthXPos - currentXPos;
 
@@ -92,6 +92,18 @@ public class Defendable : MonoBehaviour
         {
             CurrentHealth -= pain;
         }
+        else
+        {
+            GameOver gameOver = GameObject.FindObjectOfType<GameOver>();
+            gameOver.DieGame();
+        }
+
+        if (currentHealth < 66)
+        {
+            if(!blenderSmoke.gameObject.active)
+                blenderSmoke.gameObject.SetActive(true);
+        }
+        
     }
     /// <summary>
     /// This method maps a range of number into another range
