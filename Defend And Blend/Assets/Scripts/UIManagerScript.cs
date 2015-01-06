@@ -46,8 +46,9 @@ public class UIManagerScript : MonoBehaviour
 	void Start () 
     {
         
-
+        if (backgroundmusic != null)
         backgroundmusic.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
+        if (backgroundmusic != null)
         soundeffects.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
        
         //helpingHand = GameObject.FindObjectOfType<HelpingHand>();

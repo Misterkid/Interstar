@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 public class GameValues 
 {
-
-    //public user = ParseUser.CurrentUser;
+ 
     public static int SCORE = 0;
     public static int CURRENTWAVE = 0;
     public static bool ISPAUSED = false;
+
+    //This depends on everytrainee.
+    public static string USERID;
+    public static string SESSIONID;
+
     public static void Reset()
     {
         SCORE = 0;
@@ -20,10 +24,7 @@ public class GameValues
     }
     public void Start()
     {
-        ParseObject gameScore = new ParseObject("GameScore");
-        gameScore["score"] = 100;
-        gameScore["playerID"] = ParseUser.CurrentUser;
-        Task saveTask = gameScore.SaveAsync();
+        
         
     }
 }

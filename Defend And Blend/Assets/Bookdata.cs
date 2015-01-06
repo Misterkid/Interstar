@@ -4,14 +4,9 @@ using UnityEngine.UI;
 
 public class Bookdata : MonoBehaviour {
 
-    public GameValues theGameValues;
-
     public GameObject UserIDGameObject;
-    public string Teststring;
+    public GameObject SessionIDGameObject;
 
-    // This Animator is made to open the book.
-    //public Animator startBookAnimator;
-    
     public GameObject bookCoverInfo;
 
     // Load the two buttons (Play and Quit)
@@ -38,19 +33,20 @@ public class Bookdata : MonoBehaviour {
 	void Update () 
     {
         
-        Teststring = UserIDGameObject.GetComponent<InputField>().text;
-        Debug.Log(Teststring);
 	}
 
     public void LoadFirstLevel()
     {
+        
+        
         bookCoverInfo.SetActive(false);
         //startBookAnimator.SetBool("hasPressedPlay", true);
         Application.LoadLevel("Level_00_MainMenu");
-        if (Teststring.Length > 0)
+        if (UserIDGameObject.GetComponent<InputField>().text.Length > 0 && SessionIDGameObject.GetComponent<InputField>().text.Length > 0)
         {
-            
-            //theGameValues.
+
+            GameValues.USERID = UserIDGameObject.GetComponent<InputField>().text;
+            GameValues.SESSIONID = SessionIDGameObject.GetComponent<InputField>().text;
         }
         //string _password = inputPassword.GetComponent<InputField>().text;
         //UserIDGameObject.GetComponent<InputField>().text;
