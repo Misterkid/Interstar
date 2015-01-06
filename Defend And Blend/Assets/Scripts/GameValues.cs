@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO;
-using Parse;
-using System.Threading.Tasks;
+
 
 
 public class GameValues 
