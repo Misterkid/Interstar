@@ -158,7 +158,7 @@ public class HelpingHand : MonoBehaviour
                         BlenderCatch blenderCatch = hit[i].collider.GetComponent<BlenderCatch>();
                         if (blenderCatch != null)
                         {
-                            if (blenderCatch.smoothPoints > 10)
+                            if (blenderCatch.smoothPoints > blenderCatch.maxSmoothPoints)
                                 blenderIsFull = true;
 
                             break;
@@ -271,8 +271,8 @@ public class HelpingHand : MonoBehaviour
                 {
                     Ray monsterRay = new Ray(monster.transform.position,-Vector3.up);
                     RaycastHit monsterHit;
-
-                    if (!monster.isInBlender && Physics.Raycast(monsterRay, EUtils.GetObjectCollUnitSize(monster.gameObject).y + 1)/* && !monster.isStunned*/)
+                    
+                    if (!monster.isInBlender && !monster.isStunned)
                     {
                         Vector3 targetPosition = new Vector3(monster.transform.position.x, transform.position.y, transform.position.z);
                         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
@@ -286,10 +286,8 @@ public class HelpingHand : MonoBehaviour
 
                     //Vector3.Distance(transform.position, monster.transform.position) < 1)
                     //if (!monster.isInBlender && transform.position.x == monster.transform.position.x)
-                    Ray monsterRay = new Ray(monster.transform.position, -Vector3.up);
-                    RaycastHit monsterHit;
 
-                    if (!monster.isInBlender && Physics.Raycast(monsterRay, EUtils.GetObjectCollUnitSize(monster.gameObject).y + 1)/*&& !monster.isStunned */&& Mathf.Abs(transform.position.x - monster.transform.position.x) < 1)
+                    if (!monster.isInBlender && !monster.isStunned && Mathf.Abs(transform.position.x - monster.transform.position.x) < 1)
                     {
                         Vector3 targetPosition = new Vector3(transform.position.x, monster.transform.position.y, transform.position.z);
                         transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
@@ -300,10 +298,7 @@ public class HelpingHand : MonoBehaviour
             {
                 if (monster != null)
                 {
-                    Ray monsterRay = new Ray(monster.transform.position, -Vector3.up);
-                    RaycastHit monsterHit;
-
-                    if (!monster.isInBlender && Physics.Raycast(monsterRay, EUtils.GetObjectCollUnitSize(monster.gameObject).y + 1)/* && !monster.isStunned*/ && Vector3.Distance(transform.position, monster.transform.position) < 1)
+                    if (!monster.isInBlender && !monster.isStunned &&  Vector3.Distance(transform.position, monster.transform.position) < 1)
                     {
                         VisualSqueeze(monster.minPressure + 4);
                     }

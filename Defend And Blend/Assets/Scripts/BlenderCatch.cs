@@ -15,6 +15,7 @@ public class BlenderCatch : MonoBehaviour
     public  GameObject SmoothObject;
     public bool isBlending = false;
 
+    public int maxSmoothPoints = 60;
     public int smoothPoints;
     public Text smoothyText;
 
