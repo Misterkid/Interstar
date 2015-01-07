@@ -12,11 +12,12 @@ public class Monster : Mover
     public float maxPressure = 80;//Maximum pressure above this pressure this object dies
     public int fruitSize;
     public bool isInholding = false;//do we hold this object?
+
     public GameObject explosionEffect;//Explosion particle
+
     public AudioClip stunnedClip;
     public bool isInBlender = false;
     public Color explosionColor;
-    public GameObject bloodyParticle;
     public Vector3 pickUpHandPosition = Vector3.zero;
     protected float nextAttack;//The next attack.
     protected bool isInAttackRange = false;//Are we in range?
@@ -177,25 +178,13 @@ public class Monster : Mover
     }
     public virtual void Die()
     {
-        GameObject bloodyClone = GameObject.Instantiate(bloodyParticle, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
-        bloodyClone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-
-        if (!isInBlender)
-        {
+       // GameObject bloodyClone = GameObject.Instantiate(bloodyParticle, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
+        //bloodyClone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             GameObject explosionClone = GameObject.Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
             explosionClone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
            
             Explosion explosion = explosionClone.GetComponent<Explosion>();
             explosion.explode(explosionColor);
-
-            Explosion bloodyExplosion = bloodyClone.GetComponent<Explosion>();
-            bloodyExplosion.explode(explosionColor);
-        }
-        else
-        {
-            Explosion bloodyExplosion = bloodyClone.GetComponent<Explosion>();
-            bloodyExplosion.explode(explosionColor);
-        }
         //We are gone!
         WaveSpawnerTwo waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
         waveSpawner.SpawnedMonsters.Remove(this.gameObject);
