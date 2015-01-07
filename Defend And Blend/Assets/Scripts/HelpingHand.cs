@@ -18,6 +18,14 @@ public class HelpingHand : MonoBehaviour
     public bool useStick = true;
     public Animation handAnimation;
 
+    public GameObject knifeBonusBtn;
+    public GameObject forkBonusBtn;
+
+    public BonusObject knifeBonus;
+    public BonusObject forkBonus;
+    public GameObject holdingBonusObject;
+
+
     private GameObject targetMonster;
     private WaveSpawnerTwo waveSpawner;
     private bool isHoldingObject = false;
@@ -103,11 +111,70 @@ public class HelpingHand : MonoBehaviour
         if (GameValues.ISPAUSED)
             return;//Do nothing while paused
 
-	    //Controls Auto
+        //Controls Auto
         AutoMove();
         //pressure
         float openPressure = Input.GetAxis("RTrigger");
         float closePressure = Input.GetAxis("LTrigger");
+        if (!isHoldingObject && holdingBonusObject == null)
+        {
+            Vector3 position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z + 2);
+           // RaycastHit[] hit = Physics.RaycastAll(position, transform.forward /* * 0.5f*/, float.MaxValue);
+            Ray ray = new Ray(position,transform.forward);
+            RaycastHit hit;
+            Debug.DrawRay(position, (transform.forward * 50), Color.red);
+
+            Debug.Log((squeezePressure * 100 > 20 && squeezePressure * 100 < 50) + ":" + GameValues.SMOOTHYPOINTS);
+            if ( squeezePressure * 100 > 20 && squeezePressure * 100 < 50)
+            {
+                if (Physics.Raycast(ray, out hit, 20))
+                {
+                    // Debug.Log(hit.collider);
+                    if (hit.collider.gameObject == forkBonusBtn)
+                    {
+                        BlenderCatch blender = GameObject.FindObjectOfType<BlenderCatch>();
+                        if (GameValues.SMOOTHYPOINTS >= 10)
+                        {
+                            holdingBonusObject = GameObject.Instantiate(forkBonus.gameObject) as GameObject;
+                            holdingBonusObject.collider.enabled = false;
+                            holdingBonusObject.transform.parent = this.transform;
+                            holdingBonusObject.transform.position = transform.position;
+                            isHoldingObject = true;
+                            GameValues.SMOOTHYPOINTS -= 10;
+                        }
+
+                        //Debug.Log("fork");
+                    }
+                    else if (hit.collider.gameObject == knifeBonusBtn)
+                    {
+                        BlenderCatch blender = GameObject.FindObjectOfType<BlenderCatch>();
+                        if (GameValues.SMOOTHYPOINTS >= 20)
+                        {
+                            holdingBonusObject = GameObject.Instantiate(knifeBonus.gameObject) as GameObject;
+                            holdingBonusObject.collider.enabled = false;
+                            holdingBonusObject.transform.parent = this.transform;
+                            holdingBonusObject.transform.position = transform.position;
+                            isHoldingObject = true;
+                            GameValues.SMOOTHYPOINTS -= 20;
+                        }
+                        //Debug.Log("Knife");
+                    }
+                }
+            }
+
+        }
+        else if (holdingBonusObject != null)
+        {
+            if (squeezePressure * 100 < 20 && holdingBonusObject != null)
+            {
+                holdingBonusObject.collider.enabled = true;
+                holdingBonusObject.transform.parent = null;
+                holdingBonusObject.AddComponent<Rigidbody>();
+                //holdingBonusObject.transform.position = transform.position;
+                holdingBonusObject = null;
+                isHoldingObject = false;
+            }
+        }
 
         if (useStick)
         {
@@ -152,7 +219,8 @@ public class HelpingHand : MonoBehaviour
                     //Raycast
                     bool blenderIsFull = false;
                    // Defendable defendAble = GameObject.FindObjectOfType<Defendable>();
-                    RaycastHit[] hit = Physics.RaycastAll(targetMonster.transform.position, -Vector3.up /* * 0.5f*/, float.MaxValue);
+
+                    RaycastHit[] hit = Physics.RaycastAll(holdingObject.transform.position, -Vector3.up /* * 0.5f*/, float.MaxValue);
                     for (int i = 0; i < hit.Length; i++)
                     {
                         BlenderCatch blenderCatch = hit[i].collider.GetComponent<BlenderCatch>();
@@ -186,10 +254,13 @@ public class HelpingHand : MonoBehaviour
                 }
                 else if (squeezePressure * 100 > holdingObject.maxPressure)
                 {
+
+                    holdingObject.transform.localPosition = new Vector3(holdingObject.pickUpHandPosition.x, holdingObject.pickUpHandPosition.y, 0);
+                    holdingObject.transform.parent = null;
                     isHoldingObject = false;
                     holdingObject.Die();
-                    GameValues.SCORE--;
                     holdingObject = null;
+                    GameValues.SCORE--;
                 }
             }
         }
