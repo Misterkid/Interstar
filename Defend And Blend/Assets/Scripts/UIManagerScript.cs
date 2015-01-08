@@ -25,16 +25,11 @@ public class UIManagerScript : MonoBehaviour
 
     // Trying to fade in and out the HUD while on pause.
     public Animator hudBeneden;
-
+    public Animator hudBoven;
 
        
     public HelpingHand theHand;
 
-
-  
-//private Task signUpTask = user.SignUpAsync();
-
-    //public AudioSource backgroundMusic;
     
     void Awake()
     {
@@ -106,7 +101,7 @@ public class UIManagerScript : MonoBehaviour
             {
                 turnOnButtons();
                 hudBeneden.SetTrigger("ToPause");
-
+                hudBoven.SetTrigger("toPause");
                 if (CameraAnimator != null)
                     CameraAnimator.SetTrigger("ToPause");
                     //CameraAnimator.SetBool("GameIsPaused", false);
@@ -114,6 +109,7 @@ public class UIManagerScript : MonoBehaviour
             else
             {
                 hudBeneden.SetTrigger("ToGame");
+                hudBoven.SetTrigger("toGame");
                 turnOffButtons();
                 turnOffAllRightPages();
                 if (CameraAnimator != null)
@@ -125,15 +121,11 @@ public class UIManagerScript : MonoBehaviour
         }
     }
 
-    public void StartNewGame()
-    {
-        Debug.Log("A new game has started.");
-        //BookAnimator.SetTrigger("turnPage_anim");
-        Application.LoadLevel("level_1");
-    }
+    
     public void continueGame()
     {
         hudBeneden.SetTrigger("ToGame");
+        hudBoven.SetTrigger("toGame");
         Debug.Log("You pressed continue.");
         turnOffButtons();
         turnOffAllRightPages();
@@ -192,21 +184,6 @@ public class UIManagerScript : MonoBehaviour
         }
     }
 
-    public void openCredits()
-    {
-        //First we need to turn off the other pages.
-        turnOffAllRightPages();
-        
-        //BookAnimator.SetTrigger("turnPage_anim");
-        if (rp_Credits.active == true)
-        {
-            rp_Credits.SetActive(false);
-        }
-        else if (rp_Credits.active == false)
-        {
-            rp_Credits.SetActive(true);
-        }
-    }
     public void quitGame()
     {
         Application.Quit();
@@ -225,35 +202,7 @@ public class UIManagerScript : MonoBehaviour
         }
         rp_Credits.SetActive(false);
     }
-    public void setMusicVolume(float vol)
-    {
-        //backgroundMusic.volume = vol;
-        //SoundManager.Instance.PlaySound()
-        SoundManager.Instance.ChangeVolume(vol, SoundManager.SoundTypes.MUSIC);
-
-    }
-
-    public void setSoundEffectsVolume(float vol)
-    {
-        SoundManager.Instance.ChangeVolume(vol, SoundManager.SoundTypes.EFFECT);
-    }
-
-    public void setAutoXMovement(bool autoX)
-    {
-        theHand.AutoMoveX = autoX;
-        
-        Debug.Log("X-as goes automaticly? :" + theHand.AutoMoveX);
-    }
-    public void setAutoYMovement(bool autoY)
-    {
-        theHand.AutoMoveY = autoY;
-        Debug.Log("Y-as goes automaticly? :" + theHand.AutoMoveY);
-    }
-    public void setAutoGrab(bool autoGrab)
-    {
-        theHand.AutoGrab = autoGrab;
-        Debug.Log("Grabbing Automaticly? :" + theHand.AutoGrab);
-    }
+    
 
 
 

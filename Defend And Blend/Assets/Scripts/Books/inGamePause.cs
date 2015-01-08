@@ -9,8 +9,8 @@ public class inGamePause : MonoBehaviour {
 
     void Awake()
     {
-        startBookAnimator.SetBool("hasPressedPlay", true);
-        cameraAnimator.SetTrigger("zoomOutToMainMenu");
+        startBookAnimator.SetBool("isAlreadyOpen", true);
+        //cameraAnimator.SetTrigger("zoomOutToMainMenu");
     }
     // Use this for initialization
 	void Start () {
