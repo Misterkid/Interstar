@@ -27,7 +27,11 @@ public class HelpingHand : MonoBehaviour
 
     public BonusObject knifeBonus;
     public BonusObject forkBonus;
+    [HideInInspector]
     public GameObject holdingBonusObject;
+
+    public AudioClip grabClip;
+    public AudioClip releaseClip;
 
 
     private GameObject targetMonster;
@@ -132,7 +136,7 @@ public class HelpingHand : MonoBehaviour
             Debug.DrawRay(position, (transform.forward * 50), Color.red);
 
            // Debug.Log((squeezePressure * 100 > 20 && squeezePressure * 100 < 50) + ":" + GameValues.SMOOTHYPOINTS);
-            if ( squeezePressure * 100 > 20 && squeezePressure * 100 < 50)
+            if ( squeezePressure * 100 > 20/* && squeezePressure * 100 < 50*/)
             {
                 if (Physics.Raycast(ray, out hit, 20))
                 {
@@ -166,6 +170,8 @@ public class HelpingHand : MonoBehaviour
 
                             GameValues.SMOOTHYPOINTS -= 20;
                             blender.smoothyText.text = GameValues.SMOOTHYPOINTS.ToString();
+
+                            SoundManager.Instance.PlaySound(grabClip, transform.position, SoundManager.SoundTypes.EFFECT);
                         }
                         //Debug.Log("Knife");
                     }
@@ -184,6 +190,7 @@ public class HelpingHand : MonoBehaviour
                 //holdingBonusObject.transform.position = transform.position;
                 holdingBonusObject = null;
                 isHoldingObject = false;
+                SoundManager.Instance.PlaySound(releaseClip, transform.position, SoundManager.SoundTypes.EFFECT);
             }
         }
 
@@ -261,6 +268,7 @@ public class HelpingHand : MonoBehaviour
                         holdingObject.LetGo();
                         holdingObject.Stun(1);
                         holdingObject = null;
+                        SoundManager.Instance.PlaySound(releaseClip, transform.position, SoundManager.SoundTypes.EFFECT);
                     }
                     else
                     {
@@ -270,6 +278,7 @@ public class HelpingHand : MonoBehaviour
                         holdingObject.LetGo();
                         holdingObject.Stun(1);
                         holdingObject = null;
+                        SoundManager.Instance.PlaySound(releaseClip, transform.position, SoundManager.SoundTypes.EFFECT);
                         Debug.Log("Blender is full!!!!!!!!");
                     }
                 }
@@ -440,6 +449,7 @@ public class HelpingHand : MonoBehaviour
             {
                 if (squeezePressure * 100 > monster.minPressure)
                 {
+                    SoundManager.Instance.PlaySound(grabClip, transform.position, SoundManager.SoundTypes.EFFECT);
                     monster.transform.parent = this.transform;
                     monster.Hold();
                     monster.transform.localPosition = monster.pickUpHandPosition;

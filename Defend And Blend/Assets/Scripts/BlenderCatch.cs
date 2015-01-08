@@ -19,7 +19,7 @@ public class BlenderCatch : MonoBehaviour
     public int smoothPoints;
     public Text smoothyText;
 
- 
+    public AudioClip blendSound;
 	// Use this for initialization
 	void Start () 
     {
@@ -43,7 +43,7 @@ public class BlenderCatch : MonoBehaviour
             {
                 Monster monster = monsters[i].GetComponent<Monster>();
                 monster.Die();
-                GameValues.SCORE++;
+               // GameValues.SCORE++;
             }
             //
             //Debug.Log(smoothAnimator.IsInTransition(0));
@@ -52,6 +52,7 @@ public class BlenderCatch : MonoBehaviour
             Blend();
             shakeTime = Time.time + CamShakeTime;
             isBlending = true;
+            SoundManager.Instance.PlaySound(blendSound, transform.position, SoundManager.SoundTypes.EFFECT);
         }
         if (Time.time >= shakeTime && isBlending)
         {
@@ -96,6 +97,7 @@ public class BlenderCatch : MonoBehaviour
         {
             GameValues.SMOOTHYPOINTS += smoothPoints;
         }
+        GameValues.SCORE += smoothPoints;
         GameValues.SMOOTHYPOINTS += smoothPoints;
         smoothyText.text = GameValues.SMOOTHYPOINTS.ToString();
         smoothPoints = 0;
