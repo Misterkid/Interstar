@@ -9,6 +9,8 @@ public class UIManagerScript : MonoBehaviour
     public Animator CameraAnimator;
     public Animator BookAnimator;
 
+    
+
     public GameObject rp_StartGame;
     public GameObject rp_Options;
     public GameObject rp_Highscores;

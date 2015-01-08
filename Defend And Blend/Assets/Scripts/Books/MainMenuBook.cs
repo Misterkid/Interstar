@@ -6,7 +6,8 @@ public class MainMenuBook : UI_GeneralBook
 {
     public Animator startBookAnimator;
     public Animator cameraAnimator;
-    
+
+    public Animator leftPageFadeOut;
 
     public Text UserIDtxt;
     public Text SessionIDtxt;
@@ -25,7 +26,11 @@ public class MainMenuBook : UI_GeneralBook
         startBookAnimator.SetBool("hasPressedPlay", true);
         cameraAnimator.SetTrigger("zoomOutToMainMenu");
 
-        Debug.Log(GameValues.USERID);
+        StartCoroutine(WaitTillBookIsHalfOpen(55 * Time.deltaTime));
+        leftPageFadeOut.SetTrigger("isFadingIn");
+
+
+        
     }
     
 	
@@ -61,12 +66,25 @@ public class MainMenuBook : UI_GeneralBook
 
     public void backToStartBook()
     {
-        Debug.Log("backToStart.... 1");
+        leftPageFadeOut.SetTrigger("isGoingBack");
         cameraAnimator.SetTrigger("testje");
-        Debug.Log(cameraAnimator);
-        Debug.Log("backToStart.... 2");
-
-        //Application.LoadLevel("Level_00_StartBook");
+        startBookAnimator.SetBool("hasPressedPlay", false);
+        
+        print("Starting " + Time.time);
+        StartCoroutine(WaitAndPrint(55 * Time.deltaTime));
+        print("Before WaitAndPrint Finishes " + Time.time);
+        
     }
-    
+
+    IEnumerator WaitAndPrint(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Application.LoadLevel("Level_00_StartBook");
+        Debug.Log("I'm done with this...");
+    }
+    IEnumerator WaitTillBookIsHalfOpen(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        
+    }
 }

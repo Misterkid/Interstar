@@ -12,13 +12,9 @@ public class inGamePause : MonoBehaviour {
         startBookAnimator.SetBool("isAlreadyOpen", true);
         //cameraAnimator.SetTrigger("zoomOutToMainMenu");
     }
-    // Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    
+    void quitToMainMenu()
+    {
+
+    }
 }
