@@ -63,7 +63,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .348702788
+        functionName: JumpSound
+        data: 
+        objectReferenceParameter: {fileID: 100016, guid: 8a8c66af8eaabeb4dba7b765afc4dbe5,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

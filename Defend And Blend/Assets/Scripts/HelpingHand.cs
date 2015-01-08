@@ -8,6 +8,10 @@ public class HelpingHand : MonoBehaviour
    // public float holdHeight;
     public float maxHeight;
     public float minHeight;
+
+    public float maxWidth;
+    public float minWidth;
+
     public float maxPressure = 1;
     public float minPressure = 0;
 
@@ -194,6 +198,16 @@ public class HelpingHand : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
             }
+
+            if (transform.position.x < minWidth)
+            {
+                transform.position = new Vector3(minWidth, transform.position.y, transform.position.z);
+            }
+            if (transform.position.x > maxWidth)
+            {
+                transform.position = new Vector3(maxWidth, transform.position.y, transform.position.z);
+            }
+
         }
         else
         {

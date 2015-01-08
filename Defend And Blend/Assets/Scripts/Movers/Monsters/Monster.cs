@@ -28,6 +28,9 @@ public class Monster : Mover
     private bool hasSpeedBoost = false;//can only be boosted once.
     private float animationSpeed;
     private Animator animator;
+
+    public AudioClip[] jumpClips;
+    private AudioClip jumpClip;
 	// Use this for initialization
     protected override void Start()
     {
@@ -41,6 +44,7 @@ public class Monster : Mover
         {
             animationSpeed = animator.speed;
         }
+        jumpClip = jumpClips[Random.Range(0,jumpClips.Length)];
         base.Start();
     }
     
@@ -56,6 +60,11 @@ public class Monster : Mover
                 Physics.IgnoreCollision(gameObject.collider,gameObjects[i].collider,true);//ignore this object with another object
         }
     }
+    //Event function called by the animation!
+    public void JumpSound()
+    {
+        SoundManager.Instance.PlaySound(jumpClip, transform.position, SoundManager.SoundTypes.EFFECT);
+    }
 	// Update is called once per frame
     protected override void Update() 
     {
@@ -63,7 +72,7 @@ public class Monster : Mover
         
         if (GameValues.ISPAUSED)
             return;
-
+        //if(
         if (!isInholding && !isInBlender)//Is this not in holding?
         {
             if (!isStunned)//is it not stunned?
