@@ -24,6 +24,9 @@ public class Knive : BonusObject
         if(monster != null)//Got monster
         {
             health -= 1;//monster.damage;
+            HelpingHand helpingHand = GameObject.FindObjectOfType<HelpingHand>();
+            helpingHand.holdingObject = null;
+            helpingHand.isHoldingObject = false;
             monster.Die();
         }
         base.OnCollisionEnter(collision);

@@ -28,8 +28,11 @@ public class HelpingHand : MonoBehaviour
 
     private GameObject targetMonster;
     private WaveSpawnerTwo waveSpawner;
-    private bool isHoldingObject = false;
-    private Monster holdingObject;
+    [HideInInspector]
+    public bool isHoldingObject = false;
+    [HideInInspector]
+    public Monster holdingObject;
+
     private float squeezePressure;
 
     //Jildert logging
@@ -141,6 +144,7 @@ public class HelpingHand : MonoBehaviour
                             holdingBonusObject.transform.position = transform.position;
                             isHoldingObject = true;
                             GameValues.SMOOTHYPOINTS -= 10;
+                            blender.smoothyText.text = GameValues.SMOOTHYPOINTS.ToString();
                         }
 
                         //Debug.Log("fork");
@@ -155,7 +159,9 @@ public class HelpingHand : MonoBehaviour
                             holdingBonusObject.transform.parent = this.transform;
                             holdingBonusObject.transform.position = transform.position;
                             isHoldingObject = true;
+
                             GameValues.SMOOTHYPOINTS -= 20;
+                            blender.smoothyText.text = GameValues.SMOOTHYPOINTS.ToString();
                         }
                         //Debug.Log("Knife");
                     }

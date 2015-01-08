@@ -81,7 +81,6 @@ public class BlenderCatch : MonoBehaviour
             }
         }
     }
-
     private void Blend()
     {
         //SmoothObject.active = true;
