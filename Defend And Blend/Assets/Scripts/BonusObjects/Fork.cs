@@ -36,7 +36,6 @@ public class Fork : BonusObject
                 started = true;
                 removeTimeEnd = Time.time + removeTime;
             }
-            ////Destroy the peel
         }
         base.OnCollisionEnter(collision);
     }

@@ -36,7 +36,7 @@ public class BlenderCatch : MonoBehaviour
         if (GameValues.ISPAUSED)
             return;
         
-	    if (Input.GetButtonUp ("Fire1") && !isBlending) 
+	    if (Input.GetButtonUp ("Fire1") && !isBlending && monsters.Count > 0) 
         {
            // int smoothPoints = 0;
             for(int i = 0; i < monsters.Count; i++)

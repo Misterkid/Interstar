@@ -127,7 +127,7 @@ public class HelpingHand : MonoBehaviour
             RaycastHit hit;
             Debug.DrawRay(position, (transform.forward * 50), Color.red);
 
-            Debug.Log((squeezePressure * 100 > 20 && squeezePressure * 100 < 50) + ":" + GameValues.SMOOTHYPOINTS);
+           // Debug.Log((squeezePressure * 100 > 20 && squeezePressure * 100 < 50) + ":" + GameValues.SMOOTHYPOINTS);
             if ( squeezePressure * 100 > 20 && squeezePressure * 100 < 50)
             {
                 if (Physics.Raycast(ray, out hit, 20))
@@ -176,6 +176,7 @@ public class HelpingHand : MonoBehaviour
                 holdingBonusObject.collider.enabled = true;
                 holdingBonusObject.transform.parent = null;
                 holdingBonusObject.AddComponent<Rigidbody>();
+                holdingBonusObject.rigidbody.freezeRotation = true;// <3 saves some time
                 //holdingBonusObject.transform.position = transform.position;
                 holdingBonusObject = null;
                 isHoldingObject = false;

@@ -17,6 +17,8 @@ public class Knive : BonusObject
         {
             Destroy(this.gameObject);
         }
+
+        //Debug.Log()
 	}
     protected override void OnCollisionEnter(Collision collision)
     {
@@ -29,6 +31,16 @@ public class Knive : BonusObject
             helpingHand.isHoldingObject = false;
             monster.Die();
         }
+        /*
+        if (gameObject.rigidbody != null)
+        {
+            if (rigidbody.velocity.y == 0)
+            {
+                Destroy(gameObject.rigidbody);
+            }
+            Debug.Log(rigidbody.velocity);
+        }
+        */
         base.OnCollisionEnter(collision);
         //health
     }
