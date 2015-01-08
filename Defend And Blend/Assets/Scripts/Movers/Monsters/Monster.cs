@@ -180,11 +180,11 @@ public class Monster : Mover
     {
        // GameObject bloodyClone = GameObject.Instantiate(bloodyParticle, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
         //bloodyClone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            GameObject explosionClone = GameObject.Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
-            explosionClone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        GameObject explosionClone = GameObject.Instantiate(explosionEffect, transform.position, explosionEffect.transform.rotation /*transform.rotation*/) as GameObject;
+        explosionClone.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
            
-            Explosion explosion = explosionClone.GetComponent<Explosion>();
-            explosion.explode(explosionColor);
+        Explosion explosion = explosionClone.GetComponent<Explosion>();
+        explosion.explode(explosionColor);
         //We are gone!
         WaveSpawnerTwo waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
         waveSpawner.SpawnedMonsters.Remove(this.gameObject);
