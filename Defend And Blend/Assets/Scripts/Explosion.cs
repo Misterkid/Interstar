@@ -16,6 +16,12 @@ public class Explosion : MonoBehaviour
         if (explosionClip != null)
             SoundManager.Instance.PlaySound(explosionClip, transform.position, SoundManager.SoundTypes.EFFECT);
 
+
+        ParticleSystem[] particleSystems = gameObject.GetComponentsInChildren<ParticleSystem>();
+        for (int i = 0; i < particleSystems.Length; i++ )
+        {
+            particleSystems[i].startColor = color;
+        }
         particleSystem.startColor = color;
         particleSystem.Play();
     }
