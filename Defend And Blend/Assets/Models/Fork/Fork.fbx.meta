@@ -1,21 +1,13 @@
 fileFormatVersion: 2
-guid: a746425e058b9af47b07cd62a01889a8
+guid: 175c819b11c9c8e4f8d48af5d8988c10
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: Kruidengeel
-    100002: //RootNode
-    100004: polySurface26
-    400000: Kruidengeel
-    400002: //RootNode
-    400004: polySurface26
-    2300000: Kruidengeel
-    2300002: polySurface26
-    3300000: Kruidengeel
-    3300002: polySurface26
-    4300000: polySurface26
-    4300002: Kruidengeel
-    7400000: Take 001
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Fork
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -54,7 +46,7 @@ ModelImporter:
     splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 1
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
