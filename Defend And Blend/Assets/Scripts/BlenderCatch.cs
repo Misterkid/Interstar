@@ -20,6 +20,8 @@ public class BlenderCatch : MonoBehaviour
     public Text smoothyText;
 
     public AudioClip blendSound;
+
+    public int currentPointsInBlender = 0;
 	// Use this for initialization
 	void Start () 
     {
@@ -31,6 +33,9 @@ public class BlenderCatch : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        Debug.Log(GameValues.BlenderFilledPoints);
+        
+        
         //Debug.Log(SmoothObject.active);
         //Debug.Log("isBlending" + isBlending);
         if (GameValues.ISPAUSED)

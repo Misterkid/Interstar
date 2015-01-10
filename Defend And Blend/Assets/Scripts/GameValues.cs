@@ -15,12 +15,15 @@ public class GameValues
     public static string USERID;
     public static string SESSIONID;
 
+    public static int BlenderFilledPoints = 0;
+
     public static void Reset()
     {
         SCORE = 0;
         CURRENTWAVE = 0;
         SMOOTHYPOINTS = 0;
         ISPAUSED = false;
+        BlenderFilledPoints = 0;
     }
     public void Start()
     {

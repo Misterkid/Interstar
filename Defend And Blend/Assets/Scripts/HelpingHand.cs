@@ -240,6 +240,7 @@ public class HelpingHand : MonoBehaviour
         // Also check if the pressure is above maximum if so Kill the holding object.
         if (isHoldingObject)
         {
+            Debug.Log(holdingObject.fruitSize);
             if (holdingObject != null && !holdingObject.isInBlender)
             {
                 if (squeezePressure * 100 < holdingObject.minPressure)
@@ -268,6 +269,7 @@ public class HelpingHand : MonoBehaviour
                         holdingObject.LetGo();
                         holdingObject.Stun(1);
                         holdingObject = null;
+                       
                         SoundManager.Instance.PlaySound(releaseClip, transform.position, SoundManager.SoundTypes.EFFECT);
                     }
                     else
