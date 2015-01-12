@@ -21,7 +21,7 @@ public class BlenderCatch : MonoBehaviour
 
     public AudioClip blendSound;
 
-    public int currentPointsInBlender = 0;
+   // public int currentPointsInBlender = 0;
 	// Use this for initialization
 	void Start () 
     {
@@ -78,11 +78,16 @@ public class BlenderCatch : MonoBehaviour
                 GameValues.SCORE++;
                 monster.isInBlender = true;
                 smoothPoints += monster.fruitSize;
+                GameValues.BlenderFilledPoints += monster.fruitSize;
                 Debug.Log(smoothPoints);
+                //GameValues.BlenderFilledPoints += smoothPoints;
                 monsters.Add(monster.gameObject);
                 //We are gone!
                 WaveSpawnerTwo waveSpawner = FindObjectOfType<WaveSpawnerTwo>();
                 waveSpawner.SpawnedMonsters.Remove(monster.gameObject);
+
+                Defendable defendAble = GameObject.FindObjectOfType<Defendable>();
+                defendAble.HandleBlenderFilling();
                 //monster.Die();
             }
         }
@@ -106,7 +111,7 @@ public class BlenderCatch : MonoBehaviour
         GameValues.SMOOTHYPOINTS += smoothPoints;
         smoothyText.text = GameValues.SMOOTHYPOINTS.ToString();
         smoothPoints = 0;
-
+        GameValues.BlenderFilledPoints = 0;
         if (SmoothObject.activeSelf == false)
         {
             //SmoothObject.active = true;

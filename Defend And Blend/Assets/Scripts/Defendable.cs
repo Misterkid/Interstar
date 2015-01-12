@@ -58,6 +58,7 @@ public class Defendable : MonoBehaviour
     /// If you reach this amount of points, the blender is 'full'.
     /// It means you can't drop any more fruit in it. 
     /// </summary>
+    /*
     private float blenderFillPoints;
     private float BlenderFillPoints
     {
@@ -68,7 +69,7 @@ public class Defendable : MonoBehaviour
             HandleBlenderFilling();
             GameValues.BlenderFilledPoints += 1;
         }
-    }
+    }*/
     /// <summary>
     /// The fillingBar transform Rectangle
     /// </summary>
@@ -123,7 +124,7 @@ public class Defendable : MonoBehaviour
 
             fillingBarCurrentY = fillingBarCanHoldPoints;
 
-             GameValues.BlenderFilledPoints += 1;
+             //GameValues.BlenderFilledPoints += 1;
         }
        
 	}
@@ -148,21 +149,21 @@ public class Defendable : MonoBehaviour
         }
     }
 
-    private void HandleBlenderFilling()
+    public void HandleBlenderFilling()
     {
-        fillingBarPointsText.text = blenderFillPoints + "%";
+        fillingBarPointsText.text = GameValues.BlenderFilledPoints + "%";
         fillingBarCurrentY = (currentHealth / 100) * fillingBarEmptyY;
         fillingBarCurrentY = fillingBarEmptyY - fillingBarCurrentY;
 
         fillingBarRect.localPosition = new Vector3(fillingBarCurrentY, 0, 0);
 
-        if (blenderFillPoints > fillingBarCanHoldPoints / 2) // The Bar is > 50%!
+        if (GameValues.BlenderFilledPoints > fillingBarCanHoldPoints / 2) // The Bar is > 50%!
         {
-            fillingBarColorImage.color = new Color((byte)handleFillingBarColor(blenderFillPoints, fillingBarMaxY / 2, fillingBarMaxY, 255, 0), 255, 0, 255);
+            fillingBarColorImage.color = new Color((byte)handleFillingBarColor(GameValues.BlenderFilledPoints, fillingBarMaxY / 2, fillingBarMaxY, 255, 0), 255, 0, 255);
         }
         else
         {
-            fillingBarColorImage.color = new Color(255, (byte)handleFillingBarColor(blenderFillPoints, 0, fillingBarMaxY / 2, 0, 255), 0, 255);
+            fillingBarColorImage.color = new Color(255, (byte)handleFillingBarColor(GameValues.BlenderFilledPoints, 0, fillingBarMaxY / 2, 0, 255), 0, 255);
         }
     }
 
@@ -212,7 +213,7 @@ public class Defendable : MonoBehaviour
     /// <param name="out_min">The minum number we want to map to</param>
     /// <param name="out_max">The maximum number we want to map to</param>
     /// <returns></returns>
-    public float handleFillingBarColor(float x, float in_min, float in_max, float out_min, float out_max)
+    private float handleFillingBarColor(float x, float in_min, float in_max, float out_min, float out_max)
     {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
