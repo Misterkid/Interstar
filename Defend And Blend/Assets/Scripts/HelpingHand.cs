@@ -167,7 +167,7 @@ public class HelpingHand : MonoBehaviour
                             holdingBonusObject = GameObject.Instantiate(knifeBonus.gameObject) as GameObject;
                             holdingBonusObject.collider.enabled = false;
                             holdingBonusObject.transform.parent = this.transform;
-                            holdingBonusObject.transform.position = transform.position;
+                            holdingBonusObject.transform.position = new Vector3(transform.position.x,transform.position.y,transform.position.z - 2);
                             isHoldingObject = true;
 
                             GameValues.SMOOTHYPOINTS -= 20;
