@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class UI_GeneralBook : MonoBehaviour
 {
     public GameObject rp_StartGame;
@@ -10,8 +10,19 @@ public class UI_GeneralBook : MonoBehaviour
     
     public HelpingHand theHand;
 
+    public Slider musicSlider;
+    public Slider effectSlider;
+    public Slider ambientSlider;
     //public Animator cameraAnimator;
-
+    protected virtual void Start()
+    {
+        if (musicSlider != null)
+            musicSlider.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.MUSIC];
+        if (effectSlider != null)
+            effectSlider.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.EFFECT];
+        if (ambientSlider != null)
+            ambientSlider.value = SoundManager.Instance.soundValues[SoundManager.SoundTypes.AMBIENT];
+    }
     public void setMusicVolume(float vol)
     {
         //backgroundMusic.volume = vol;
@@ -23,6 +34,10 @@ public class UI_GeneralBook : MonoBehaviour
     public void setSoundEffectsVolume(float vol)
     {
         SoundManager.Instance.ChangeVolume(vol, SoundManager.SoundTypes.EFFECT);
+    }
+    public void setAmbientVolume(float vol)
+    {
+        SoundManager.Instance.ChangeVolume(vol, SoundManager.SoundTypes.AMBIENT);
     }
     /*
     public void setAutoXMovement(bool autoX)

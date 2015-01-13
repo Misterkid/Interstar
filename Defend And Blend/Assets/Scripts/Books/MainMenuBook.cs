@@ -9,6 +9,7 @@ public class MainMenuBook : UI_GeneralBook
 
     public Animator leftPageFadeOut;
 
+    public Animator inputsAnimator;
     public Text UserIDtxt;
     public Text SessionIDtxt;
 
@@ -24,8 +25,7 @@ public class MainMenuBook : UI_GeneralBook
     {
         turnOffAllRightPages();
     }
-    
-    void Start()
+    protected override void Start()
     {
         startBookAnimator.SetBool("hasPressedPlay", true);
         cameraAnimator.SetTrigger("zoomOutToMainMenu");
@@ -33,12 +33,14 @@ public class MainMenuBook : UI_GeneralBook
         StartCoroutine(WaitTillBookIsHalfOpen(55 * Time.deltaTime));
         leftPageFadeOut.SetTrigger("isFadingIn");
 
+        inputsAnimator.SetTrigger("FadeIn");
+
         onlyGrabToggle.isOn = false;
         onlyXToggle.isOn = false;
         onlyYToggle.isOn = false;
         autoToggle.isOn = false;
         manualToggle.isOn = true;
-
+        base.Start();
         
     }
     
@@ -134,10 +136,11 @@ public class MainMenuBook : UI_GeneralBook
 
     public void backToStartBook()
     {
+        inputsAnimator.SetTrigger("FadeOut");
         leftPageFadeOut.SetTrigger("isGoingBack");
         cameraAnimator.SetTrigger("testje");
         startBookAnimator.SetBool("hasPressedPlay", false);
-        
+
         print("Starting " + Time.time);
         StartCoroutine(WaitAndPrint(55 * Time.deltaTime));
         print("Before WaitAndPrint Finishes " + Time.time);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class inGamePause : MonoBehaviour {
+public class inGamePause : UI_GeneralBook {
 
 
     public Animator startBookAnimator;
@@ -13,8 +13,8 @@ public class inGamePause : MonoBehaviour {
         //cameraAnimator.SetTrigger("zoomOutToMainMenu");
     }
     
-    void quitToMainMenu()
+    public void quitToMainMenu()
     {
-
+        Application.LoadLevel(1);
     }
 }
