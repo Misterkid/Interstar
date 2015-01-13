@@ -15,6 +15,11 @@ public class GameValues
     public static string USERID;
     public static string SESSIONID;
 
+    public static bool AutoMoveX = false;
+    public static bool AutoMoveY = false;
+    public static bool AutoGrab = false;
+
+
     public static int BlenderFilledPoints = 0;
 
     public static void Reset()

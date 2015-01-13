@@ -11,8 +11,12 @@ public class MainMenuBook : UI_GeneralBook
 
     public Text UserIDtxt;
     public Text SessionIDtxt;
-     
-   
+
+    public Toggle onlyGrabToggle;
+    public Toggle onlyXToggle;
+    public Toggle onlyYToggle;
+    public Toggle autoToggle;
+    public Toggle manualToggle;
 
    // public UI_GeneralBook bookSettings;
     // Use this for initialization
@@ -29,6 +33,11 @@ public class MainMenuBook : UI_GeneralBook
         StartCoroutine(WaitTillBookIsHalfOpen(55 * Time.deltaTime));
         leftPageFadeOut.SetTrigger("isFadingIn");
 
+        onlyGrabToggle.isOn = false;
+        onlyXToggle.isOn = false;
+        onlyYToggle.isOn = false;
+        autoToggle.isOn = false;
+        manualToggle.isOn = true;
 
         
     }
@@ -41,6 +50,65 @@ public class MainMenuBook : UI_GeneralBook
         SessionIDtxt.GetComponent<Text>().text = "Session ID: " + GameValues.SESSIONID; 
 	}
 
+    public void AutoPlay()
+    {
+        GameValues.AutoGrab = true;
+        GameValues.AutoMoveX = true;
+        GameValues.AutoMoveY = true;
+
+        onlyGrabToggle.isOn = false;
+        onlyXToggle.isOn = false;
+        onlyYToggle.isOn = false;
+        manualToggle.isOn = false;
+
+    }
+    public void AutoMoveXY()
+    {
+        GameValues.AutoGrab = false;
+        GameValues.AutoMoveX = true;
+        GameValues.AutoMoveY = true;
+
+        onlyXToggle.isOn = false;
+        onlyYToggle.isOn = false;
+        autoToggle.isOn = false;
+        manualToggle.isOn = false;
+
+    }
+    public void AutoGrabMoveX()
+    {
+        GameValues.AutoGrab = true;
+        GameValues.AutoMoveX = true;
+        GameValues.AutoMoveY = false;
+
+        onlyGrabToggle.isOn = false;
+        onlyXToggle.isOn = false;
+        autoToggle.isOn = false;
+        manualToggle.isOn = false;
+
+    }
+    public void AutoGrabMoveY()
+    {
+        GameValues.AutoGrab = true;
+        GameValues.AutoMoveX = false;
+        GameValues.AutoMoveY = true;
+
+        onlyGrabToggle.isOn = false;
+        onlyYToggle.isOn = false;
+        autoToggle.isOn = false;
+        manualToggle.isOn = false;
+
+    }
+    public void PlayManually()
+    {
+        GameValues.AutoGrab = false;
+        GameValues.AutoMoveX = false;
+        GameValues.AutoMoveY = false;
+
+        onlyGrabToggle.isOn = false;
+        onlyXToggle.isOn = false;
+        onlyYToggle.isOn = false;
+        autoToggle.isOn = false;
+    }
     public void StartNewGame()
     {
         Debug.Log("A new game has started.");

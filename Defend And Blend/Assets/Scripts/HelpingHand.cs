@@ -15,9 +15,6 @@ public class HelpingHand : MonoBehaviour
     public float maxPressure = 1;
     public float minPressure = 0;
 
-    public bool AutoMoveX = false;
-    public bool AutoMoveY = false;
-    public bool AutoGrab = false;
     public bool useController = true;
     public bool useStick = true;
     public Animation handAnimation;
@@ -58,6 +55,11 @@ public class HelpingHand : MonoBehaviour
         handAnimation["Squeeze"].speed = 0f;
         if (!useController)
             UDPInputController.Instance.OnInput += OnInputReceived;
+
+        if((GameValues.AutoMoveY || GameValues.AutoMoveX )&& GameValues.AutoGrab )
+        {
+            useStick = false;
+        }
 
         //Jildert logging
         NotificationCenter.AddObserver(LogController.EventRequestFrameData, OnRequestFrameData);
@@ -133,7 +135,7 @@ public class HelpingHand : MonoBehaviour
            // RaycastHit[] hit = Physics.RaycastAll(position, transform.forward /* * 0.5f*/, float.MaxValue);
             Ray ray = new Ray(position,transform.forward);
             RaycastHit hit;
-            Debug.DrawRay(position, (transform.forward * 50), Color.red);
+            //Debug.DrawRay(position, (transform.forward * 50), Color.red);
 
            // Debug.Log((squeezePressure * 100 > 20 && squeezePressure * 100 < 50) + ":" + GameValues.SMOOTHYPOINTS);
             if ( squeezePressure * 100 > 20/* && squeezePressure * 100 < 50*/)
@@ -218,14 +220,14 @@ public class HelpingHand : MonoBehaviour
         }
         else
         {
-            if(!AutoMoveX)
+            if(!GameValues.AutoMoveX)
             {
                 if (openPressure > closePressure)
                     transform.Translate(openPressure * 10 * Time.deltaTime,0,0);
                 else if( openPressure < closePressure)
                     transform.Translate(-closePressure * 10 * Time.deltaTime, 0, 0);
             }
-            if(!AutoMoveY)
+            if (!GameValues.AutoMoveY)
             {
                 if (openPressure > closePressure)
                     transform.Translate(0,openPressure * 10 * Time.deltaTime, 0);
@@ -234,7 +236,7 @@ public class HelpingHand : MonoBehaviour
             }
         }
 
-        if (useController && !AutoGrab)
+        if (useController && !GameValues.AutoGrab)
             Squeezing(openPressure, closePressure);
         //While holding a object check if the pressure is below minumum if so let it go.
         // Also check if the pressure is above maximum if so Kill the holding object.
@@ -338,7 +340,7 @@ public class HelpingHand : MonoBehaviour
     }
     private void AutoMove()
     {
-        if((AutoMoveX || AutoMoveY )&& !isHoldingObject)
+        if ((GameValues.AutoMoveX || GameValues.AutoMoveY) && !isHoldingObject)
         {
             //bool isAboveBlender = false;
             Monster monster = null;
@@ -368,7 +370,7 @@ public class HelpingHand : MonoBehaviour
                 monster = targetMonster.GetComponent<Monster>();
             }
 
-            if (AutoMoveX)
+            if (GameValues.AutoMoveX)
             {
                 if (monster != null)
                 {
@@ -382,7 +384,7 @@ public class HelpingHand : MonoBehaviour
                     }
                 }
             }
-            if (AutoMoveY)
+            if (GameValues.AutoMoveY)
             {
                 if (monster != null)
                 {
@@ -397,7 +399,7 @@ public class HelpingHand : MonoBehaviour
                     }
                 }
             }
-            if(AutoGrab)
+            if (GameValues.AutoGrab)
             {
                 if (monster != null)
                 {
@@ -408,10 +410,10 @@ public class HelpingHand : MonoBehaviour
                 }
             }
         }
-        else if((AutoMoveX || AutoMoveY )&& isHoldingObject)
+        else if ((GameValues.AutoMoveX || GameValues.AutoMoveY) && isHoldingObject)
         {
             BlenderCatch blender = GameObject.FindObjectOfType<BlenderCatch>();//EUtils.GetNearestObject(waveSpawner.SpawnedMonsters, transform.position);
-            if (AutoMoveX)
+            if (GameValues.AutoMoveX)
             {
                 //if (blender != null && /*transform.position.y == blender.transform.position.y + 7.50f*/)
                 if (blender != null && Mathf.Abs(transform.position.y - blender.transform.position.y) > 5.50f)
@@ -420,7 +422,7 @@ public class HelpingHand : MonoBehaviour
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
                 }
             }
-            if (AutoMoveY)
+            if (GameValues.AutoMoveY)
             {
                 if (blender != null)
                 {
@@ -428,7 +430,7 @@ public class HelpingHand : MonoBehaviour
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, 10 * Time.deltaTime);
                 }
             }
-            if (AutoGrab)
+            if (GameValues.AutoGrab)
             {
                 if (blender != null)
                 {

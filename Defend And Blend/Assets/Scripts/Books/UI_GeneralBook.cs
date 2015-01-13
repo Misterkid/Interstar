@@ -24,7 +24,7 @@ public class UI_GeneralBook : MonoBehaviour
     {
         SoundManager.Instance.ChangeVolume(vol, SoundManager.SoundTypes.EFFECT);
     }
-
+    /*
     public void setAutoXMovement(bool autoX)
     {
         theHand.AutoMoveX = autoX;
@@ -41,6 +41,7 @@ public class UI_GeneralBook : MonoBehaviour
         theHand.AutoGrab = autoGrab;
         Debug.Log("Grabbing Automaticly? :" + theHand.AutoGrab);
     }
+    */
     protected void turnOffAllRightPages()
     {
         if (rp_StartGame != null)
