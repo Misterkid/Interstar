@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 using System.Globalization;
-internal static class EExtension 
+public static class EExtension 
 {
     //Unity color to hex
     /// <summary>
