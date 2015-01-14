@@ -267,7 +267,8 @@ public class HelpingHand : MonoBehaviour
                         BlenderCatch blenderCatch = hit[i].collider.GetComponent<BlenderCatch>();
                         if (blenderCatch != null)
                         {
-                            if (blenderCatch.smoothPoints > blenderCatch.maxSmoothPoints)
+                            Monster monster = holdingObject.GetComponent<Monster>();
+                            if (blenderCatch.smoothPoints + monster.fruitSize > blenderCatch.maxSmoothPoints)
                                 blenderIsFull = true;
 
                             break;
