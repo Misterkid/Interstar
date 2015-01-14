@@ -12,7 +12,7 @@ public class Bookdata : MonoBehaviour {
     // Load the two buttons (Play and Quit)
     public Button toMainMenu;
     public Button toWindows;
-    
+    public Animator cameraAnimator;
     void Awake()
     {
         //Debug.Log("Startbook has been loaded");
@@ -37,25 +37,23 @@ public class Bookdata : MonoBehaviour {
 
     public void LoadFirstLevel()
     {
-        
-        
-        bookCoverInfo.SetActive(false);
-        //startBookAnimator.SetBool("hasPressedPlay", true);
-        Application.LoadLevel("Level_00_MainMenu");
+
+        cameraAnimator.SetTrigger("zoomOutToMainMenu");
+        StartCoroutine(WaitForLoad(45 * Time.deltaTime));
+
         if (UserIDGameObject.GetComponent<InputField>().text.Length > 0 && SessionIDGameObject.GetComponent<InputField>().text.Length > 0)
         {
 
             GameValues.USERID = UserIDGameObject.GetComponent<InputField>().text;
             GameValues.SESSIONID = SessionIDGameObject.GetComponent<InputField>().text;
         }
-        //string _password = inputPassword.GetComponent<InputField>().text;
-        //UserIDGameObject.GetComponent<InputField>().text;
-
-        
-
-        //Application.LoadLevel("Level_1");
     }
-    
+    private IEnumerator WaitForLoad(float time)
+    {
+        yield return new WaitForSeconds(time);
+        bookCoverInfo.SetActive(false);;
+        Application.LoadLevel("Level_00_MainMenu");
+    }
     public void quitToDesktop()
     {
         Application.Quit();

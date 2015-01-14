@@ -28,7 +28,7 @@ public class MainMenuBook : UI_GeneralBook
     protected override void Start()
     {
         startBookAnimator.SetBool("hasPressedPlay", true);
-        cameraAnimator.SetTrigger("zoomOutToMainMenu");
+        //cameraAnimator.SetTrigger("zoomOutToMainMenu");
 
         StartCoroutine(WaitTillBookIsHalfOpen(55 * Time.deltaTime));
         leftPageFadeOut.SetTrigger("isFadingIn");
@@ -136,9 +136,10 @@ public class MainMenuBook : UI_GeneralBook
 
     public void backToStartBook()
     {
+        cameraAnimator.SetTrigger("zoomInToStartMenu");
         inputsAnimator.SetTrigger("FadeOut");
         leftPageFadeOut.SetTrigger("isGoingBack");
-        cameraAnimator.SetTrigger("testje");
+        //cameraAnimator.SetTrigger("testje");
         startBookAnimator.SetBool("hasPressedPlay", false);
 
         print("Starting " + Time.time);
