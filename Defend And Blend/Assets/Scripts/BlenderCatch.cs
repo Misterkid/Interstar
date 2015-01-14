@@ -33,7 +33,7 @@ public class BlenderCatch : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        Debug.Log(GameValues.BlenderFilledPoints);
+        //Debug.Log(GameValues.BlenderFilledPoints);
         
         
         //Debug.Log(SmoothObject.active);
@@ -44,20 +44,12 @@ public class BlenderCatch : MonoBehaviour
 	    if (Input.GetButtonUp ("Fire1") && !isBlending && monsters.Count > 0) 
         {
            // int smoothPoints = 0;
-            for(int i = 0; i < monsters.Count; i++)
-            {
-                Monster monster = monsters[i].GetComponent<Monster>();
-                monster.Die();
-               // GameValues.SCORE++;
-            }
+
             //
             //Debug.Log(smoothAnimator.IsInTransition(0));
             // Made an function when its blending. 
             // isBlending = true;
             Blend();
-            shakeTime = Time.time + CamShakeTime;
-            isBlending = true;
-            SoundManager.Instance.PlaySound(blendSound, transform.position, SoundManager.SoundTypes.EFFECT);
         }
         if (Time.time >= shakeTime && isBlending)
         {
@@ -79,7 +71,7 @@ public class BlenderCatch : MonoBehaviour
                 monster.isInBlender = true;
                 smoothPoints += monster.fruitSize;
                 GameValues.BlenderFilledPoints += monster.fruitSize;
-                Debug.Log(smoothPoints);
+                //Debug.Log(smoothPoints);
                 //GameValues.BlenderFilledPoints += smoothPoints;
                 monsters.Add(monster.gameObject);
                 //We are gone!
@@ -92,8 +84,14 @@ public class BlenderCatch : MonoBehaviour
             }
         }
     }
-    private void Blend()
+    public void Blend()
     {
+        for (int i = 0; i < monsters.Count; i++)
+        {
+            Monster monster = monsters[i].GetComponent<Monster>();
+            monster.Die();
+            // GameValues.SCORE++;
+        }
         //SmoothObject.active = true;
         if (smoothPoints > 20 && smoothPoints < 40)
         {
@@ -122,6 +120,10 @@ public class BlenderCatch : MonoBehaviour
         drawerAnimator.SetTrigger("Shake");
         spiceJarsAnimator.SetTrigger("Shake");
         monsters = new List<GameObject>();
+
+        shakeTime = Time.time + CamShakeTime;
+        isBlending = true;
+        SoundManager.Instance.PlaySound(blendSound, transform.position, SoundManager.SoundTypes.EFFECT);
     }
     private void StopBlend()
     {

@@ -79,9 +79,13 @@ public class Defendable : MonoBehaviour
     /// </summary>
     public float fillingBarCanHoldPoints;
     /// <summary>
-    /// The current points in the fillingBar (in Text)
+    /// The current points in the fillingBar (in Text) 
     /// </summary>
     public Text fillingBarPointsText;
+    /// <summary>
+    /// The current percentage in the fillingBar (in Text) (percentages)
+    /// </summary>
+    public Text fillingBarPointsPercentageText;
     /// <summary>
     /// The max value of Fillbar.Y
     /// </summary>
@@ -98,7 +102,10 @@ public class Defendable : MonoBehaviour
     /// The health's image, this is used for color changing
     /// </summary>
     public Image fillingBarColorImage;
-
+    /// <summary>
+    /// This is One Procent of the FillingBar
+    /// </summary>
+    private float BlenderProcent; 
 
 
 
@@ -115,16 +122,17 @@ public class Defendable : MonoBehaviour
             currentHealth = maxHealth;
         }
 
+        
+        // Aantal punten in percentages.
+
         //Caches the the max value of the xPos is the start position (12)			
         if (fillingBarRect != null)
         {
-            fillingBarMaxY = fillingBarRect.localPosition.x;
+            fillingBarEmptyY = fillingBarRect.localPosition.y;
+            fillingBarCurrentY = fillingBarEmptyY;
+            fillingBarMaxY = fillingBarRect.localPosition.y + 325;
 
-            fillingBarEmptyY = fillingBarRect.localPosition.x - fillingBarRect.rect.width;
-
-            fillingBarCurrentY = fillingBarCanHoldPoints;
-
-             //GameValues.BlenderFilledPoints += 1;
+            
         }
        
 	}
@@ -143,7 +151,7 @@ public class Defendable : MonoBehaviour
         {
             visualHealth.color = new Color32((byte)handleHealthColor(currentHealth, maxHealth / 2, maxHealth, 255, 0), 255, 0, 255);
         }
-        else // I have less than 50% health. 
+        else // I have less than 50% health.
         {
             visualHealth.color = new Color32(255, (byte)handleHealthColor(currentHealth, 0, maxHealth / 2, 0, 255), 0, 255);
         }
@@ -151,24 +159,29 @@ public class Defendable : MonoBehaviour
 
     public void HandleBlenderFilling()
     {
-        fillingBarPointsText.text = GameValues.BlenderFilledPoints + "%";
-        fillingBarCurrentY = (currentHealth / 100) * fillingBarEmptyY;
-        fillingBarCurrentY = fillingBarEmptyY - fillingBarCurrentY;
+        BlenderProcent = 100f / 60f * (float)GameValues.BlenderFilledPoints;// / 60 * 100f ;
 
-        fillingBarRect.localPosition = new Vector3(fillingBarCurrentY, 0, 0);
+        fillingBarPointsText.text = GameValues.BlenderFilledPoints + "  / 60 P";
+        fillingBarPointsPercentageText.text = BlenderProcent + "%";
+        
+        float calcTemp = (325 / 100) * BlenderProcent; 
+        
+        fillingBarCurrentY = fillingBarEmptyY + calcTemp;
 
-        if (GameValues.BlenderFilledPoints > fillingBarCanHoldPoints / 2) // The Bar is > 50%!
-        {
-            fillingBarColorImage.color = new Color((byte)handleFillingBarColor(GameValues.BlenderFilledPoints, fillingBarMaxY / 2, fillingBarMaxY, 255, 0), 255, 0, 255);
-        }
-        else
-        {
-            fillingBarColorImage.color = new Color(255, (byte)handleFillingBarColor(GameValues.BlenderFilledPoints, 0, fillingBarMaxY / 2, 0, 255), 0, 255);
-        }
+        fillingBarRect.localPosition = new Vector3(0, fillingBarCurrentY, 0);
+
+        
     }
 
     public void DoDamage(float pain)
     {
+        GameValues.BlenderFilledPoints = 0;
+        fillingBarPointsText.text = GameValues.BlenderFilledPoints + "  / 60 P";
+        fillingBarPointsPercentageText.text = BlenderProcent + "%";
+
+        BlenderCatch blenderCatch = GameObject.FindObjectOfType<BlenderCatch>();
+        blenderCatch.Blend();
+        
         if (currentHealth > 0)
         {
             CurrentHealth -= pain;
@@ -204,19 +217,7 @@ public class Defendable : MonoBehaviour
     {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
-    /// <summary>
-    /// This method maps a range of number into another range
-    /// </summary>
-    /// <param name="x">The value to evaluate</param>
-    /// <param name="in_min">The minimum value of the evaluated variable</param>
-    /// <param name="in_max">The maximum value of the evaluated variable</param>
-    /// <param name="out_min">The minum number we want to map to</param>
-    /// <param name="out_max">The maximum number we want to map to</param>
-    /// <returns></returns>
-    private float handleFillingBarColor(float x, float in_min, float in_max, float out_min, float out_max)
-    {
-        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-    }
+    
 
     
 }

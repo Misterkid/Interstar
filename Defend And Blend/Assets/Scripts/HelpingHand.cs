@@ -252,7 +252,7 @@ public class HelpingHand : MonoBehaviour
         // Also check if the pressure is above maximum if so Kill the holding object.
         if (isHoldingObject)
         {
-            Debug.Log(holdingObject.fruitSize);
+            Debug.Log("Huidige grootte van het fruit in de hand: " + holdingObject.fruitSize);
             if (holdingObject != null && !holdingObject.isInBlender)
             {
                 if (squeezePressure * 100 < holdingObject.minPressure)

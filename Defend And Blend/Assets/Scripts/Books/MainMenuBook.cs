@@ -38,7 +38,7 @@ public class MainMenuBook : UI_GeneralBook
         onlyGrabToggle.isOn = false;
         onlyXToggle.isOn = false;
         onlyYToggle.isOn = false;
-        autoToggle.isOn = false;
+        autoToggle.isOn = true;
         manualToggle.isOn = true;
         base.Start();
         
@@ -117,7 +117,12 @@ public class MainMenuBook : UI_GeneralBook
         //BookAnimator.SetTrigger("turnPage_anim");
         Application.LoadLevel("level_1");
     }
-    
+    public void StartTest()
+    {
+        Debug.Log("A new game has started.");
+        //BookAnimator.SetTrigger("turnPage_anim");
+        Application.LoadLevel("level_test");
+    }
     public void openCredits()
     {
         //First we need to turn off the other pages.
