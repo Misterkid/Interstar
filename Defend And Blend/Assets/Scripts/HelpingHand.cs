@@ -129,6 +129,16 @@ public class HelpingHand : MonoBehaviour
         //pressure
         float openPressure = Input.GetAxis("RTrigger");
         float closePressure = Input.GetAxis("LTrigger");
+        if(Input.GetKey(KeyCode.Q))
+        {
+            openPressure = 1;
+        }
+        if(Input.GetKey(KeyCode.E))
+        {
+            closePressure = 1;
+        }
+
+
         if (!isHoldingObject && holdingBonusObject == null)
         {
             Vector3 position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z + 2);
@@ -138,7 +148,7 @@ public class HelpingHand : MonoBehaviour
             //Debug.DrawRay(position, (transform.forward * 50), Color.red);
 
            // Debug.Log((squeezePressure * 100 > 20 && squeezePressure * 100 < 50) + ":" + GameValues.SMOOTHYPOINTS);
-            if ( squeezePressure * 100 > 20/* && squeezePressure * 100 < 50*/)
+            if ( /*squeezePressure * 100 > 20 &&*/ closePressure > 0/* && squeezePressure * 100 < 50*/)
             {
                 if (Physics.Raycast(ray, out hit, 20))
                 {
@@ -183,7 +193,7 @@ public class HelpingHand : MonoBehaviour
         }
         else if (holdingBonusObject != null)
         {
-            if (squeezePressure * 100 < 20 && holdingBonusObject != null)
+            if (/*squeezePressure * 100 < 20 &&*/ openPressure > 0 && holdingBonusObject != null)
             {
                 holdingBonusObject.collider.enabled = true;
                 holdingBonusObject.transform.parent = null;
@@ -346,7 +356,7 @@ public class HelpingHand : MonoBehaviour
             Monster monster = null;
             
            // GameObject monsterGo = null;
-            if(targetMonster == null)
+            //if(targetMonster == null)
                 targetMonster = EUtils.GetNearestObject(waveSpawner.SpawnedMonsters, transform.position);
 
             RaycastHit[] hit;

@@ -9,7 +9,7 @@ public class UIManagerScript : MonoBehaviour
     public Animator CameraAnimator;
     public Animator BookAnimator;
 
-    
+    public Text gameScoreText;
 
     public GameObject rp_StartGame;
     public GameObject rp_Options;
@@ -118,6 +118,10 @@ public class UIManagerScript : MonoBehaviour
                     CameraAnimator.SetTrigger("ToGame");
                     //CameraAnimator.SetBool("GameIsPaused", true);
                 
+            }
+            if (gameScoreText != null)
+            {
+                gameScoreText.text = "Score: " + GameValues.SCORE;
             }
             Debug.Log("Is het spel op pauze? " + GameValues.ISPAUSED);
         }
