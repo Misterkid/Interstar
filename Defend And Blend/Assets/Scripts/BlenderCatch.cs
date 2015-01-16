@@ -67,7 +67,7 @@ public class BlenderCatch : MonoBehaviour
         {
             if (!monster.isInholding /*&& smoothPoints < 60*/)
             {
-                GameValues.SCORE++;
+               // GameValues.SCORE++;
                 monster.isInBlender = true;
                 smoothPoints += monster.fruitSize;
                 GameValues.BlenderFilledPoints += monster.fruitSize;
@@ -123,6 +123,10 @@ public class BlenderCatch : MonoBehaviour
 
         shakeTime = Time.time + CamShakeTime;
         isBlending = true;
+
+        Defendable defendAble = GameObject.FindObjectOfType<Defendable>();
+        defendAble.HandleBlenderFilling();
+
         SoundManager.Instance.PlaySound(blendSound, transform.position, SoundManager.SoundTypes.EFFECT);
     }
     private void StopBlend()

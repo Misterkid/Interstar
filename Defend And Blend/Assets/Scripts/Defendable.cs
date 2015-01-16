@@ -85,7 +85,7 @@ public class Defendable : MonoBehaviour
     /// <summary>
     /// The current percentage in the fillingBar (in Text) (percentages)
     /// </summary>
-    public Text fillingBarPointsPercentageText;
+    public Text totalBlendPointsText;
     /// <summary>
     /// The max value of Fillbar.Y
     /// </summary>
@@ -159,11 +159,27 @@ public class Defendable : MonoBehaviour
 
     public void HandleBlenderFilling()
     {
+        Debug.Log(GameValues.BlenderFilledPoints);
         BlenderProcent = 100f / 60f * (float)GameValues.BlenderFilledPoints;// / 60 * 100f ;
 
-        fillingBarPointsText.text = GameValues.BlenderFilledPoints + "  / 60 P";
-        fillingBarPointsPercentageText.text = BlenderProcent + "%";
+        fillingBarPointsText.text = GameValues.BlenderFilledPoints + "  / 60";
+
+        BlenderCatch blenderCatch = GameObject.FindObjectOfType<BlenderCatch>();
+
+        if (blenderCatch.smoothPoints > 20 && blenderCatch.smoothPoints < 40)
+        {
+            totalBlendPointsText.text = "SP: " + GameValues.BlenderFilledPoints * 2;
+        }
+        else if (blenderCatch.smoothPoints > 40)
+        {
+            totalBlendPointsText.text = "SP: " + GameValues.BlenderFilledPoints * 4;
+        }
+        else
+        {
+            totalBlendPointsText.text = "SP: " + GameValues.BlenderFilledPoints;
+        }
         
+
         float calcTemp = (325 / 100) * BlenderProcent; 
         
         fillingBarCurrentY = fillingBarEmptyY + calcTemp;
@@ -176,10 +192,12 @@ public class Defendable : MonoBehaviour
     public void DoDamage(float pain)
     {
         GameValues.BlenderFilledPoints = 0;
-        fillingBarPointsText.text = GameValues.BlenderFilledPoints + "  / 60 P";
-        fillingBarPointsPercentageText.text = BlenderProcent + "%";
+        fillingBarPointsText.text = (float)GameValues.BlenderFilledPoints + "  / 60";
+        totalBlendPointsText.text = "SP:0";
+ 
 
         BlenderCatch blenderCatch = GameObject.FindObjectOfType<BlenderCatch>();
+        blenderCatch.smoothPoints = 0;
         blenderCatch.Blend();
         
         if (currentHealth > 0)
